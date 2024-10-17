@@ -271,6 +271,7 @@
                         </tbody>
                       </table>
                       <p>aku sayang kamu</p>
+                      <p>aku senang belajar</p>
 
 
                     </div>
