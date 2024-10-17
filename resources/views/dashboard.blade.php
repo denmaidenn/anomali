@@ -99,7 +99,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title font-weight-normal text-danger">$ 7832</h4>
-                  <p class="card-text">Revenue</p>
+                  <p class="card-text">Revenue Test</p>
                   <div class="progress">
                     <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">65%</div>
                   </div>
@@ -264,15 +264,15 @@
                             <td class="text-right">
                               550
                             </td>
-                            <td class="text-right">
+                            <td class="text-right">`
                               4.34%
                             </td>
                           </tr>
                         </tbody>
                       </table>
-                      <p>login</p>
-          
-                      
+                      <p>aku sayang kamu</p>
+
+
                     </div>
                     <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12">
 
