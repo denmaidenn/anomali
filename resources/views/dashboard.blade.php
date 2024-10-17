@@ -270,9 +270,9 @@
                           </tr>
                         </tbody>
                       </table>
-                      <p>login</p>
-          
-                      
+                      <p>logout</p>
+
+
                     </div>
                     <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12">
 
