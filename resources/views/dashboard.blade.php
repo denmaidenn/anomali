@@ -264,7 +264,7 @@
                             <td class="text-right">
                               550
                             </td>
-                            <td class="text-right">
+                            <td class="text-right">`
                               4.34%
                             </td>
                           </tr>
