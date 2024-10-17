@@ -99,7 +99,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title font-weight-normal text-danger">$ 7832</h4>
-                  <p class="card-text">Revenue</p>
+                  <p class="card-text">Revenue Test</p>
                   <div class="progress">
                     <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">65%</div>
                   </div>
