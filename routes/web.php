@@ -5,6 +5,9 @@ use App\Http\Controllers\SignController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PelatihanController;
+use App\Http\Controllers\FishmartController;
+use App\Http\Controllers\FishpediaController;
 
 //menampilkan view sign
 Route::get('/', function () {
@@ -21,16 +24,22 @@ Route::get('/dashboard', [DashboardController::class,'index']);
 Route::get('/formuser', [UserController::class,'formuser']);
 Route::post('/formuser', [FormController::class,'submitForm']);
 Route::get('/userpages', [UserController::class,'index']);
-
-//untuk menampilkan view pelatihan
-Route::get('/pelatihan', [])
-//untuk menampilkan view fishpedia
-
-//untuk menampilkan view fishmart
-
-
 //Edit Form User
 Route::get('/edituser', [UserController::class,'edituser']);
+
+
+
+//untuk menampilkan view pelatihan
+Route::get('/pelatihan', [PelatihanController::class,'index']);
+//untuk menampilkan view fishpedia
+Route::get('/fishpedia', [FishpediaController::class,'index']);
+
+//untuk menampilkan view fishmart
+Route::get('/fishmart', [FishmartController::class,'index']);
+
+
+
+
 
 
 
