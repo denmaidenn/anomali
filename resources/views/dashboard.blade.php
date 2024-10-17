@@ -270,7 +270,7 @@
                           </tr>
                         </tbody>
                       </table>
-                      <p>logout</p>
+                      <p>aku sayang kamu</p>
 
 
                     </div>
