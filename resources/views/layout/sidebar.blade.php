@@ -39,28 +39,28 @@
                 </ul>
               </div>
             </li>
-           <li class="nav-item {{ Request::is('signin') ? 'active':'' }}">
+           <li class="nav-item {{ Request::is('pelatihan') ? 'active':'' }}">
               <a class="nav-link" href="/pelatihan">
                 <img src="images/icons/5.png" alt="">
                 <span class="menu-title">Pelatihan</span>
               </a>
             </li>
 
-            <li class="nav-item {{ Request::is('') ? 'active':'' }}">
+            <li class="nav-item {{ Request::is('fishpedia') ? 'active':'' }}">
               <a class="nav-link" href="/fishpedia">
                 <img src="images/icons/5.png" alt="">
                 <span class="menu-title">Fishpedia</span>
               </a>
             </li>
 
-            <li class="nav-item {{ Request::is('') ? 'active':'' }}">
+            <li class="nav-item {{ Request::is('fishmart') ? 'active':'' }}">
               <a class="nav-link" href="/fishmart">
                 <img src="images/icons/5.png" alt="">
                 <span class="menu-title">FishMart</span>
               </a>
             </li>
 
-            <li class="nav-item {{ Request::is('') ? 'active':'' }}">
+            <li class="nav-item {{ Request::is('signin') ? 'active':'' }}">
               <a class="nav-link" href="/">
                 <img src="images/icons/5.png" alt="">
                 <span class="menu-title">Logout</span>
