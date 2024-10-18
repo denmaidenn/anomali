@@ -8721,10 +8721,10 @@ fieldset[disabled] a.btn {
     background-image: none;
     border-color: #1175c0; }
 
-.btn-secondary {
-  color: #111;
-  background-color: #dee2e6;
-  border-color: #dee2e6; }
+ .btn-secondary {
+        color: #fff;
+        background-color: #6c757d; /* Warna abu-abu */
+        border-color: #6c757d; }
   .btn-secondary:hover {
     color: #111;
     background-color: #c8cfd6;

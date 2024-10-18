@@ -41,7 +41,7 @@
             </li>
            <li class="nav-item {{ Request::is('pelatihan') ? 'active':'' }}">
               <a class="nav-link" href="/pelatihan">
-                <img src="images/icons/5.png" alt="">
+                <i class= "fa fa-male"></i>
                 <span class="menu-title">Pelatihan</span>
               </a>
             </li>
