@@ -15,9 +15,13 @@ Route::get('/', function () {
 });
 
 //untuk mengirim data signin lalu ke dashboard
+Route::get('/signin' , [SignController::class,'in'])->name('login');
 Route::post('/signin' , [SignController::class,'in']);
-Route::get('/dashboard', [DashboardController::class,'index']);
+Route::get('/dashboard', [DashboardController::class,'index'])->middleware('auth');
 
+
+//untuk logout
+Route::post('/logout', [SignController::class,'logout'])->middleware('auth');
 
 
 //untuk mengirim form data user ke view userdata 

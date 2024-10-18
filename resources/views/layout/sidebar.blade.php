@@ -61,7 +61,13 @@
             </li>
 
             <li class="nav-item {{ Request::is('signin') ? 'active':'' }}">
-              <a class="nav-link" href="/">
+
+              <form id="logout-form" action="/logout" method="POST" style="display: none;">
+              @csrf
+              </form>
+
+              <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                
                 <img src="images/icons/5.png" alt="">
                 <span class="menu-title">Logout</span>
               </a>
