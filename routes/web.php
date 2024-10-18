@@ -24,8 +24,9 @@ Route::get('/dashboard', [DashboardController::class,'index']);
 Route::get('/formuser', [UserController::class,'formuser']);
 Route::post('/formuser', [FormController::class,'submitForm']);
 Route::get('/userpages', [UserController::class,'index']);
-//Edit Form User
-Route::get('/edituser', [UserController::class,'edituser']);
+//Untuk edit Form data User
+Route::get('/edituser{id}', [UserController::class,'edituser'])->name('edituser');
+Route::post('/updateuser{id}', [UserController::class,'update'])->name('updateuser');
 
 
 
