@@ -14,12 +14,12 @@
                 <span class="menu-title">Dashboard</span>
               </a>
             </li>
-            
-            
+
+
             <li class="nav-item ">
               <a class="nav-link" data-toggle="collapse" aria-expanded="false" aria-controls="User Data" href="#userdata">
-                <img src="images/icons/5.png" alt="">
-                <span class="menu-title">User Data<i class="fa fa-sort-down"></i></span>             
+                <i class="fa fa-address-book-o"></i>
+                <span class="menu-title">User Data<i class="fa fa-sort-down"></i></span>
               </a>
               <div class="collapse" id="userdata">
                 <ul class="nav flex-column sub-menu">
@@ -41,14 +41,14 @@
             </li>
            <li class="nav-item {{ Request::is('pelatihan') ? 'active':'' }}">
               <a class="nav-link" href="/pelatihan">
-                <img src="images/icons/5.png" alt="">
+                <i class= "fa fa-male"></i>
                 <span class="menu-title">Pelatihan</span>
               </a>
             </li>
 
             <li class="nav-item {{ Request::is('fishpedia') ? 'active':'' }}">
               <a class="nav-link" href="/fishpedia">
-                <img src="images/icons/5.png" alt="">
+               <i class= " fa fa-book"></i>
                 <span class="menu-title">Fishpedia</span>
               </a>
             </li>
@@ -60,6 +60,7 @@
               </a>
             </li>
 
+
             <li class="nav-item {{ Request::is('logout') ? 'active':'' }}">
 
               <form id="logout-form" action="/logout" method="POST" style="display: none;">
@@ -68,10 +69,13 @@
 
               <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 
-                <img src="images/icons/5.png" alt="">
+                <i class= "fa fa-sign-out fa-L"></i>
+
+
                 <span class="menu-title">Logout</span>
+
               </a>
             </li>
-            
+
           </ul>
         </nav>
