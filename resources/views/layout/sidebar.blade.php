@@ -3,7 +3,7 @@
 <nav class="bg-white sidebar sidebar-offcanvas" id="sidebar">
           <div class="user-info">
             <img src="images/face.jpg" alt="">
-            <p class="name">M Bilal Abdurrahman</p>
+            <p class="name">Selamat Datang, {{ Auth::user()->name}}!</p>
             <p class="designation">Project Manager</p>
             <span class="online"></span>
           </div>
@@ -60,7 +60,7 @@
               </a>
             </li>
 
-            <li class="nav-item {{ Request::is('signin') ? 'active':'' }}">
+            <li class="nav-item {{ Request::is('logout') ? 'active':'' }}">
 
               <form id="logout-form" action="/logout" method="POST" style="display: none;">
               @csrf

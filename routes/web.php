@@ -25,22 +25,19 @@ Route::post('/logout', [SignController::class,'logout'])->middleware('auth');
 
 
 //untuk mengirim form data user ke view userdata 
-Route::get('/formuser', [UserController::class,'formuser']);
-Route::post('/formuser', [FormController::class,'submitForm']);
-Route::get('/userpages', [UserController::class,'index']);
+Route::get('/formuser', [UserController::class,'formuser'])->middleware('auth');
+Route::post('/formuser', [FormController::class,'submitForm'])->middleware('auth');
+Route::get('/userpages', [UserController::class,'index'])->middleware('auth');
+
 //Untuk edit Form data User
-Route::get('/edituser', [UserController::class,'edituser']);
-
-
-
+Route::get('/edituser', [UserController::class,'edituser'])->middleware('auth');
 
 //untuk menampilkan view pelatihan
-Route::get('/pelatihan', [PelatihanController::class,'index']);
+Route::get('/pelatihan', [PelatihanController::class,'index'])->middleware('auth');
 //untuk menampilkan view fishpedia
-Route::get('/fishpedia', [FishpediaController::class,'index']);
-
+Route::get('/fishpedia', [FishpediaController::class,'index'])->middleware('auth');
 //untuk menampilkan view fishmart
-Route::get('/fishmart', [FishmartController::class,'index']);
+Route::get('/fishmart', [FishmartController::class,'index'])->middleware('auth');
 
 
 
