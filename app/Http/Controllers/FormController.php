@@ -32,5 +32,23 @@ class FormController extends Controller
 
         return redirect('/userpages');
     }
+
+    public function update(Request $request, $id) {
+        // Validasi input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'prodi' => 'required|string|max:255',
+            'kelas' => 'required|string|max:255',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+        ]);
+    
+        // Cari mahasiswa berdasarkan ID
+        $mahasiswa = FormUser::findOrFail($id);
+        $mahasiswa->update($request->all());
+    
+        return redirect()->route('userpages')->with('success', 'Data mahasiswa berhasil diperbarui!');
+    }
+    
 }
 

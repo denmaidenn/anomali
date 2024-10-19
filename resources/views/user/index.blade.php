@@ -48,7 +48,7 @@
                           <td>{{ $mahasiswa-> jenis_kelamin }}</td>
                           <div>
                             <td>
-                              <a href="/edituser" class="btn btn-primary btn-sm">Manage</a>
+                              <a href="{{ route('manageuser', $mahasiswa->id) }}" class="btn btn-primary btn-sm">Manage</a>
                             </td>
                             <td>
                               <a href="/removeuser" class="btn btn-danger btn-sm">Remove</a>

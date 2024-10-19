@@ -29,13 +29,13 @@
                       <label for="exampleInputJk1">Jenis Kelamin</label>
                       <div class="form-radio">
                         <label>
-                          <input name="jenis_kelamin" value="Laki-laki" type="radio" require_once>
+                          <input name="jenis_kelamin" value="L" type="radio" require_once>
                           Laki-laki
                         </label>
                       </div>
                       <div class="form-radio">
                         <label>
-                          <input name="jenis_kelamin" value="Perempuan" type="radio" require_once>
+                          <input name="jenis_kelamin" value="P" type="radio" require_once>
                           Perempuan
                         </label>
                       </div>

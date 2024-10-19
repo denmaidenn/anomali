@@ -9,6 +9,7 @@ use App\Http\Controllers\PelatihanController;
 use App\Http\Controllers\FishmartController;
 use App\Http\Controllers\FishpediaController;
 
+# AUTHENTICATION
 //menampilkan view sign
 Route::get('/', function () {
     return view('sign.index', ['title' => 'Sign In']);
@@ -24,14 +25,18 @@ Route::get('/dashboard', [DashboardController::class,'index'])->middleware('auth
 Route::post('/logout', [SignController::class,'logout'])->middleware('auth');
 
 
+# USER VIEW
 //untuk mengirim form data user ke view userdata 
-Route::get('/formuser', [UserController::class,'formuser'])->middleware('auth');
+Route::get('/formuser', [UserController::class,'formuser_page'])->middleware('auth');
 Route::post('/formuser', [FormController::class,'submitForm'])->middleware('auth');
-Route::get('/userpages', [UserController::class,'index'])->middleware('auth');
+Route::get('/userpages', [UserController::class,'index'])->middleware('auth')->name('userpages');
 
 //Untuk edit Form data User
-Route::get('/edituser', [UserController::class,'edituser'])->middleware('auth');
+Route::get('/manageuser/{id}', [UserController::class,'manageuser_page'])->middleware('auth')->name('manageuser');
+Route::put('/manageuser/{id}', [FormController::class,'update'])->middleware('auth')->name('updateuser');
 
+
+# PELATIHAN VIEW
 //untuk menampilkan view pelatihan
 Route::get('/pelatihan', [PelatihanController::class,'index'])->middleware('auth');
 //untuk menampilkan view fishpedia

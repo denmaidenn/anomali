@@ -36,10 +36,10 @@
               <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <div class="form-group">
-                  <input type="email" class="form-control p_input" placeholder="Email" name="email">
+                  <input type="email" class="form-control p_input" placeholder="Email" name="email" required>
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control p_input" placeholder="Password" name="password">
+                  <input type="text" class="form-control p_input" placeholder="Password" name="password" required>
                 </div>
                 <div class="form-group d-flex align-items-center justify-content-between">
                   <div class="form-check"><label><input type="checkbox" class="form-check-input">Remember me</label></div>
