@@ -12,6 +12,7 @@ class UserController extends Controller
 
     public function index() {
         $data = FormUser::all();
+        
         return view('user.index', ['title' => 'Data User', 'data'=> $data,]);
     }
     

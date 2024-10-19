@@ -33,7 +33,7 @@
               <h3 class="card-title text-left mb-3">Login</h3>
 
 
-              <form method="POST" action="/signin">
+              <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <div class="form-group">
                   <input type="email" class="form-control p_input" placeholder="Email" name="email">
