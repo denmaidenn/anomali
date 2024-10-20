@@ -44,10 +44,23 @@ class FormController extends Controller
         ]);
     
         // Cari mahasiswa berdasarkan ID
-        $mahasiswa = FormUser::findOrFail($id);
+        $mahasiswa = FormUser::find($id);
         $mahasiswa->update($request->all());
     
         return redirect()->route('userpages')->with('success', 'Data mahasiswa berhasil diperbarui!');
+    }
+
+    public function delete($id)
+    {
+        $mahasiswa = FormUser::find($id);
+
+        if ($mahasiswa) {
+            $mahasiswa->delete();
+            return redirect('/userpages')->with('success','data berhasil dihapus.');
+        } else {
+            return redirect('/userpages')->with('error', 'Data tidak ditemukan.');
+        }
+        
     }
     
 }

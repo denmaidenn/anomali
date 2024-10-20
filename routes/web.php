@@ -35,6 +35,9 @@ Route::get('/userpages', [UserController::class,'index'])->middleware('auth')->n
 Route::get('/manageuser/{id}', [UserController::class,'manageuser_page'])->middleware('auth')->name('manageuser');
 Route::put('/manageuser/{id}', [FormController::class,'update'])->middleware('auth')->name('updateuser');
 
+//Untuk delete data yang ada di form
+Route::delete('/deleteuser/{id}', [FormController::class,'delete'])->middleware('auth')->name('deleteuser');
+
 
 # PELATIHAN VIEW
 //untuk menampilkan view pelatihan
@@ -43,13 +46,3 @@ Route::get('/pelatihan', [PelatihanController::class,'index'])->middleware('auth
 Route::get('/fishpedia', [FishpediaController::class,'index'])->middleware('auth');
 //untuk menampilkan view fishmart
 Route::get('/fishmart', [FishmartController::class,'index'])->middleware('auth');
-
-
-
-
-
-
-
-
-
-

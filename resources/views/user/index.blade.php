@@ -48,10 +48,18 @@
                           <td>{{ $mahasiswa-> jenis_kelamin }}</td>
                           <div>
                             <td>
-                              <a href="{{ route('manageuser', $mahasiswa->id) }}" class="btn btn-primary btn-sm">Manage</a>
+                              <a href="{{ route('manageuser', $mahasiswa -> id) }}"  class="btn btn-primary btn-sm">Manage</a>
                             </td>
                             <td>
-                              <a href="/removeuser" class="btn btn-danger btn-sm">Remove</a>
+
+                              <form action="{{ route('deleteuser', $mahasiswa -> id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" >
+                                @csrf
+                                @method('DELETE')
+                                
+                                  <button  type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                
+
+                              </form>
                             </td>
                           </div>
 

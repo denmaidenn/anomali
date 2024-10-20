@@ -1,69 +1,64 @@
 @extends('layout.main')
-
 @section('content')
-        <div class="container-fluid">
-              <h2>Edit Mahasiswa</h2>
-
-              @if (session('success'))
-                  <div class="alert alert-success">{{ session('success') }}</div>
-              @endif
-              @if (session('error'))
-                  <div class="alert alert-danger">{{ session('error') }}</div>
-              @endif
-
+        <div class="content-wrapper">
+          <h3 class="page-heading mb-4">Forms</h3>
+          <div class="row mb-2">
+            <div class="col-lg-12">
               <div class="card">
-                  <div class="card-body">
-                      <form method="POST" action="{{ route('updateuser', $mahasiswa->id) }}">
-                          @csrf
-                          @method('PUT') <!-- Menggunakan PUT method untuk update -->
+                <div class="card-body">
+                  <h5 class="card-title mb-4">Edit User Data</h5>
+                  <form class="forms-sample" method="POST" action="{{ route('updateuser', $mahasiswa->id) }}">
+                    @csrf
+                    @method('PUT') <!-- Menggunakan PUT untuk update data -->
 
-                          <div class="mb-3">
-                              <label for="name" class="form-label">Nama</label>
-                              <input type="text" class="form-control" name="name" id="name" value="{{ old('name', $mahasiswa->name) }}" required>
-                              @error('name')
-                                  <div class="text-danger">{{ $message }}</div>
-                              @enderror
-                          </div>
+                    <div class="form-group">
+                      <label for="exampleInputName1">Nama</label>
+                      <input name="name" type="text" class="form-control p-input" id="exampleInputName1" placeholder="Nama" value="{{ old('name', $mahasiswa->name) }}" required>
+                      @error('name')
+                        <div class="text-danger"> {{ $message }}></div>
+                      @enderror
+                    </div>
 
-                          <div class="mb-3">
-                              <label for="email" class="form-label">Email</label>
-                              <input type="email" class="form-control" name="email" id="email" value="{{ old('email', $mahasiswa->email) }}" required>
-                              @error('email')
-                                  <div class="text-danger">{{ $message }}</div>
-                              @enderror
-                          </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Email address</label>
+                      <input name="email" type="email" class="form-control p-input" id="exampleInputEmail1" placeholder="Enter email" value="{{ old('email', $mahasiswa->email) }}" required>
+                    </div>
 
-                          <div class="mb-3">
-                              <label for="prodi" class="form-label">Program Studi</label>
-                              <input type="text" class="form-control" name="prodi" id="prodi" value="{{ old('prodi', $mahasiswa->prodi) }}" required>
-                              @error('prodi')
-                                  <div class="text-danger">{{ $message }}</div>
-                              @enderror
-                          </div>
+                    <div class="form-group">
+                      <label for="exampleInputProdi1">Prodi</label>
+                      <input name="prodi" type="text" class="form-control p-input" id="exampleInputProdi1" placeholder="Prodi" value="{{ old('prodi', $mahasiswa->prodi) }}" required>
+                    </div>
 
-                          <div class="mb-3">
-                              <label for="kelas" class="form-label">Kelas</label>
-                              <input type="text" class="form-control" name="kelas" id="kelas" value="{{ old('kelas', $mahasiswa->kelas) }}" required>
-                              @error('kelas')
-                                  <div class="text-danger">{{ $message }}</div>
-                              @enderror
-                          </div>
+                    <div class="form-group">
+                      <label for="exampleInputKelas1">Kelas</label>
+                      <input name="kelas" type="text" class="form-control p-input" id="exampleInputKelas1" placeholder="Kelas" value="{{ old('kelas', $mahasiswa->kelas) }}" required>
+                    </div>
 
-                          <div class="mb-3">
-                              <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
-                              <select name="jenis_kelamin" id="jenis_kelamin" class="form-select" required>
-                                  <option value="Laki-laki" {{ $mahasiswa->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                                  <option value="Perempuan" {{ $mahasiswa->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
-                              </select>
-                              @error('jenis_kelamin')
-                                  <div class="text-danger">{{ $message }}</div>
-                              @enderror
-                          </div>
+                    <div class="form-group">
+                      <label for="exampleInputJk1">Jenis Kelamin</label>
+                      <div class="form-radio">
+                        <label>
+                          <input name="jenis_kelamin" value="Laki-laki" type="radio" {{ $mahasiswa->jenis_kelamin == 'Laki-laki' ? 'checked' : '' }} required>
+                          Laki-laki
+                        </label>
+                      </div>
+                      <div class="form-radio">
+                        <label>
+                          <input name="jenis_kelamin" value="Perempuan" type="radio" {{ $mahasiswa->jenis_kelamin == 'Perempuan' ? 'checked' : '' }} required>
+                          Perempuan
+                        </label>
+                      </div>
+                    </div>
 
-                          <button type="submit" class="btn btn-primary">Update</button>
-                          <a href="/userpages" class="btn btn-secondary">Batal</a>
-                      </form>
-                  </div>
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-primary">Update</button>
+                      <a href="/userpages" class="btn btn-secondary">Batal</a>
+                    </div>
+
+                  </form>
+                </div>
               </div>
+            </div>
           </div>
+        </div>
 @endsection
