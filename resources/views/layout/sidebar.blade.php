@@ -2,7 +2,7 @@
 
 <nav class="bg-white sidebar sidebar-offcanvas" id="sidebar">
           <div class="user-info">
-            <img src="images/face.jpg" alt="">
+            <img src="images/bili.jpg" alt="">
             <p class="name">M Bilal Abdurrahman</p>
             <p class="designation">Project Manager</p>
             <span class="online"></span>
@@ -55,7 +55,8 @@
 
             <li class="nav-item {{ Request::is('fishmart') ? 'active':'' }}">
               <a class="nav-link" href="/fishmart">
-                <img src="images/icons/5.png" alt="">
+              <img src="https://sumber-url.com/Vector.png" alt="Vector Image">
+
                 <span class="menu-title">FishMart</span>
               </a>
             </li>
