@@ -9,6 +9,8 @@ class FishpediaController extends Controller
     //
 
     public function index() {
-        return view('fishpedia.index', ['title' => 'Fishpedia']);
+        $fishes = Fish::all(); // Mengambil semua data ikan
+        return view('fishpedia.fish', compact('fishes')); // Mengirim data ikan ke view
     }
+
 }
