@@ -38,20 +38,28 @@
                         </tr>
                       </thead>
                       <tbody>
-                      @foreach($data as $item)
+                      @foreach($data as $mahasiswa)
                         <tr class="">
-                          <td>{{ $item->id}}</td>
-                          <td>{{ $item-> name }}</td>
-                          <td>{{ $item-> email }}</td>
-                          <td>{{ $item-> prodi }}</td>
-                          <td>{{ $item-> kelas }}</td>
-                          <td>{{ $item-> jenis_kelamin }}</td>
+                          <td>{{ $mahasiswa->id}}</td>
+                          <td>{{ $mahasiswa-> name }}</td>
+                          <td>{{ $mahasiswa-> email }}</td>
+                          <td>{{ $mahasiswa-> prodi }}</td>
+                          <td>{{ $mahasiswa-> kelas }}</td>
+                          <td>{{ $mahasiswa-> jenis_kelamin }}</td>
                           <div>
                             <td>
-                              <a href="/edituser" class="btn btn-primary btn-sm">Manage</a>
+                              <a href="{{ route('manageuser', $mahasiswa -> id) }}"  class="btn btn-primary btn-sm">Manage</a>
                             </td>
                             <td>
-                              <a href="/removeuser" class="btn btn-danger btn-sm">Remove</a>
+
+                              <form action="{{ route('deleteuser', $mahasiswa -> id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" >
+                                @csrf
+                                @method('DELETE')
+                                
+                                  <button  type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                
+
+                              </form>
                             </td>
                           </div>
 

@@ -12,15 +12,17 @@ class UserController extends Controller
 
     public function index() {
         $data = FormUser::all();
+        
         return view('user.index', ['title' => 'Data User', 'data'=> $data,]);
     }
     
-    public function formuser() {
+    public function formuser_page() {
         return view('user.form', ['title' => 'Form Tambah User']);
     }
 
-    public function edituser() {
-        return view('user.edit', ['title'=> 'Edit User']);
+    public function manageuser_page($id) {
+        $mahasiswa = FormUser::findOrfail($id);
+        return view('user.manage', ['title'=> 'Edit User', 'mahasiswa'=> $mahasiswa]);
     }
 
     

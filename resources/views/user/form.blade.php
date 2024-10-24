@@ -1,12 +1,12 @@
 @extends('layout.main')
 @section('content')
-<div class="content-wrapper">
+        <div class="content-wrapper">
           <h3 class="page-heading mb-4">Forms</h3>
           <div class="row mb-2">
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title mb-4">User Data Form</h5>
+                  <h5 class="card-title mb-4">Form User Data</h5>
                   <form class="forms-sample" method="POST" action="/formuser">
                     @csrf
                     <div class="form-group">

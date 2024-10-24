@@ -2,8 +2,8 @@
 
 <nav class="bg-white sidebar sidebar-offcanvas" id="sidebar">
           <div class="user-info">
-            <img src="images/bili.jpg" alt="">
-            <p class="name">M Bilal Abdurrahman</p>
+            <img src="images/face.jpg" alt="">
+            <p class="name">Selamat Datang, {{ Auth::user()->name}}!</p>
             <p class="designation">Project Manager</p>
             <span class="online"></span>
           </div>
@@ -55,15 +55,23 @@
 
             <li class="nav-item {{ Request::is('fishmart') ? 'active':'' }}">
               <a class="nav-link" href="/fishmart">
-              <img src="https://sumber-url.com/Vector.png" alt="Vector Image">
-
+                <img src="images/icons/5.png" alt="">
                 <span class="menu-title">FishMart</span>
               </a>
             </li>
 
-            <li class="nav-item {{ Request::is('signin') ? 'active':'' }}">
-              <a class="nav-link" href="/">
+
+            <li class="nav-item {{ Request::is('logout') ? 'active':'' }}">
+
+              <form id="logout-form" action="/logout" method="POST" style="display: none;">
+              @csrf
+              </form>
+
+              <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                
                 <i class= "fa fa-sign-out fa-L"></i>
+
+
                 <span class="menu-title">Logout</span>
 
               </a>
