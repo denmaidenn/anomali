@@ -41,21 +41,25 @@
             </li>
            <li class="nav-item {{ Request::is('pelatihan') ? 'active':'' }}">
               <a class="nav-link" href="/pelatihan">
-                <i class= "fa fa-male"></i>
+              <img src="images/pelatihan.png" alt="">
                 <span class="menu-title">Pelatihan</span>
               </a>
             </li>
 
             <li class="nav-item {{ Request::is('fishpedia') ? 'active':'' }}">
               <a class="nav-link" href="/fishpedia">
-               <i class= " fa fa-book"></i>
+              <img src="images/fish.png" alt="">
                 <span class="menu-title">Fishpedia</span>
               </a>
             </li>
 
             <li class="nav-item {{ Request::is('fishmart') ? 'active':'' }}">
               <a class="nav-link" href="/fishmart">
+<<<<<<< Updated upstream
                 <img src="images/icons/5.png" alt="">
+=======
+              <img src="images/Vector.png" alt="">
+>>>>>>> Stashed changes
                 <span class="menu-title">FishMart</span>
               </a>
             </li>
