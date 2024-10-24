@@ -2,7 +2,7 @@
     "version": 2,
     "framework": null,
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@1.0.0" }
+        "api/index.php": { "runtime": "vercel-php@0.6.0" }
     },
     "routes": [
         { "src": "/build/(.*)", "dest": "/public/build/" },
@@ -30,11 +30,5 @@
         "DB_PORT": "3306",
         "DB_DATABASE": "db2024_stormtorn",
         "DB_USERNAME": "db2024_stormtorn"
-    },
-    "functions": {
-        "api/index.php": {
-            "runtime": "vercel-php@0.6.0",
-            "runtime": "php-8.3"
-        }
     }
 }
