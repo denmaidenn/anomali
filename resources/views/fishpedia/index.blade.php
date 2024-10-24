@@ -1,14 +1,14 @@
 @extends('layout.main')
 
 @section('content')
-<div class="content-wrapper">
+        <div class="content-wrapper">
           <h3 class="page-heading mb-4">Bootstrap Tables</h3>
           <div class="row mb-2">
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex justify-content-between m-2">
-                    <h5 class="card-title mb-4">User Data Table</h5>
+                    <h5 class="card-title mb-4">Fishpedia Table</h5>
                     <a href="/tambahikan" class="btn btn-primary ">Tambah</a>
                   </div>
                   <div class="table-responsive">

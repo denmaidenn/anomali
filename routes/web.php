@@ -8,11 +8,16 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PelatihanController;
 use App\Http\Controllers\FishmartController;
 use App\Http\Controllers\FishpediaController;
-use App\Http\Controllers\FishController;
+use Illuminate\Support\Facades\Auth;
+
 //menampilkan view sign
 Route::get('/', function () {
     return view('sign.index', ['title' => 'Sign In']);
 });
+
+//untuk register membuat data akun
+Route::get('/register',[SignController::class,'showRegisterForm'])->name('register');
+Route::post('/register',[SignController::class,'register']);
 
 //untuk mengirim data signin lalu ke dashboard
 Route::get('/signin' , [SignController::class,'index'])->name('login');
@@ -20,7 +25,7 @@ Route::post('/signin' , [SignController::class,'in']);
 
 Route::group(['middleware' => ['auth']], function () {
 
-    Route::get('/dashboard', [DashboardController::class,'index']);
+    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 
 
     //untuk logout

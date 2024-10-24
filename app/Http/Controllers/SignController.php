@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class SignController extends Controller
 {
@@ -15,21 +16,36 @@ class SignController extends Controller
         return view('sign.index');
     }
     
-    // public function in(Request $request) {
-    //     $response = User::where([
-    //                     'email' => $request->input('email'),
-    //                     'password' => $request->input('password'),
-    //                 ])->where('email_verified_at', '!=', null)->first();
+    public function showRegisterForm()
+    {
+        return view('register.index');  // View untuk form register
+    }
 
-    //     if($response) {
-    //         $request ->session()->put('name', $response->name);
-    //         //session([name], $response->name);
-    //         return redirect('dashboard')->with('success', 'Login berhasil!');
-            
-    //     } else {
-    //         return back()->with('error', 'Email atau password salah.')->withInput();
-    //     }
-    // }
+    // Menangani register user
+    public function register(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',  // Harus ada konfirmasi password
+        ]);
+
+        // Membuat user baru dan otomatis meng-hash password
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),  // Otomatis akan di-hash oleh mutator di model User
+        ]);
+
+        event(new Registered($user));
+
+        // Login user setelah registrasi (opsional)
+        Auth::login($user);
+
+        // Redirect ke halaman dashboard atau halaman lain
+        return redirect()->route('dashboard')->with('success', 'Registrasi berhasil!');
+    }
 
     public function in(Request $request) {
         $request->validate([
@@ -40,15 +56,12 @@ class SignController extends Controller
         $user = User::where('email', $request->input('email'))->first();
 
         if ($user && Hash::check($request->input('password'), $user->password)) {
-            if ($user->email_verified_at) {
-                Auth::login($user);  // Login the user
-                return redirect('dashboard')->with('success', 'Login berhasil!');
-            } else {
-                return back()->with('error', 'Email belum diverifikasi.')->withInput();
-            }
+            Auth::login($user);  // Login the user
+            return redirect('dashboard')->with('success', 'Login berhasil!');
         } else {
             return back()->with('error', 'Email atau password salah.')->withInput();
         }
+        
     }
 
     public function logout(Request $request) {
@@ -57,5 +70,7 @@ class SignController extends Controller
         $request->session()->regenerateToken();
         return redirect('/')->with('success', 'Logout berhasil!');
     }
+
+
 
 }   
