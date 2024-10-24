@@ -30,5 +30,11 @@
         "DB_PORT": "3306",
         "DB_DATABASE": "db2024_stormtorn",
         "DB_USERNAME": "db2024_stormtorn"
+    },
+    "functions": {
+        "api/index.php": {
+            "runtime": "vercel-php@0.6.0",
+            "runtime": "php-8.3"
+        }
     }
 }
