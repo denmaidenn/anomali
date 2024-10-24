@@ -1,30 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-<<<<<<< Updated upstream
 
 use App\Models\Fish;
 use Illuminate\Container\Attributes\Auth;
-=======
-use App\Models\Fish; // Pastikan ini ada
->>>>>>> Stashed changes
 use Illuminate\Http\Request;
 
 class FishpediaController extends Controller
 {
     public function index() {
-<<<<<<< Updated upstream
         $fish = Fish::all();
         return view('fishpedia.index', ['title' => 'Fishpedia', 'fish'=> $fish]);
-=======
-        $Fish = Fish::all(); // Mengambil semua data ikan
-        return view('Fish.index', compact('Fish')); // Mengirim data ikan ke view
-    }
-
-    public function show($id) {
-        $fish = Fish::find($id); // Mengambil detail ikan berdasarkan ID
-        return view('FishPedia.Fish', compact('Fish')); // Mengirimkan data ikan ke view
->>>>>>> Stashed changes
     }
 
     public function tambahikan_page() {

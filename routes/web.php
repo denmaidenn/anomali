@@ -8,12 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PelatihanController;
 use App\Http\Controllers\FishmartController;
 use App\Http\Controllers\FishpediaController;
-<<<<<<< Updated upstream
-
-# AUTHENTICATION
-=======
 use App\Http\Controllers\FishController;
->>>>>>> Stashed changes
 //menampilkan view sign
 Route::get('/', function () {
     return view('sign.index', ['title' => 'Sign In']);
@@ -22,64 +17,30 @@ Route::get('/', function () {
 //untuk mengirim data signin lalu ke dashboard
 Route::get('/signin' , [SignController::class,'index'])->name('login');
 Route::post('/signin' , [SignController::class,'in']);
-<<<<<<< Updated upstream
-=======
-Route::get('/dashboard', [DashboardController::class,'index']);
-
-
-
-//untuk mengirim form data user ke view userdata
-Route::get('/formuser', [UserController::class,'formuser']);
-Route::post('/formuser', [FormController::class,'submitForm']);
-Route::get('/userpages', [UserController::class,'index']);
-//Edit Form User
-Route::get('/edituser', [UserController::class,'edituser']);
-
-
-
-//untuk menampilkan view pelatihan
-Route::get('/pelatihan', [PelatihanController::class,'index']);
-//untuk menampilkan view fishpedia
-Route::get('/fishpedia', [FishpediaController::class,'index']);
-
-//untuk menampilkan view fishmart
-Route::get('/fishmart', [FishmartController::class,'index']);
-Route::get('/fish', [FishPediaController::class, 'index'])->name('fish.index');
-
-
-
-
-
-
-
-
-
-
->>>>>>> Stashed changes
 
 Route::group(['middleware' => ['auth']], function () {
-    
+
     Route::get('/dashboard', [DashboardController::class,'index']);
-    
-    
+
+
     //untuk logout
     Route::post('/logout', [SignController::class,'logout']);
-    
-    
+
+
     # USER VIEW
-    //untuk mengirim form data user ke view userdata 
+    //untuk mengirim form data user ke view userdata
     Route::get('/formuser', [UserController::class,'formuser_page']);
     Route::post('/formuser', [FormController::class,'submitForm']);
     Route::get('/userpages', [UserController::class,'index'])->name('userpages');
-    
+
     //Untuk edit Form data User
     Route::get('/manageuser/{id}', [UserController::class,'manageuser_page'])->name('manageuser');
     Route::put('/manageuser/{id}', [FormController::class,'update'])->name('updateuser');
-    
+
     //Untuk delete data yang ada di form
     Route::delete('/deleteuser/{id}', [FormController::class,'delete'])->name('deleteuser');
-    
-    
+
+
     # PELATIHAN VIEW
     //untuk menampilkan view pelatihan
     Route::get('/pelatihan', [PelatihanController::class,'index']);
@@ -90,10 +51,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/fishpedia/manage/{id}', [FishpediaController::class, 'edit'])->name('manageikan');
     Route::put('/fishpedia/update/{id}', [FishpediaController::class, 'update'])->name('updateikan');
     Route::delete('/fishpedia/delete/{id}', [FishpediaController::class, 'destroy'])->name('deleteikan');
-    
+
     //untuk menampilkan view fishmart
     Route::get('/fishmart', [FishmartController::class,'index']);
     });
-    
-    
-    
+
+

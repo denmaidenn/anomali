@@ -13,7 +13,7 @@ class CreateFishTable extends Migration
      */
     public function up()
     {
-        Schema::create('fish_table', function (Blueprint $table) {
+        Schema::create('fishes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('scientific_name');
