@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 
 class FishpediaController extends Controller
 {
-    //
-
     public function index() {
         $fish = Fish::all();
         return view('fishpedia.index', ['title' => 'Fishpedia', 'fish'=> $fish]);
@@ -33,7 +31,7 @@ class FishpediaController extends Controller
             'salinity' => 'required',
             'lighting' => 'required',
         ]);
-    
+
         Fish::create([
             'name' => $request->name,
             'scientific_name' => $request->scientific_name,
@@ -47,7 +45,7 @@ class FishpediaController extends Controller
             'salinity' => $request->salinity,
             'lighting' => $request->lighting,
         ]);
-    
+
         return redirect('/fishpedia')->with('success', 'Data ikan berhasil ditambahkan!');
     }
 
@@ -55,7 +53,7 @@ class FishpediaController extends Controller
         $fish = Fish::findOrFail($id);  // Mencari ikan berdasarkan ID
         return view('fishpedia.edit_fish', ['title' => 'Edit Ikan', 'fish' => $fish]);
     }
-    
+
 
     public function update(Request $request, $id) {
         $request->validate([
@@ -71,7 +69,7 @@ class FishpediaController extends Controller
             'salinity' => 'required',
             'lighting' => 'required',
         ]);
-    
+
         $fish = Fish::findOrFail($id);  // Cari ikan berdasarkan ID
         $fish->update([
             'name' => $request->name,
@@ -86,16 +84,16 @@ class FishpediaController extends Controller
             'salinity' => $request->salinity,
             'lighting' => $request->lighting,
         ]);
-    
+
         return redirect('/fishpedia')->with('success', 'Data ikan berhasil diperbarui!');
     }
 
-    
+
     public function destroy($id) {
         $fish = Fish::findOrFail($id);  // Mencari ikan berdasarkan ID
         $fish->delete();  // Menghapus data ikan
         return redirect('/fishpedia')->with('success', 'Data ikan berhasil dihapus!');
     }
-    
-    
+
+
 }

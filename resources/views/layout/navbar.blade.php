@@ -1,6 +1,6 @@
 <nav class="navbar navbar-default col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="bg-white text-center navbar-brand-wrapper">
-        <a class="navbar-brand brand-logo" href="index.html"><img src="images/logo_star_black.png" /></a>
+        <a class="navbar-brand brand-logo" href="index.html"><img src="images/iQuarium 1.png" style="max-width: 160px" /></a>
         <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo_star_mini.jpg" alt=""></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center">

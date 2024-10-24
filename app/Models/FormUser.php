@@ -16,6 +16,7 @@ class FormUser extends Model
         'kelas',
         'jenis_kelamin',
     ];
-
     
+
+
 }

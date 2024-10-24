@@ -2,7 +2,7 @@
 
 <nav class="bg-white sidebar sidebar-offcanvas" id="sidebar">
           <div class="user-info">
-            <img src="images/face.jpg" alt="">
+            <img src="images/bili.jpg" alt="">
             <p class="name">Selamat Datang, {{ Auth::user()->name}}!</p>
             <p class="designation">Project Manager</p>
             <span class="online"></span>
@@ -10,7 +10,7 @@
           <ul class="nav">
             <li class="nav-item {{ Request::is('dashboard') ? 'active':'' }}">
               <a class="nav-link" href="/dashboard">
-                <img src="images/icons/1.png" alt="">
+              <img src="images/logo_dashboard.png" alt="" >
                 <span class="menu-title">Dashboard</span>
               </a>
             </li>
@@ -18,7 +18,7 @@
 
             <li class="nav-item ">
               <a class="nav-link" data-toggle="collapse" aria-expanded="false" aria-controls="User Data" href="#userdata">
-                <i class="fa fa-address-book-o"></i>
+              <img src="images/logo_user.png" alt="" >
                 <span class="menu-title">User Data<i class="fa fa-sort-down"></i></span>
               </a>
               <div class="collapse" id="userdata">
@@ -41,21 +41,21 @@
             </li>
            <li class="nav-item {{ Request::is('pelatihan') ? 'active':'' }}">
               <a class="nav-link" href="/pelatihan">
-                <i class= "fa fa-male"></i>
+              <img src="images/pelatihan.png" alt="" >
                 <span class="menu-title">Pelatihan</span>
               </a>
             </li>
 
             <li class="nav-item {{ Request::is('fishpedia') ? 'active':'' }}">
               <a class="nav-link" href="/fishpedia">
-               <i class= " fa fa-book"></i>
+              <img src="images/lucide_fish.png" alt=""  >
                 <span class="menu-title">Fishpedia</span>
               </a>
             </li>
 
             <li class="nav-item {{ Request::is('fishmart') ? 'active':'' }}">
               <a class="nav-link" href="/fishmart">
-                <img src="images/icons/5.png" alt="">
+              <img src="images/logo_market.png" alt="">
                 <span class="menu-title">FishMart</span>
               </a>
             </li>
@@ -68,8 +68,8 @@
               </form>
 
               <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                
-                <i class= "fa fa-sign-out fa-L"></i>
+
+              <img src="images/logo_logout.png" alt="" >
 
 
                 <span class="menu-title">Logout</span>

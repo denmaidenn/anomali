@@ -4,12 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateFishTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('fishes', function (Blueprint $table) {
             $table->id();
@@ -17,22 +19,24 @@ return new class extends Migration
             $table->string('scientific_name');
             $table->string('category');
             $table->string('origin');
-            $table->string('size')->nullable();
-            $table->text('characteristics')->nullable();
-            $table->float('aquarium_size')->nullable();
-            $table->float('temperature')->nullable();
-            $table->float('ph')->nullable();
-            $table->float('salinity')->nullable();
-            $table->string('lighting')->nullable();
+            $table->string('size');
+            $table->string('characteristics');
+            $table->integer('aquarium_size');
+            $table->string('temperature');
+            $table->string('ph');
+            $table->string('salinity');
+            $table->string('lighting');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('fish');
     }
-};
+}

@@ -8,40 +8,44 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PelatihanController;
 use App\Http\Controllers\FishmartController;
 use App\Http\Controllers\FishpediaController;
+use Illuminate\Support\Facades\Auth;
 
-# AUTHENTICATION
 //menampilkan view sign
 Route::get('/', function () {
     return view('sign.index', ['title' => 'Sign In']);
 });
+
+//untuk register membuat data akun
+Route::get('/register',[SignController::class,'showRegisterForm'])->name('register');
+Route::post('/register',[SignController::class,'register']);
 
 //untuk mengirim data signin lalu ke dashboard
 Route::get('/signin' , [SignController::class,'index'])->name('login');
 Route::post('/signin' , [SignController::class,'in']);
 
 Route::group(['middleware' => ['auth']], function () {
-    
-    Route::get('/dashboard', [DashboardController::class,'index']);
-    
-    
+
+    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
+
+
     //untuk logout
     Route::post('/logout', [SignController::class,'logout']);
-    
-    
+
+
     # USER VIEW
-    //untuk mengirim form data user ke view userdata 
+    //untuk mengirim form data user ke view userdata
     Route::get('/formuser', [UserController::class,'formuser_page']);
     Route::post('/formuser', [FormController::class,'submitForm']);
     Route::get('/userpages', [UserController::class,'index'])->name('userpages');
-    
+
     //Untuk edit Form data User
     Route::get('/manageuser/{id}', [UserController::class,'manageuser_page'])->name('manageuser');
     Route::put('/manageuser/{id}', [FormController::class,'update'])->name('updateuser');
-    
+
     //Untuk delete data yang ada di form
     Route::delete('/deleteuser/{id}', [FormController::class,'delete'])->name('deleteuser');
-    
-    
+
+
     # PELATIHAN VIEW
     //untuk menampilkan view pelatihan
     Route::get('/pelatihan', [PelatihanController::class,'index']);
@@ -52,10 +56,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/fishpedia/manage/{id}', [FishpediaController::class, 'edit'])->name('manageikan');
     Route::put('/fishpedia/update/{id}', [FishpediaController::class, 'update'])->name('updateikan');
     Route::delete('/fishpedia/delete/{id}', [FishpediaController::class, 'destroy'])->name('deleteikan');
-    
+
     //untuk menampilkan view fishmart
     Route::get('/fishmart', [FishmartController::class,'index']);
     });
-    
-    
-    
+
+
