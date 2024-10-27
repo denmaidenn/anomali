@@ -16,10 +16,10 @@ class FishSeeder extends Seeder
             'origin' => 'Jepang',
             'size' => '30-40cm',
             'characteristics' => 'Sirip panjang, warna cerah',
-            'aquarium_size' => 1000,
-            'temperature' => '18-24',
-            'ph' => '7.0-8.0',
-            'salinity' => 'Air Tawar',
+            'aquarium_size' => 1000,   
+            'temperature' => 18,    
+            'ph' => 7,              
+            'salinity' => 3,  
             'lighting' => 'Kuat/Sedang',
         ]);
     }

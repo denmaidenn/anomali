@@ -4,6 +4,17 @@
 <div class="content-wrapper">
     <h3 class="page-heading mb-4">Dashboard</h3>
 
+    @if (session('success_login'))
+      <div class="alert alert-success">
+        {{ session('success_login') }}
+      </div>
+    @endif
+    @if (session('error_login'))
+      <div class="alert alert-danger">
+      {{ session('error_login') }}
+      </div>
+    @endif
+
     <div class="row mb-4">
             <div class="col-lg-12">
               <div class="card">

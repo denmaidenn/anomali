@@ -57,9 +57,9 @@ class SignController extends Controller
 
         if ($user && Hash::check($request->input('password'), $user->password)) {
             Auth::login($user);  // Login the user
-            return redirect('dashboard')->with('success', 'Login berhasil!');
+            return redirect('dashboard')->with('success_login', 'Login berhasil!');
         } else {
-            return back()->with('error', 'Email atau password salah.')->withInput();
+            return back()->with('error_login', 'Email atau password salah.')->withInput();
         }
         
     }

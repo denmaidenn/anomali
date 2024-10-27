@@ -21,10 +21,10 @@ class CreateFishTable extends Migration
             $table->string('origin');
             $table->string('size');
             $table->string('characteristics');
-            $table->integer('aquarium_size');
-            $table->string('temperature');
-            $table->string('ph');
-            $table->string('salinity');
+            $table->double('aquarium_size');
+            $table->double('temperature');
+            $table->double('ph');
+            $table->double('salinity');
             $table->string('lighting');
             $table->timestamps();
         });
