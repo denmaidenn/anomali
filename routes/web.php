@@ -15,13 +15,15 @@ Route::get('/', function () {
     return view('sign.index', ['title' => 'Sign In']);
 });
 
-//untuk register membuat data akun
-Route::get('/register',[SignController::class,'showRegisterForm'])->name('register');
-Route::post('/register',[SignController::class,'register']);
+    //untuk register membuat data akun
+    Route::get('/register',[SignController::class,'showRegisterForm'])->name('register');
+    Route::post('/register',[SignController::class,'register']);
 
-//untuk mengirim data signin lalu ke dashboard
-Route::get('/signin' , [SignController::class,'index'])->name('login');
-Route::post('/signin' , [SignController::class,'in']);
+    //untuk mengirim data signin lalu ke dashboard
+    Route::get('/signin' , [SignController::class,'index'])->name('login');
+    Route::post('/signin' , [SignController::class,'in']);
+
+
 
 Route::group(['middleware' => ['auth']], function () {
 
@@ -48,7 +50,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     # PELATIHAN VIEW
     //untuk menampilkan view pelatihan
-    Route::get('/pelatihan', [PelatihanController::class,'index']);
+    Route::get('/pelatihan', [PelatihanController::class,'index'])->name('pelatihan.index');
+    Route::get('/pelatihan/create', [PelatihanController::class, 'create'])->name('pelatihan.create');
+    Route::post('/pelatihan', [PelatihanController::class, 'store'])->name('pelatihan.store');
+
     //untuk menampilkan view fishpedia
     Route::get('/fishpedia', [FishpediaController::class,'index']);
     Route::get('/tambahikan', [FishpediaController::class,'tambahikan_page']);
