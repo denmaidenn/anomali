@@ -37,6 +37,6 @@ class CreateFishTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fish');
+        Schema::dropIfExists('fishes');
     }
 }

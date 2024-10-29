@@ -50,9 +50,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     # PELATIHAN VIEW
     //untuk menampilkan view pelatihan
-    Route::get('/pelatihan', [PelatihanController::class,'index'])->name('pelatihan.index');
+    Route::get('/pelatihan', [PelatihanController::class,'index']);
     Route::get('/pelatihan/create', [PelatihanController::class, 'create'])->name('pelatihan.create');
     Route::post('/pelatihan', [PelatihanController::class, 'store'])->name('pelatihan.store');
+    Route::resource('pelatihan', PelatihanController::class);
+    Route::get('/pelatihan/{id}/edit', [PelatihanController::class, 'edit'])->name('pelatihan.edit');
+
 
     //untuk menampilkan view fishpedia
     Route::get('/fishpedia', [FishpediaController::class,'index']);

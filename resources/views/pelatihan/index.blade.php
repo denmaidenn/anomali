@@ -38,19 +38,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($pelatihans as $index => $pelatihan)
+                                @foreach($pelatihan as $pelatihans)
                                     <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $pelatihan->user_id }}</td>
-                                        <td>{{ $pelatihan->video_pelatihan }}</td>
-                                        <td>{{ $pelatihan->deskripsi_pelatihan }}</td>
-                                        <td>{{ number_format($pelatihan->harga, 2) }}</td>
+                                        <td>{{ $pelatihans->id}}</td>
+                                        <td>{{ $pelatihans->user_id }}</td>
+                                        <td>{{ $pelatihans->video_pelatihan }}</td>
+                                        <td>{{ $pelatihans->deskripsi_pelatihan }}</td>
+                                        <td>{{ number_format($pelatihans->harga, 2) }}</td>
                                         <td>
-                                            <a href="{{ route('pelatihan.show', $pelatihan->id) }}" class="btn btn-info btn-sm">Lihat</a>
+                                            <a href="{{ route('pelatihan.show', $pelatihans->id) }}" class="btn btn-info btn-sm">Lihat</a>
                                         </td>
                                         <td>
-                                            <a href="{{ route('pelatihan.edit', $pelatihan->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                            <form action="{{ route('pelatihan.destroy', $pelatihan->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
+                                            <a href="{{ route('pelatihan.edit', $pelatihans->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                            <form action="{{ route('pelatihan.destroy', $pelatihans->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm">Hapus</button>

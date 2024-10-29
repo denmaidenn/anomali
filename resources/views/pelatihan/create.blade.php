@@ -46,7 +46,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a href="{{ route('pelatihan.index') }}" class="btn btn-secondary">Kembali</a>
+                        <a href="/pelatihan" class="btn btn-secondary">Kembali</a>
                     </form>
 
                     <!-- Area untuk menampilkan notifikasi setelah AJAX submit -->

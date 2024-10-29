@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         
         $this->call([
              FishSeeder::class,
+             PelatihanSeeder::class,
             // Seeder lain jika ada
         ]);
     }

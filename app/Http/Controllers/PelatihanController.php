@@ -10,8 +10,8 @@ class PelatihanController extends Controller
     //
 
     public function index() {
-        $pelatihans = Pelatihan::all();
-        return view('pelatihan.index', ['title' => 'Pelatihan', 'pelatihans' => $pelatihans]);
+        $pelatihan = Pelatihan::all();
+        return view('pelatihan.index', ['title' => 'Pelatihan', 'pelatihan' => $pelatihan]);
     }
 
     public function create() {
@@ -30,5 +30,21 @@ class PelatihanController extends Controller
         Pelatihan::create($request->all());
 
         return redirect()->route('pelatihan.index')->with('success', 'Pelatihan berhasil ditambahkan');
+    }
+
+    public function show($id)
+    {
+        // Mengambil data pelatihan berdasarkan id
+        $pelatihan = Pelatihan::findOrFail($id);
+
+        return view('pelatihan.show', compact('pelatihan'), ['title'=> 'Pelatihan']);
+    }
+
+    public function destroy($id)
+    {
+        $pelatihan = Pelatihan::findOrFail($id);
+        $pelatihan->delete();
+
+        return redirect()->route('pelatihan.index')->with('success', 'Data pelatihan berhasil dihapus!');
     }
 }
