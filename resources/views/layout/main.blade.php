@@ -11,18 +11,19 @@
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="shortcut icon" href="/images/favicon.png" />
   <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
   <div class=" container-scroller">
     <!-- partial:partials/_navbar.html -->
     @include('layout.navbar')
+        <!-- partial:partials/_sidebar.html -->
+        @include('layout.sidebar')
 
     <!-- partial -->
     <div class="container-fluid">
       <div class="row row-offcanvas row-offcanvas-right">
-        <!-- partial:partials/_sidebar.html -->
-        @include('layout.sidebar')
 
         <!-- partial -->
         @yield('content')
@@ -46,6 +47,7 @@
   <script src="/js/misc.js"></script>
   <script src="/js/chart.js"></script>
   <script src="/js/maps.js"></script>
+  @yield('scripts')
 </body>
 
 </html>

@@ -14003,4 +14003,29 @@ input {
   border: solid 1px #ebebeb;
   color: #1c2c3f; }
 
-/*# sourceMappingURL=maps/style.css.map */
+/*sourceMappingURL=maps/style.css.map */
+/* Chart specific styles */
+.product-chart-wrapper {
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+#sales-chart-legend ul li {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 20px;
+    font-size: 13px;
+    color: #636c72;
+}
+
+#sales-chart-legend ul li span {
+    width: 15px !important;
+    height: 15px !important;
+    margin-right: 8px;
+    border-radius: 3px;
+}
+
+.btn-group .btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.875rem;
+}

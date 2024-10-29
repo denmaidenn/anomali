@@ -46,10 +46,8 @@
                   <a href="#" class="forgot-pass">Forgot password</a>
                 </div>
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary btn-block enter-btn" value="SIGN IN">LOG IN</button>
+                  <button type="submit" class="btn btn-primary btn-block enter-btn" value="SIGN IN ">LOG IN</button>
                 </div>
-                <p class="Or-login-with my-3">Or login with</p>
-                <a href="#" class="facebook-login btn btn-facebook btn-block">Sign in with Facebook</a>
                 <a href="#" class="google-login btn btn-google btn-block">Sign in with Google+</a>
                 <a href="/register" class="google-login btn btn-create-account btn-block">Create An Account</a>
               </form>

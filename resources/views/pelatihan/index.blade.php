@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="content-wrapper">
-    <h3 class="page-heading mb-4">Daftar Pelatihan</h3>
+    <h3 class="page-heading mb-4" style="font-weight: Bold">Daftar Pelatihan</h3>
     <div class="row mb-2">
         <div class="col-lg-12">
             <div class="card">
@@ -91,5 +91,40 @@
             }
         });
     });
+</script>
+@endsection
+@section('scripts')
+<script>
+document.addEventListener('searchResults', function(e) {
+    const results = e.detail.results;
+    const tbody = document.querySelector('tbody');
+
+    if (results.length > 0) {
+        tbody.innerHTML = results.map(item => `
+            <tr>
+                <td>${item.id_transaksi}</td>
+                <td>${item.id_produk}</td>
+                <td>${item.nama_produk}</td>
+                <td>${item.deskripsi_produk}</td>
+                <td>
+                    <img src="${item.gambar_produk}" alt="${item.nama_produk}" class="table-image">
+                </td>
+                <td>${item.jumlah_produk}</td>
+                <td>Rp ${item.harga}</td>
+                <td>
+                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#detail-${item.id_transaksi}">
+                        <i class="fa fa-eye"></i> Detail
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+    } else {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" class="text-center">No results found</td>
+            </tr>
+        `;
+    }
+});
 </script>
 @endsection

@@ -9,7 +9,7 @@ use App\Http\Controllers\PelatihanController;
 use App\Http\Controllers\FishmartController;
 use App\Http\Controllers\FishpediaController;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\SearchController; 
 //menampilkan view sign
 Route::get('/', function () {
     return view('sign.index', ['title' => 'Sign In']);
@@ -65,5 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
     //untuk menampilkan view fishmart
     Route::get('/fishmart', [FishmartController::class,'index']);
     });
+
+    Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 
