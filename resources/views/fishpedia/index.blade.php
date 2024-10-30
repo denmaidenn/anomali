@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between m-2">
                         <h5 class="card-title mb-4">Fishpedia Table</h5>
-                        <a href="/tambahikan" class="btn btn-primary">Tambah</a>
+                        <a href="{{ route('fishpedia.create') }}" class="btn btn-primary">Tambah</a>
                     </div>
 
                     <!-- Notifikasi sukses dan error -->

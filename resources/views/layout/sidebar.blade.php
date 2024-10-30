@@ -2,7 +2,7 @@
 
 <nav class="bg-white sidebar sidebar-offcanvas" id="sidebar">
           <div class="bg-white text-center">
-            <a class="navbar-brand brand-logo text-center w-100" href="index.html"><img src="{{ asset('images/iQuarium 1.png') }}" style="max-width: 160px; display: inline-block;"  alt="iQuarium Logo" /></a>
+            <a class="navbar-brand brand-logo text-center w-100" href="index.html"><img src="{{ asset('images/iquarium.png') }}" style="max-width: 160px; display: inline-block;"  alt="iQuarium Logo" /></a>
 
           </div>
           <div class="user-info">

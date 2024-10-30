@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between m-2">
                         <h5 class="card-title mb-4">Tabel Pelatihan</h5>
-                        <a href="{{ route('pelatihan.create') }}" class="btn btn-primary">Tambah Pelatihan</a>
+                        <a href="{{ route('pelatihan.create') }}" class="btn btn-primary">Tambah</a>
                     </div>
 
                     <!-- Notifikasi sukses dan error -->
@@ -33,23 +33,22 @@
                                     <th>Video Pelatihan</th>
                                     <th>Deskripsi</th>
                                     <th>Harga</th>
-                                    <th>Manage</th>
-                                    <th>Action</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($pelatihan as $pelatihans)
                                     <tr>
-                                        <td>{{ $pelatihans->id}}</td>
-                                        <td>{{ $pelatihans->user_id }}</td>
+                                        <td>{{ $pelatihans->id }}</td>
+                                        <td>{{ $pelatihans->id_user }}</td>
                                         <td>{{ $pelatihans->video_pelatihan }}</td>
-                                        <td>{{ $pelatihans->deskripsi_pelatihan }}</td>
-                                        <td>{{ number_format($pelatihans->harga, 2) }}</td>
+                                        <td>{{ $pelatihans->deskripsi }}</td>
+                                        <td>Rp {{ number_format($pelatihans->harga, 2) }}</td>
                                         <td>
-                                            <a href="{{ route('pelatihan.show', $pelatihans->id) }}" class="btn btn-info btn-sm">Lihat</a>
+                                             <a href="{{ route('pelatihan.edit', $pelatihans->id) }}" class="btn btn-primary btn-sm">Manage</a>
                                         </td>
                                         <td>
-                                            <a href="{{ route('pelatihan.edit', $pelatihans->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                             <form action="{{ route('pelatihan.destroy', $pelatihans->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
@@ -71,60 +70,5 @@
     <div id="pelatihan-data" class="mb-4"></div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $.ajax({
-            url: '/api/pelatihan', // Adjust the URL if needed
-            method: 'GET',
-            success: function(data) {
-                let pelatihanHtml = '<ul class="list-group">';
-                data.forEach(function(pelatihan) {
-                    pelatihanHtml += '<li class="list-group-item">' + pelatihan.deskripsi_pelatihan + ' (Harga: ' + pelatihan.harga + ')</li>';
-                });
-                pelatihanHtml += '</ul>';
-                $('#pelatihan-data').html(pelatihanHtml);
-            },
-            error: function(err) {
-                console.error('Error fetching pelatihan data:', err);
-                $('#pelatihan-data').html('<p class="text-danger">Error fetching data</p>');
-            }
-        });
-    });
-</script>
-@endsection
-@section('scripts')
-<script>
-document.addEventListener('searchResults', function(e) {
-    const results = e.detail.results;
-    const tbody = document.querySelector('tbody');
 
-    if (results.length > 0) {
-        tbody.innerHTML = results.map(item => `
-            <tr>
-                <td>${item.id_transaksi}</td>
-                <td>${item.id_produk}</td>
-                <td>${item.nama_produk}</td>
-                <td>${item.deskripsi_produk}</td>
-                <td>
-                    <img src="${item.gambar_produk}" alt="${item.nama_produk}" class="table-image">
-                </td>
-                <td>${item.jumlah_produk}</td>
-                <td>Rp ${item.harga}</td>
-                <td>
-                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#detail-${item.id_transaksi}">
-                        <i class="fa fa-eye"></i> Detail
-                    </button>
-                </td>
-            </tr>
-        `).join('');
-    } else {
-        tbody.innerHTML = `
-            <tr>
-                <td colspan="8" class="text-center">No results found</td>
-            </tr>
-        `;
-    }
-});
-</script>
 @endsection

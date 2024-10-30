@@ -6,6 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>{{ $title }}</title>
+  <link rel="icon" href="{{ asset('/images/iquarium.png') }}" type="image/png">
   <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css" />
   <link rel="stylesheet" href="/node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css" />
   <link rel="stylesheet" href="/css/style.css" />
@@ -47,6 +48,37 @@
   <script src="/js/misc.js"></script>
   <script src="/js/chart.js"></script>
   <script src="/js/maps.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+      $(document).ready(function() {
+          $('#pelatihan-form').on('submit', function(e) {
+              e.preventDefault(); // Prevent the default form submission
+
+              $.ajax({
+                  url: $(this).attr('action'),
+                  method: 'POST',
+                  data: $(this).serialize(),
+                  success: function(response) {
+                      // Clear the form
+                      $('#pelatihan-form')[0].reset();
+
+                      // Display success message
+                      $('#ajax-notification').html('<div class="alert alert-success">' + response.message + '</div>');
+                  },
+                  error: function(xhr) {
+                      // Display error messages
+                      var errors = xhr.responseJSON.errors;
+                      var errorHtml = '<div class="alert alert-danger"><ul>';
+                      $.each(errors, function(key, value) {
+                          errorHtml += '<li>' + value[0] + '</li>'; // Display the first error message for each field
+                      });
+                      errorHtml += '</ul></div>';
+                      $('#ajax-notification').html(errorHtml);
+                  }
+              });
+          });
+      });
+  </script>
   @yield('scripts')
 </body>
 

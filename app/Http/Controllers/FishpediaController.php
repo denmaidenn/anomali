@@ -13,7 +13,7 @@ class FishpediaController extends Controller
         return view('fishpedia.index', ['title' => 'Fishpedia', 'fish'=> $fish]);
     }
 
-    public function tambahikan_page() {
+    public function create() {
         return view('fishpedia.tambahikan', ['title'=> 'Tambah Ikan']);
     }
 

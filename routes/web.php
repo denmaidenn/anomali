@@ -52,21 +52,27 @@ Route::group(['middleware' => ['auth']], function () {
     //untuk menampilkan view pelatihan
     Route::get('/pelatihan', [PelatihanController::class,'index']);
     Route::get('/pelatihan/create', [PelatihanController::class, 'create'])->name('pelatihan.create');
-    Route::post('/pelatihan', [PelatihanController::class, 'store'])->name('pelatihan.store');
-    Route::resource('pelatihan', PelatihanController::class);
+    Route::post('/pelatihan/store', [PelatihanController::class, 'store'])->name('pelatihan.store');
     Route::get('/pelatihan/{id}/edit', [PelatihanController::class, 'edit'])->name('pelatihan.edit');
+    Route::delete('/pelatiahan/{id}/delete', [PelatihanController::class,'destroy'])->name('pelatihan.destroy');
 
 
     //untuk menampilkan view fishpedia
     Route::get('/fishpedia', [FishpediaController::class,'index']);
-    Route::get('/tambahikan', [FishpediaController::class,'tambahikan_page']);
+    Route::get('/fishpedia/create', [FishpediaController::class,'create'])->name('fishpedia.create');
     Route::post('/fishpedia/store', [FishpediaController::class, 'store'])->name('fish.store');
     Route::get('/fishpedia/manage/{id}', [FishpediaController::class, 'edit'])->name('manageikan');
     Route::put('/fishpedia/update/{id}', [FishpediaController::class, 'update'])->name('updateikan');
     Route::delete('/fishpedia/delete/{id}', [FishpediaController::class, 'destroy'])->name('deleteikan');
 
     //untuk menampilkan view fishmart
-    Route::get('/fishmart', [FishmartController::class,'index']);
+    Route::get('/fishmart', [FishmartController::class,'index'])->name('fishmart.index');
+    Route::get('/fishmart/create', [FishmartController::class,'create'])->name('fishmart.create');
+    Route::post('/fishmart/store', [FishmartController::class,'store'])->name('fishmart.store');
+    Route::get('/fishmart/{id}/edit', [FishmartController::class,'edit'])->name('fishmart.edit');
+    Route::put('/fishmart/{id}/update', [FishmartController::class,'update'])->name('fishmart.update');
+    Route::delete('/fishmart/{id}/delete', [FishmartController::class,'destroy'])->name('fishmart.destroy');
+    Route::get('/fishmart/{id}/show', [FishmartController::class,'show'])->name('fishmart.show');
     });
 
     Route::get('/search', [SearchController::class, 'search'])->name('search');
