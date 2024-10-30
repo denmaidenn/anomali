@@ -7,7 +7,7 @@
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title mb-4">Form User Data</h5>
-                  <form class="forms-sample" method="POST" action="/formuser">
+                  <form class="forms-sample" method="POST" action="{{ route('user.store')}}">
                     @csrf
                     <div class="form-group">
                       <label for="exampleInputName1">Nama</label>

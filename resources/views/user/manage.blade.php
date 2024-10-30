@@ -7,7 +7,7 @@
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title mb-4">Edit User Data</h5>
-                  <form class="forms-sample" method="POST" action="{{ route('updateuser', $mahasiswa->id) }}">
+                  <form class="forms-sample" method="POST" action="{{ route('user.update', $mahasiswa->id) }}">
                     @csrf
                     @method('PUT') <!-- Menggunakan PUT untuk update data -->
 
@@ -52,7 +52,7 @@
 
                     <div class="form-group">
                       <button type="submit" class="btn btn-primary">Update</button>
-                      <a href="/userpages" class="btn btn-secondary">Batal</a>
+                      <a href="{{ route('user.index') }}" class="btn btn-secondary">Batal</a>
                     </div>
 
                   </form>

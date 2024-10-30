@@ -15,14 +15,14 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
 
         
         $this->call([
-             FishSeeder::class,
+             FishpediaSeeder::class,
              PelatihanSeeder::class,
              ProdukSeeder::class,
             // Seeder lain jika ada

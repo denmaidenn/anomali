@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class FormController extends Controller
 {
-    public function submitForm(Request $request)
+    public function store(Request $request)
     {
         // Validate the request (optional but recommended)
         $validatedData = $request->validate([
@@ -30,7 +30,7 @@ class FormController extends Controller
 
         // Pass the submitted data to the view
 
-        return redirect('/userpages');
+        return redirect('user.index');
     }
 
     public function update(Request $request, $id) {
@@ -47,7 +47,7 @@ class FormController extends Controller
         $mahasiswa = FormUser::find($id);
         $mahasiswa->update($request->all());
     
-        return redirect()->route('userpages')->with('success', 'Data mahasiswa berhasil diperbarui!');
+        return redirect()->route('user.index')->with('success', 'Data mahasiswa berhasil diperbarui!');
     }
 
     public function delete($id)
@@ -56,9 +56,9 @@ class FormController extends Controller
 
         if ($mahasiswa) {
             $mahasiswa->delete();
-            return redirect('/userpages')->with('success','data berhasil dihapus.');
+            return redirect('user.index')->with('success','data berhasil dihapus.');
         } else {
-            return redirect('/userpages')->with('error', 'Data tidak ditemukan.');
+            return redirect('user.index')->with('error', 'Data tidak ditemukan.');
         }
         
     }

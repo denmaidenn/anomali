@@ -27,14 +27,14 @@
               <div class="collapse" id="userdata">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item {{ Request::is('userpages') ? 'active':'' }}">
-                    <a class="nav-link" href="/userpages">
+                    <a class="nav-link" href=" {{ route('user.index') }}">
                       <img src="{{ asset('images/icons/005-forms.png') }}" alt="">
                       View Data
                     </a>
                   </li>
 
                   <li class="nav-item {{ Request::is('formuser') ? 'active':'' }}">
-                    <a class="nav-link" href="/formuser">
+                    <a class="nav-link" href="{{ route('user.create') }}">
                       <img src="{{ asset('images/icons/005-forms.png') }}" alt="">
                       Add Data
                     </a>
@@ -43,21 +43,21 @@
               </div>
             </li>
            <li class="nav-item {{ Request::is('pelatihan') ? 'active':'' }}">
-              <a class="nav-link" href="/pelatihan">
+              <a class="nav-link" href="{{ route('pelatihan.index') }}">
               <img src="{{ asset('images/pelatihan.png') }}" alt="" >
                 <span class="menu-title">Pelatihan</span>
               </a>
             </li>
 
             <li class="nav-item {{ Request::is('fishpedia') ? 'active':'' }}">
-              <a class="nav-link" href="/fishpedia">
+              <a class="nav-link" href="{{ route('fishpedia.index') }}">
               <img src="{{ asset('images/lucide_fish.png') }}" alt=""  >
                 <span class="menu-title">Fishpedia</span>
               </a>
             </li>
 
             <li class="nav-item {{ Request::is('fishmart') ? 'active':'' }}">
-              <a class="nav-link" href="/fishmart">
+              <a class="nav-link" href="{{ route('fishmart.index') }}">
               <img src="{{ asset('images/logo_market.png') }}" alt="">
                 <span class="menu-title">FishMart</span>
               </a>
