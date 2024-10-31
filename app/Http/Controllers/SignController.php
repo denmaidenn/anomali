@@ -38,13 +38,12 @@ class SignController extends Controller
             'password' => $request->input('password'),  // Otomatis akan di-hash oleh mutator di model User
         ]);
 
-        event(new Registered($user));
 
         // Login user setelah registrasi (opsional)
         Auth::login($user);
 
         // Redirect ke halaman dashboard atau halaman lain
-        return redirect()->route('dashboard')->with('success_login', 'Registrasi berhasil!');
+        return redirect()->route('login')->with('success_login', 'Registrasi berhasil!');
     }
 
     public function in(Request $request) {

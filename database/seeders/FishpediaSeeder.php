@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Fish;
 
-class FishSeeder extends Seeder
+class FishpediaSeeder extends Seeder
 {
     public function run()
     {

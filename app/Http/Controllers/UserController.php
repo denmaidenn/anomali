@@ -16,11 +16,11 @@ class UserController extends Controller
         return view('user.index', ['title' => 'Data User', 'data'=> $data,]);
     }
     
-    public function formuser_page() {
-        return view('user.form', ['title' => 'Form Tambah User']);
+    public function create() {
+        return view('user.create', ['title' => 'Form Tambah User']);
     }
 
-    public function manageuser_page($id) {
+    public function edit($id) {
         $mahasiswa = FormUser::findOrfail($id);
         return view('user.manage', ['title'=> 'Edit User', 'mahasiswa'=> $mahasiswa]);
     }

@@ -13,7 +13,7 @@ class FishpediaController extends Controller
         return view('fishpedia.index', ['title' => 'Fishpedia', 'fish'=> $fish]);
     }
 
-    public function tambahikan_page() {
+    public function create() {
         return view('fishpedia.tambahikan', ['title'=> 'Tambah Ikan']);
     }
 
@@ -51,7 +51,7 @@ class FishpediaController extends Controller
 
     public function edit($id) {
         $fish = Fish::findOrFail($id);  // Mencari ikan berdasarkan ID
-        return view('fishpedia.edit_fish', ['title' => 'Edit Ikan', 'fish' => $fish]);
+        return view('fishpedia.edit', ['title' => 'Edit Ikan', 'fish' => $fish]);
     }
 
 

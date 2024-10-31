@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="content-wrapper">
-    <h3 class="page-heading mb-4">Tambah Pelatihan Baru</h3>
+    <h3 class="page-heading mb-4" style="font-weight: bold">Pelatihan</h3>
     <div class="row mb-2">
         <div class="col-lg-12">
             <div class="card">
@@ -25,9 +25,15 @@
                     <form id="pelatihan-form" action="{{ route('pelatihan.store') }}" method="POST">
                         @csrf
 
+                        <!-- Dropdown untuk memilih User ID -->
                         <div class="form-group">
-                            <label for="user_id">User ID</label>
-                            <input type="number" class="form-control" id="user_id" name="user_id" placeholder="Masukkan ID user" required>
+                            <label for="id_user">User</label>
+                            <select class="form-control" id="id_user" name="id_user" required>
+                                <option value="" disabled selected>Pilih User</option>
+                                @foreach($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -36,8 +42,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="deskripsi_pelatihan">Deskripsi Pelatihan</label>
-                            <textarea class="form-control" id="deskripsi_pelatihan" name="deskripsi_pelatihan" rows="4" placeholder="Masukkan deskripsi pelatihan" required></textarea>
+                            <label for="deskripsi">Deskripsi Pelatihan</label>
+                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" placeholder="Masukkan deskripsi pelatihan" required></textarea>
                         </div>
 
                         <div class="form-group">
@@ -49,43 +55,9 @@
                         <a href="{{ route('pelatihan.index') }}" class="btn btn-secondary">Kembali</a>
                     </form>
 
-                    <!-- Area untuk menampilkan notifikasi setelah AJAX submit -->
-                    <div id="ajax-notification" class="mt-3"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#pelatihan-form').on('submit', function(e) {
-            e.preventDefault(); // Prevent the default form submission
-
-            $.ajax({
-                url: $(this).attr('action'),
-                method: 'POST',
-                data: $(this).serialize(),
-                success: function(response) {
-                    // Clear the form
-                    $('#pelatihan-form')[0].reset();
-
-                    // Display success message
-                    $('#ajax-notification').html('<div class="alert alert-success">' + response.message + '</div>');
-                },
-                error: function(xhr) {
-                    // Display error messages
-                    var errors = xhr.responseJSON.errors;
-                    var errorHtml = '<div class="alert alert-danger"><ul>';
-                    $.each(errors, function(key, value) {
-                        errorHtml += '<li>' + value[0] + '</li>'; // Display the first error message for each field
-                    });
-                    errorHtml += '</ul></div>';
-                    $('#ajax-notification').html(errorHtml);
-                }
-            });
-        });
-    });
-</script>
 @endsection
