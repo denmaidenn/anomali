@@ -20,12 +20,13 @@
     <!-- partial:partials/_navbar.html -->
     @include('layout.navbar')
         <!-- partial:partials/_sidebar.html -->
-        @include('layout.sidebar')
+
 
     <!-- partial -->
     <div class="container-fluid">
       <div class="row row-offcanvas row-offcanvas-right">
 
+        @include('layout.sidebar')
         <!-- partial -->
         @yield('content')
         <!-- partial:partials/_footer.html -->
