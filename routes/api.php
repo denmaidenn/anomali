@@ -1,19 +1,28 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FishpediaController;
+use App\Http\Controllers\API\AuthControllerAPI;
+use App\Http\Controllers\API\PelatihanControllerAPI;
 
 // Route untuk menampilkan semua data ikan
-Route::get('/fishes', [FishpediaController::class, 'index'])->name('fish.index');
-
-// Route untuk menyimpan data ikan
-Route::post('/fishes', [FishpediaController::class, 'store'])->name('fish.store');
-
-// Route untuk menampilkan detail data ikan
 
 
-// Route untuk mengupdate data ikan
-Route::put('/fishes/{id}', [FishpediaController::class, 'update'])->name('fish.update');
+Route::group(['middleware' => ['auth']], function () {
 
-// Route untuk menghapus data ikan
-Route::delete('/fishes/{id}', [FishpediaController::class, 'destroy'])->name('fish.destroy');
+   
+        Route::get('/', [AuthControllerAPI::class, 'index']);
+        Route::post('/create', [AuthControllerAPI::class,'store']);
+        Route::get('/{id}', [AuthControllerAPI::class, 'show']);
+        Route::put('/{id}', [AuthControllerAPI::class,'update']);
+        Route::delete('/{id}', [AuthControllerAPI::class,'delete']);
+   
+
+    Route::prefix('pelatihan')->group(function () {
+        Route::get('/', [PelatihanControllerAPI::class, 'index']);
+        Route::post('/create', [PelatihanControllerAPI::class,'store']);
+        Route::get('/{id}', [PelatihanControllerAPI::class, 'show']);
+    });
+});
+
+
+    

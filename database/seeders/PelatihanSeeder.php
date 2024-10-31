@@ -22,7 +22,7 @@ class PelatihanSeeder extends Seeder
         ]);
 
         Pelatihan::create([
-            'id_user' => 3, // Pastikan id_user ini ada di tabel User
+            'id_user' => 2, // Pastikan id_user ini ada di tabel User
             'video_pelatihan' => 'video_link_2.mp4',
             'deskripsi' => 'Pelatihan lanjut pemrograman mobile.',
             'harga' => 75000,
