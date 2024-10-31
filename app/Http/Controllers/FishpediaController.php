@@ -32,7 +32,7 @@ class FishpediaController extends Controller
             'lighting' => 'required',
         ]);
 
-        $fish = Fish::create([
+        Fish::create([
             'name' => $request->name,
             'scientific_name' => $request->scientific_name,
             'category' => $request->category,
@@ -46,9 +46,8 @@ class FishpediaController extends Controller
             'lighting' => $request->lighting,
         ]);
 
-        return response()->json(['message' => 'Data ikan berhasil ditambahkan!', 'fish' => $fish]);
+        return redirect()->route('fishpedia.index')->with('success', 'Data telah berhasil ditambah!');
     }
-
     public function edit($id) {
         $fish = Fish::findOrFail($id);  // Mencari ikan berdasarkan ID
         return view('fishpedia.edit', ['title' => 'Edit Ikan', 'fish' => $fish]);

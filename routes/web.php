@@ -41,12 +41,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', [UserController::class,'index'])->name('user.index');
         Route::get('/create', [UserController::class,'create'])->name('user.create');
         Route::post('/store', [FormController::class,'store'])->name('user.store');
-    
-        //Untuk edit Form data User
         Route::get('/{id}/edituser', [UserController::class,'edit'])->name('user.edit');
         Route::put('/{id}/manageuser', [FormController::class,'update'])->name('user.update');
-    
-        //Untuk delete data yang ada di form
         Route::delete('/{id}/deleteuser', [FormController::class,'delete'])->name('user.delete');
     
     });

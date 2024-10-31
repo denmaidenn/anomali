@@ -22,19 +22,22 @@ class PelatihanController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'id_user' => 'required|exists:users,id',
             'video_pelatihan' => 'required|string',
             'deskripsi' => 'required|string',
             'harga' => 'required|numeric',
         ]);
+            Pelatihan::create([
+                'id_user' => $validatedData['id_user'],
+                'video_pelatihan'=> $validatedData['video_pelatihan'],
+                'deskripsi' => $validatedData['deskripsi'],
+                'harga'=> $validatedData['harga'],
+            ]);
 
-        try {
-            Pelatihan::create($request->all());
+            
             return redirect()->route('pelatihan.index')->with('success', 'Pelatihan berhasil ditambahkan');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
-        }    
+           
     }
 
     public function edit($id)

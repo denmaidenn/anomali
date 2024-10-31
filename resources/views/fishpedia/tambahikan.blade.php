@@ -22,7 +22,7 @@
                     @endif
 
                     <!-- Form untuk menambah ikan baru -->
-                    <form id="fish-form" action="{{ route('fish.store') }}" method="POST">
+                    <form id="fish-form" action="{{ route('fishpedia.store') }}" method="POST">
                         @csrf
 
                         <div class="form-group">
@@ -90,39 +90,4 @@
         </div>
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#fish-form').on('submit', function(e) {
-            e.preventDefault(); // Prevent the default form submission
-
-            $.ajax({
-                url: $(this).attr('action'),
-                method: 'POST',
-                data: $(this).serialize(),
-                success: function(response) {
-                    // Clear the form
-                    $('#fish-form')[0].reset();
-
-                    // Display success message
-                    $('#ajax-notification').html('<div class="alert alert-success">' + response.message + '</div>');
-
-                    // Optionally, you can trigger a function to refresh the fish list
-                    // fetchFishData(); // Uncomment this line if you implement the fetchFishData function
-                },
-                error: function(xhr) {
-                    // Display error messages
-                    var errors = xhr.responseJSON.errors;
-                    var errorHtml = '<div class="alert alert-danger"><ul>';
-                    $.each(errors, function(key, value) {
-                        errorHtml += '<li>' + value[0] + '</li>'; // Display the first error message for each field
-                    });
-                    errorHtml += '</ul></div>';
-                    $('#ajax-notification').html(errorHtml);
-                }
-            });
-        });
-    });
-</script>
 @endsection

@@ -30,7 +30,7 @@ class FormController extends Controller
 
         // Pass the submitted data to the view
 
-        return redirect('user.index');
+        return redirect()->route('user.index')->with('success', 'Data telah berhasil ditambah!');
     }
 
     public function update(Request $request, $id) {

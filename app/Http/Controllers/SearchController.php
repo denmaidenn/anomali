@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Fish;
-use App\Models\Product;
-use App\Models\Training;
+use App\Models\Produk;
+use App\Models\Pelatihan;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -35,13 +35,13 @@ class SearchController extends Controller
                 break;
 
             case 'fishmart.index':
-                $results = Product::where('nama_produk', 'LIKE', "%{$query}%")
+                $results = Produk::where('nama_produk', 'LIKE', "%{$query}%")
                     ->orWhere('deskripsi_produk', 'LIKE', "%{$query}%")
                     ->get();
                 break;
 
             case 'training.index':
-                $results = Training::where('title', 'LIKE', "%{$query}%")
+                $results = Pelatihan::where('title', 'LIKE', "%{$query}%")
                     ->orWhere('description', 'LIKE', "%{$query}%")
                     ->get();
                 break;
