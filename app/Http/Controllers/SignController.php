@@ -43,28 +43,40 @@ class SignController extends Controller
         Auth::login($user);
 
         // Redirect ke halaman dashboard atau halaman lain
-        return redirect()->route('login')->with('success_login', 'Registrasi berhasil!');
+        return redirect()->route('login')->with('success', 'Registrasi berhasil!');
     }
 
     public function in(Request $request) {
+        // Validasi input
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
+    
+        // Mencari pengguna berdasarkan email
         $user = User::where('email', $request->input('email'))->first();
-
+    
+        // Memeriksa apakah pengguna ditemukan dan password cocok
         if ($user && Hash::check($request->input('password'), $user->password)) {
-            Auth::login($user);  // Login the user
-            return redirect('dashboard')->with('success_login', 'Login berhasil!');
+            Auth::login($user);  // Login pengguna
+    
+            // Membuat token setelah login
+            $token = $user->createToken('token_name')->plainTextToken;
+    
+            // Redirect ke dashboard dengan token untuk digunakan di Postman
+            return redirect('dashboard')->with([
+                'success_login' => 'Login berhasil!',
+                'token' => $token // Anda bisa menampung token di session atau mengembalikannya ke view
+            ]);
         } else {
-            return back()->with('error_login', 'Email atau password salah.')->withInput();
+            return back()->with('error', 'Email atau password salah.')->withInput();
         }
-
     }
 
     public function logout(Request $request) {
-        Auth::logout();
+        if ($request->user()) {
+            $request->user()->tokens()->delete();
+        }
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/')->with('success', 'Logout berhasil!');

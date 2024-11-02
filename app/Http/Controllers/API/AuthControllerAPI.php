@@ -29,31 +29,24 @@ class AuthControllerAPI extends Controller
 
     public function store(Request $request)
     {
-        // Validasi input
-        $validator = Validator::make($request->all(), [
+        // Validasi data yang masuk
+        $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
         ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        // Membuat data admin
-        $admin = User::create([
+    
+        // Membuat pengguna baru
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password), // Hashing is optional since `password` will be auto-hashed
+            'password' => bcrypt($request->password), // Hash password
         ]);
-
+    
         return response()->json([
             'success' => true,
-            'message' => 'Admin created successfully',
-            'data' => $admin
+            'message' => 'User created successfully',
+            'data' => $user
         ], 201);
     }
 

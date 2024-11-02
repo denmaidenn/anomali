@@ -20,9 +20,9 @@
           <div class="card col-lg-4 mx-auto">
             <div class="card-body px-5 py-5">
 
-              @if (session('success_login'))
+              @if (session('success'))
                     <div class="alert alert-success">
-                        {{ session('success_login') }}
+                        {{ session('success') }}
                     </div>
               @endif
               @if (session('error'))

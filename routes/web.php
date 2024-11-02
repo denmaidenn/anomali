@@ -25,7 +25,7 @@ Route::get('/', function () {
 
 
 
-Route::group(['middleware' => ['auth']], function () {
+Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 
@@ -91,7 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 
-    });
+});
 
     Route::get('/search', [SearchController::class, 'search'])->name('search');
 
