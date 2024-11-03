@@ -21,8 +21,8 @@ class UserController extends Controller
     }
 
     public function edit($id) {
-        $mahasiswa = FormUser::findOrfail($id);
-        return view('user.manage', ['title'=> 'Edit User', 'mahasiswa'=> $mahasiswa]);
+        $formUser = FormUser::findOrfail($id);
+        return view('user.manage', ['title'=> 'Edit User', 'formUser'=> $formUser]);
     }
 
     

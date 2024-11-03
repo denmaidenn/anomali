@@ -10,13 +10,17 @@ class FormUser extends Model
     use HasFactory;
 
     protected $fillable = [
+        'no_telp',
         'name',
         'email',
-        'prodi',
-        'kelas',
-        'jenis_kelamin',
+        'username',
+        'password',
     ];
     
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 
 
 }

@@ -12,53 +12,54 @@ class FormController extends Controller
     {
         // Validate the request (optional but recommended)
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'prodi' => 'required|string',
-            'kelas' => 'required|string',
-            'jenis_kelamin' => 'required|string',
+            'no_telp' => 'required|string|unique:form_users',
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:form_users',
+            'username' => 'required|string|unique:form_users',
+            'password' => 'required|string|min:8',
         ]);
-
+    
+        // Create a new FormUser instance and save it to the database
         FormUser::create([
-            'name'=> $validatedData['name'],
-            'email'=> $validatedData['email'],
-            'prodi'=> $validatedData['prodi'],
-            'kelas' => $validatedData['kelas'],
-            'jenis_kelamin' => $validatedData['jenis_kelamin'],
-
+            'no_telp' => $request->no_telp,
+            'name' => $request->name,
+            'email' => $request->email,
+            'username' => $request->username,
+            'password' => bcrypt($request->password), // Enkripsi password
         ]);
-
-        // Pass the submitted data to the view
-
+    
         return redirect()->route('user.index')->with('success', 'Data telah berhasil ditambah!');
     }
+    
 
     public function update(Request $request, $id) {
         // Validasi input
+        $formUser = FormUser::find($id);
+    
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'prodi' => 'required|string|max:255',
-            'kelas' => 'required|string|max:255',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'no_telp' => 'required|string|unique:form_users,no_telp,' . $formUser->id,
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:form_users,email,' . $formUser->id,
+            'username' => 'required|string|unique:form_users,username,' . $formUser->id,
+            'password' => 'nullable|string|min:8', // Password tidak wajib diisi saat update
         ]);
     
-        // Cari mahasiswa berdasarkan ID
-        $mahasiswa = FormUser::find($id);
-        $mahasiswa->update($request->all());
+        // Update data form user
+        $formUser->update($request->all());
     
-        return redirect()->route('user.index')->with('success', 'Data mahasiswa berhasil diperbarui!');
+        return redirect()->route('user.index')->with('success', 'Data pengguna berhasil diperbarui!');
     }
+     
 
     public function delete($id)
     {
-        $mahasiswa = FormUser::find($id);
+        $formUser = FormUser::find($id);
 
-        if ($mahasiswa) {
-            $mahasiswa->delete();
-            return redirect('user.index')->with('success','data berhasil dihapus.');
+        if ($formUser) {
+            $formUser->delete();
+            return redirect()->route('user.index')->with('success','data berhasil dihapus.');
         } else {
-            return redirect('user.index')->with('error', 'Data tidak ditemukan.');
+            return redirect()->route('user.index')->with('error', 'Data tidak ditemukan.');
         }
         
     }
