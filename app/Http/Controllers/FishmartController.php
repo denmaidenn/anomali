@@ -32,7 +32,13 @@ class FishmartController extends Controller
         if ($request->hasFile('gambar_produk')) {
             $gambarPath = $request->file('gambar_produk')->store('produk', 'public');
         }
-        Produk::create($request->all());
+        Produk::create([
+            'nama_produk' => $request->nama_produk,
+            'deskripsi_produk'=> $request->deskripsi_produk,
+            'stok' => $request->stok,
+            'harga' => $request->harga,
+            'gambar_produk' => $gambarPath,
+        ]);
 
         return redirect()->route('fishmart.index')->with('success', 'Produk berhasil ditambahkan.');
     }

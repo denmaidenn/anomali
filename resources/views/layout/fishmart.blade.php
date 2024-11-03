@@ -44,7 +44,7 @@
                                         <td>Rp {{ number_format($item->harga, 2) }}</td>
                                         <td>
                                             @if($item->gambar_produk)
-                                                <img src="{{ asset('storage/' . $item->gambar_produk) }}" alt="Gambar Produk" width="50">
+                                                <img src="{{ asset('storage/' . $item->gambar_produk) }}" alt="Gambar Produk" width="50px" height="auto">
                                             @else
                                                 Tidak ada gambar
                                             @endif
