@@ -7,13 +7,41 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AuthControllerAPI extends Controller
 {
     /**
      * Membuat akun admin baru.
      */
-
+    public function in(Request $request) {
+        // Validasi input
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+    
+        // Mencari pengguna berdasarkan email
+        $user = User::where('email', $request->input('email'))->first();
+    
+        // Memeriksa apakah pengguna ditemukan dan password cocok
+        if ($user && Hash::check($request->input('password'), $user->password)) {
+            // Login pengguna
+            Auth::login($user);
+    
+            // Membuat token setelah login
+            $token = $user->createToken('token_name')->plainTextToken;
+    
+            // Kirim respons JSON dengan token
+            return response()->json([
+                'message' => 'Login berhasil!',
+                'token' => $token,
+            ]);
+        } else {
+            return response()->json(['message' => 'Email atau password salah.'], 401);
+        }
+    }
+    
 
     public function index()
     {
@@ -72,4 +100,16 @@ class AuthControllerAPI extends Controller
             'data' => $admin
         ], 200);
     }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $user->update($request->only(['name', 'email']));
+
+        return response()->json($user, 200);
+    }   
 }
