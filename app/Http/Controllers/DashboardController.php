@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FormUser;
-use App\Models\Fish;
+use App\Models\Fishpedia;
 use App\Models\Pelatihan;
 use App\Models\Produk;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class DashboardController extends Controller
 
     public function index(Request $request) {
         $data = FormUser::all();
-        $fish = Fish::all();
+        $fish = Fishpedia::all();
         $pelatihan = Pelatihan::all();
         $produk = Produk::all();
 

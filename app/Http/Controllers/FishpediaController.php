@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Fish;
+use App\Models\Fishpedia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FishpediaController extends Controller
 {
     public function index()
     {
-        $fish = Fish::all();
+        $fish = Fishpedia::all();
         return view('fishpedia.index', ['title' => 'Fishpedia', 'fish' => $fish]);
     }
 
@@ -20,28 +21,39 @@ class FishpediaController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi input
         $request->validate([
             'nama' => 'required|string|max:255',
-            'jenis' => 'required|string|max:255',
             'asal' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
+            'jenis' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
             'harga_pasar' => 'required|numeric',
+            'gambar_ikan' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        Fish::create([
+        // Menyimpan gambar ke storage jika ada
+        $gambarPath = null;
+        if ($request->hasFile('gambar_ikan')) {
+            $gambarPath = $request->file('gambar_ikan')->store('fishpedia', 'public');
+        }
+
+        // Membuat entri baru di database
+        Fishpedia::create([
             'nama' => $request->nama,
-            'jenis' => $request->jenis,
             'asal' => $request->asal,
+            'jenis' => $request->jenis,
             'deskripsi' => $request->deskripsi,
             'harga_pasar' => $request->harga_pasar,
+            'gambar_ikan' => $gambarPath, // Menyimpan path gambar
         ]);
 
-        return redirect()->route('fishpedia.index')->with('success', 'Data telah berhasil ditambah!');
+        // Redirect dengan pesan sukses
+        return redirect()->route('fishpedia.index')->with('success', 'Data ikan berhasil ditambahkan.');
     }
 
     public function edit($id)
     {
-        $fish = Fish::findOrFail($id);
+        $fish = Fishpedia::findOrFail($id);
         return view('fishpedia.edit', ['title' => 'Edit Ikan', 'fish' => $fish]);
     }
 
@@ -51,25 +63,41 @@ class FishpediaController extends Controller
             'nama' => 'required|string|max:255',
             'jenis' => 'required|string|max:255',
             'asal' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
+            'deskripsi' => 'nullable|string',
             'harga_pasar' => 'required|numeric',
+            'gambar_ikan' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
         ]);
-
-        $fish = Fish::findOrFail($id);
-        $fish->update([
-            'nama' => $request->nama,
-            'jenis' => $request->jenis,
-            'asal' => $request->asal,
-            'deskripsi' => $request->deskripsi,
-            'harga_pasar' => $request->harga_pasar,
-        ]);
-
+    
+        $fish = Fishpedia::findOrFail($id);
+    
+        // Simpan gambar baru jika diunggah
+        if ($request->hasFile('gambar_ikan')) {
+            // Hapus gambar lama dari storage jika ada
+            if ($fish->gambar_ikan) {
+                Storage::disk('public')->delete($fish->gambar_ikan);
+            }
+    
+            // Simpan gambar baru
+            $gambarPath = $request->file('gambar_ikan')->store('fishpedia', 'public');
+            $fish->gambar_ikan = $gambarPath; // Update path gambar
+        }
+    
+        // Update data lainnya
+        $fish->nama = $request->nama;
+        $fish->jenis = $request->jenis;
+        $fish->asal = $request->asal;
+        $fish->deskripsi = $request->deskripsi;
+        $fish->harga_pasar = $request->harga_pasar;
+    
+        $fish->save(); // Simpan perubahan
+    
         return redirect()->route('fishpedia.index')->with('success', 'Data ikan berhasil diperbarui!');
     }
+    
 
     public function destroy($id)
     {
-        $fish = Fish::findOrFail($id);
+        $fish = Fishpedia::findOrFail($id);
         $fish->delete();
         return redirect()->route('fishpedia.index')->with('success', 'Data ikan berhasil dihapus!');
     }

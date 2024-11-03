@@ -3,24 +3,19 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Fish;
+use App\Models\Fishpedia;
 
 class FishpediaSeeder extends Seeder
 {
     public function run()
     {
-        Fish::create([
-            'name' => 'Koi Slayer',
-            'scientific_name' => 'Cyprinus carpio var.',
-            'category' => 'Ikan air tawar',
-            'origin' => 'Jepang',
-            'size' => '30-40cm',
-            'characteristics' => 'Sirip panjang, warna cerah',
-            'aquarium_size' => 1000,   
-            'temperature' => 18,    
-            'ph' => 7,              
-            'salinity' => 3,  
-            'lighting' => 'Kuat/Sedang',
+        $ikan = Fishpedia::create([
+            'nama' => 'Ikan Koi',
+            'asal' => 'Jepang',
+            'jenis' => 'Hias',
+            'deskripsi' => 'Ikan hias yang terkenal dengan warna-warni yang indah.',
+            'harga_pasar' => 150000,
+            'gambar_ikan' => 'path/to/image.jpg',
         ]);
     }
 }

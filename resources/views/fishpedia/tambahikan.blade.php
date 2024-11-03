@@ -22,67 +22,35 @@
                     @endif
 
                     <!-- Form untuk menambah ikan baru -->
-                    <form id="fish-form" action="{{ route('fishpedia.store') }}" method="POST">
+                    <form method="POST" action="{{ route('fishpedia.store') }}" enctype="multipart/form-data">
                         @csrf
-
                         <div class="form-group">
-                            <label for="name">Nama Ikan</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan nama ikan" required>
+                            <label for="nama">Nama</label>
+                            <input name="nama" type="text" class="form-control" id="nama" required>
                         </div>
-
                         <div class="form-group">
-                            <label for="scientific_name">Nama Ilmiah</label>
-                            <input type="text" class="form-control" id="scientific_name" name="scientific_name" placeholder="Masukkan nama ilmiah ikan" required>
+                            <label for="asal">Asal</label>
+                            <input name="asal" type="text" class="form-control" id="asal" required>
                         </div>
-
                         <div class="form-group">
-                            <label for="category">Kategori</label>
-                            <input type="text" class="form-control" id="category" name="category" placeholder="Masukkan kategori ikan" required>
+                            <label for="jenis">Jenis</label>
+                            <input name="jenis" type="text" class="form-control" id="jenis" required>
                         </div>
-
                         <div class="form-group">
-                            <label for="origin">Asal</label>
-                            <input type="text" class="form-control" id="origin" name="origin" placeholder="Masukkan asal ikan" required>
+                            <label for="deskripsi">Deskripsi</label>
+                            <textarea name="deskripsi" class="form-control" id="deskripsi"></textarea>
                         </div>
-
                         <div class="form-group">
-                            <label for="size">Ukuran</label>
-                            <input type="text" class="form-control" id="size" name="size" placeholder="Masukkan ukuran ikan" required>
+                            <label for="harga_pasar">Harga Pasar</label>
+                            <input name="harga_pasar" type="number" class="form-control" id="harga_pasar" required>
                         </div>
-
                         <div class="form-group">
-                            <label for="characteristics">Karakteristik</label>
-                            <textarea class="form-control" id="characteristics" name="characteristics" rows="4" placeholder="Masukkan karakteristik ikan" required></textarea>
+                            <label for="gambar_ikan">Gambar Ikan</label>
+                            <input name="gambar_ikan" type="file" class="form-control" id="gambar_ikan" accept="image/*">
                         </div>
-
-                        <div class="form-group">
-                            <label for="aquarium_size">Akuarium</label>
-                            <input type="text" class="form-control" id="aquarium_size" name="aquarium_size" placeholder="Masukkan ukuran akuarium" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="temperature">Suhu Ideal</label>
-                            <input type="text" class="form-control" id="temperature" name="temperature" placeholder="Masukkan suhu ideal" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="ph">pH Air</label>
-                            <input type="text" class="form-control" id="ph" name="ph" placeholder="Masukkan pH air" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="salinity">Salinitas</label>
-                            <input type="text" class="form-control" id="salinity" name="salinity" placeholder="Masukkan salinitas" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="lighting">Pencahayaan</label>
-                            <input type="text" class="form-control" id="lighting" name="lighting" placeholder="Masukkan pencahayaan" required>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a href="/fishpedia" class="btn btn-secondary">Kembali</a>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
+
                     <!-- Area untuk menampilkan notifikasi setelah AJAX submit -->
                     <div id="ajax-notification" class="mt-3"></div>
                 </div>

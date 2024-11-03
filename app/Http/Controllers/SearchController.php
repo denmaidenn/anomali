@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Fish;
+use App\Models\Fishpedia;
 use App\Models\Produk;
 use App\Models\Pelatihan;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class SearchController extends Controller
                 break;
 
             case 'fishpedia.index':
-                $results = Fish::where('name', 'LIKE', "%{$query}%")
+                $results = Fishpedia::where('name', 'LIKE', "%{$query}%")
                     ->orWhere('scientific_name', 'LIKE', "%{$query}%")
                     ->orWhere('category', 'LIKE', "%{$query}%")
                     ->get();
