@@ -14030,6 +14030,7 @@ input {
     font-size: 0.875rem;
 }
 
+<<<<<<< Updated upstream
 
 /* Loading Animation */
 .loader-wrapper {
@@ -14068,3 +14069,109 @@ input {
     display: none;
 }
 
+=======
+/* Responsive adjustments */
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    /* Sidebar adjustments */
+    .sidebar {
+      position: fixed;
+      width: 80%;
+      max-width: 250px;
+      height: 100vh;
+      left: -100%;
+      top: 0;
+      transition: 0.3s;
+      z-index: 1030;
+      background: white;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    /* Content adjustments */
+    .content-wrapper {
+      margin-left: 0 !important;
+      padding: 15px !important;
+      width: 100% !important;
+    }
+
+    /* Table adjustments */
+    .table-responsive {
+      margin: 0 -15px;
+      width: calc(100% + 30px);
+    }
+
+    .table {
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    /* Make table headers sticky */
+    .table thead th {
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 1;
+    }
+
+    /* Adjust buttons in table */
+    .btn-sm {
+      padding: 0.25rem 0.5rem;
+      font-size: 12px;
+    }
+
+    /* Card adjustments */
+    .card {
+      margin: 0 -15px;
+      border-radius: 0;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    /* Fix container padding */
+    .container-fluid {
+      padding: 0;
+    }
+
+    /* Add overlay when sidebar is open */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1020;
+    }
+
+    .sidebar-overlay.active {
+      display: block;
+    }
+  }
+
+  /* General improvements */
+  .table-responsive {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  /* Custom scrollbar for better UX */
+  .table-responsive::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .table-responsive::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .table-responsive::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+  }
+>>>>>>> Stashed changes

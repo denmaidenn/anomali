@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <nav class="navbar navbar-default col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="navbar-menu-wrapper d-flex align-items-center">
         <button class="navbar-toggler navbar-toggler d-none d-lg-block navbar-dark align-self-center mr-3" type="button" data-toggle="minimize">
@@ -16,3 +17,14 @@
         </button>
       </div>
     </nav>
+=======
+<nav class="navbar navbar-light bg-white col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+  <div class="text-center navbar-brand-wrapper">
+    <!-- Tambahkan tombol toggle untuk mobile -->
+    <button class="navbar-toggler d-block d-lg-none" type="button" id="sidebarToggle">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+  <!-- ... kode navbar lainnya ... -->
+</nav>
+>>>>>>> Stashed changes

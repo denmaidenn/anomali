@@ -20,7 +20,7 @@
         <div class="loader"></div>
     </div>
   <div class=" container-scroller">
-    <!-- partial:partials/_navbar.html -->
+  <div class="sidebar-overlay"></div>
     @include('layout.navbar')
         <!-- partial:partials/_sidebar.html -->
 
@@ -52,6 +52,7 @@
   <script src="/js/misc.js"></script>
   <script src="/js/chart.js"></script>
   <script src="/js/maps.js"></script>
+<<<<<<< Updated upstream
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
       $(document).ready(function() {
@@ -83,6 +84,10 @@
           });
       });
   </script>
+=======
+
+<script src="/js/sidebar-mobile.js"></script>
+>>>>>>> Stashed changes
   @yield('scripts')
 </body>
 
