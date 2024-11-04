@@ -25,19 +25,19 @@ class PelatihanController extends Controller
         $validatedData = $request->validate([
             'id_user' => 'required|exists:users,id',
             'video_pelatihan' => 'required|string',
-            'deskripsi' => 'required|string',
+            'deskripsi_pelatihan' => 'required|string',
             'harga' => 'required|numeric',
         ]);
             Pelatihan::create([
                 'id_user' => $validatedData['id_user'],
                 'video_pelatihan'=> $validatedData['video_pelatihan'],
-                'deskripsi' => $validatedData['deskripsi'],
+                'deskripsi_pelatihan' => $validatedData['deskripsi_pelatihan'],
                 'harga'=> $validatedData['harga'],
             ]);
 
-            
+
             return redirect()->route('pelatihan.index')->with('success', 'Pelatihan berhasil ditambahkan');
-           
+
     }
 
     public function edit($id)
@@ -54,7 +54,7 @@ class PelatihanController extends Controller
     $request->validate([
         'id_user' => 'required|exists:users,id',
         'video_pelatihan' => 'required|string',
-        'deskripsi' => 'required|string',
+        'deskripsi_pelatihan' => 'required|string',
         'harga' => 'required|numeric',
     ]);
 
@@ -65,7 +65,7 @@ class PelatihanController extends Controller
         $pelatihan->update([
             'id_user' => $request->id_user,
             'video_pelatihan' => $request->video_pelatihan,
-            'deskripsi' => $request->deskripsi,
+            'deskripsi_pelatihan' => $request->deskripsi_pelatihan,
             'harga' => $request->harga,
         ]);
 

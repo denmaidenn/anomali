@@ -13,7 +13,7 @@ class PelatihanControllerAPI extends Controller
      * Membuat data pelatihan baru.
      */
 
-     
+
     public function index()
     {
         $pelatihan = Pelatihan::with('user')->get(); // Mengambil semua data pelatihan beserta informasi user yang terkait
@@ -25,7 +25,7 @@ class PelatihanControllerAPI extends Controller
         ], 200);
     }
 
-    
+
     public function store(Request $request)
     {
         // Validasi input
@@ -78,5 +78,35 @@ class PelatihanControllerAPI extends Controller
             'message' => 'Pelatihan retrieved successfully',
             'data' => $pelatihan
         ], 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $pelatihan = Pelatihan::find($id);
+        if (!$pelatihan) {
+            return response()->json(['message' => 'Pelatihan not found'], 404);
+        }
+
+        $validatedData = $request->validate([
+            'id_user' => 'sometimes|required|exists:users,id',
+            'video_pelatihan' => 'sometimes|required|string',
+            'deskripsi_pelatihan' => 'sometimes|required|string',
+            'harga' => 'sometimes|required|numeric',
+        ]);
+
+        $pelatihan->update($validatedData);
+        return response()->json(['message' => 'Pelatihan updated successfully', 'data' => $pelatihan]);
+    }
+
+    // Menghapus pelatihan berdasarkan ID
+    public function delete($id)
+    {
+        $pelatihan = Pelatihan::find($id);
+        if (!$pelatihan) {
+            return response()->json(['message' => 'Pelatihan not found'], 404);
+        }
+
+        $pelatihan->delete();
+        return response()->json(['message' => 'Pelatihan deleted successfully']);
     }
 }

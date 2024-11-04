@@ -42,8 +42,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="deskripsi">Deskripsi Pelatihan</label>
-                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" placeholder="Masukkan deskripsi pelatihan" required></textarea>
+                            <label for="deskripsi_pelatihan">Deskripsi Pelatihan</label>
+                            <textarea class="form-control" id="deskripsi_pelatihan" name="deskripsi_pelatihan" rows="4" placeholder="Masukkan deskripsi pelatihan" required></textarea>
                         </div>
 
                         <div class="form-group">
