@@ -17,7 +17,7 @@ class CreatePelatihanTable extends Migration
             $table->id();
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
             $table->string('video_pelatihan');
-            $table->text('deskripsi');
+            $table->text('deskripsi_pelatihan');
             $table->decimal('harga', 10, 2); // Menggunakan decimal untuk menyimpan harga
             $table->timestamps();
         });

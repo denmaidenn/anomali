@@ -29,50 +29,46 @@
                     @endif
 
                     <div class="table-responsive">
-                        <table class="table center-aligned-table">
-                            <thead>
-                                <tr class="text-primary">
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Nama Ilmiah</th>
-                                    <th>Kategori</th>
-                                    <th>Asal</th>
-                                    <th>Ukuran</th>
-                                    <th>Karakteristik</th>
-                                    <th>Akuarium</th>
-                                    <th>Suhu Ideal</th>
-                                    <th>pH Air</th>
-                                    <th>Salinitas</th>
-                                    <th>Pencahayaan</th>
-                                    <th>Manage</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($fish as $fishes)
-                                    <tr>
-                                        <td>{{ $fishes->id }}</td>
-                                        <td>{{ $fishes->name }}</td>
-                                        <td>{{ $fishes->scientific_name }}</td>
-                                        <td>{{ $fishes->category }}</td>
-                                        <td>{{ $fishes->origin }}</td>
-                                        <td>{{ $fishes->size }}</td>
-                                        <td>{{ $fishes->characteristics }}</td>
-                                        <td>{{ $fishes->aquarium_size }}</td>
-                                        <td>{{ $fishes->temperature }}</td>
-                                        <td>{{ $fishes->ph }}</td>
-                                        <td>{{ $fishes->salinity }}</td>
-                                        <td>{{ $fishes->lighting }}</td>
-                                        <td>
-                                            <a href="{{ route('fishpedia.edit', $fishes->id) }}" class="btn btn-primary btn-sm">Manage</a>
-                                        </td>
-                                        <td>
-                                            <form action="{{ route('fishpedia.delete', $fishes->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                                            </form>
-                                        </td>
+                    <table class="table center-aligned-table">
+                        <thead>
+                            <tr class="text-primary">
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Asal</th>
+                                <th>Jenis</th>
+                                <th>Deskripsi</th>
+                                <th>Harga Pasar</th>
+                                <th>Gambar</th>
+                                <th>Manage</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($fish as $fishes)
+                                <tr>
+                                    <td>{{ $fishes->id }}</td>
+                                    <td>{{ $fishes->nama }}</td>
+                                    <td>{{ $fishes->asal }}</td>
+                                    <td>{{ $fishes->jenis }}</td>
+                                    <td>{{ $fishes->deskripsi }}</td>
+                                    <td>{{ number_format($fishes->harga_pasar, 2) }}</td>
+                                    <td>
+                                        @if($fishes->gambar_ikan)
+                                            <img src="{{ asset('storage/'.$fishes->gambar_ikan) }}" alt="Gambar Ikan" style="width: 50px; height: auto;">
+                                        @else
+                                            No Image
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('fishpedia.edit', $fishes->id) }}" class="btn btn-primary btn-sm">Manage</a>
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('fishpedia.delete', $fishes->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                        </form>
+                                    </td>
                                     </tr>
                                 @endforeach
                             </tbody>

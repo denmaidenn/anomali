@@ -16,7 +16,7 @@ class Pelatihan extends Model
     protected $fillable = [
         'id_user',
         'video_pelatihan',
-        'deskripsi',
+        'deskripsi_pelatihan',
         'harga',
     ];
 
