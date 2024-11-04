@@ -49,12 +49,19 @@
                         <h5 class="card-title mb-4">Transaction Table</h5>
                         <div class="search-container">
                             <form class="form-inline" action="{{ route('search') }}" method="GET">
-                                <div class="input-group">
-                                    <input type="text" class="form-control search" name="query"
-                                           placeholder="Search transactions..." data-page="fishmart.index">
+                            <div class="input-group">
+                                    <input 
+                                        type="text" 
+                                        class="form-control search" 
+                                        name="query"
+                                        placeholder="Search transactions..." 
+                                        data-page="index.blade"
+                                        style="height: 30px; border-radius: 3px 0 0 3px;">
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-primary" type="submit">
-                                            <i class="fa fa-search"></i>
+                                        <button 
+                                            class="btn btn-outline-primary search-btn" 
+                                            type="submit">
+                                            <i class="fa fa-search" style="height: 20px"></i>
                                         </button>
                                     </div>
                                 </div>
