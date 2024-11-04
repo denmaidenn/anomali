@@ -10,7 +10,6 @@ class FormUser extends Model
     use HasFactory;
 
     protected $fillable = [
-        'no_telp',
         'name',
         'email',
         'username',
