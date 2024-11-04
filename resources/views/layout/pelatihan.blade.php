@@ -46,7 +46,7 @@
                                             <td>{{ $pelatihans->id }}</td>
                                             <td>{{ $pelatihans->id_user }}</td>
                                             <td>{{ $pelatihans->video_pelatihan }}</td>
-                                            <td>{{ $pelatihans->deskripsi }}</td>
+                                            <td>{{ $pelatihans->deskripsi_pelatihan }}</td>
                                             <td>Rp {{ number_format($pelatihans->harga, 2) }}</td>
                                             <td>
                                                 <a href="{{ route('pelatihan.edit', $pelatihans->id) }}" class="btn btn-primary btn-sm">Manage</a>
