@@ -39,8 +39,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/', [PelatihanControllerAPI::class, 'index']);
         Route::post('/create', [PelatihanControllerAPI::class,'store']);
         Route::get('/{id}', [PelatihanControllerAPI::class, 'show']);
-        Route::put('/{id}', [PelatihanController::class, 'update']);
-        Route::delete('/{id}', [PelatihanController::class, 'delete']);
+        Route::put('/{id}', [PelatihanControllerAPI::class, 'update']);
+        Route::delete('/{id}', [PelatihanControllerAPI::class, 'delete']);
     });
 
     Route::prefix('fishpedia')->group(function () {
