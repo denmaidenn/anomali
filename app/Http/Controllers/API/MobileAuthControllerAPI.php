@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Models\FormUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class MobileAuthControllerAPI extends Controller
 {
@@ -29,6 +31,8 @@ class MobileAuthControllerAPI extends Controller
 
         return response()->json(['message' => 'User created successfully', 'user' => $user], 201);
     }
+
+    
 
     // Method untuk mengambil semua pengguna
     public function index()
@@ -82,5 +86,37 @@ class MobileAuthControllerAPI extends Controller
 
         $user->delete();
         return response()->json(['message' => 'User deleted successfully']);
+    }
+
+    public function login(Request $request)
+    {
+        // Validasi input
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        // Mencari pengguna berdasarkan email
+        $user = FormUser::where('email', $request->email)->first();
+
+        // Memeriksa apakah pengguna ditemukan dan password cocok
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'message' => 'Email atau password salah'
+            ], 401);
+        }
+
+        // Membuat token untuk pengguna
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Login berhasil',
+            'user' => $user,
+            'token' => $token
+        ], 200);
     }
 }

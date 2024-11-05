@@ -14,9 +14,18 @@ use App\Http\Controllers\API\MobileAuthControllerAPI;
 
 
 Route::post('/login', [AuthControllerAPI::class, 'in']);
+Route::prefix('formuser')->group(function () {
+    Route::get('/', [MobileAuthControllerAPI::class, 'index']);
+    Route::post('/create', [MobileAuthControllerAPI::class,'store']);
+    Route::post('/login', [MobileAuthControllerAPI::class,'login']);
+    Route::get('/{id}', [MobileAuthControllerAPI::class, 'show']);
+    Route::put('/{id}', [MobileAuthControllerAPI::class,'update']);
+    Route::delete('/{id}', [MobileAuthControllerAPI::class,'delete']);
+});
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
+   
     Route::prefix('admin')->group(function () {
         Route::get('/', [AuthControllerAPI::class, 'index']);
         Route::post('/create', [AuthControllerAPI::class,'store']);
@@ -25,13 +34,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/{id}', [AuthControllerAPI::class,'delete']);
     });
 
-    Route::prefix('formuser')->group(function () {
-        Route::get('/', [MobileAuthControllerAPI::class, 'index']);
-        Route::post('/create', [MobileAuthControllerAPI::class,'store']);
-        Route::get('/{id}', [MobileAuthControllerAPI::class, 'show']);
-        Route::put('/{id}', [MobileAuthControllerAPI::class,'update']);
-        Route::delete('/{id}', [MobileAuthControllerAPI::class,'delete']);
-    });
 
     Route::prefix('pelatihan')->group(function () {
         Route::get('/', [PelatihanControllerAPI::class, 'index']);
