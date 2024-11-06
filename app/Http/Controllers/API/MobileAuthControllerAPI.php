@@ -114,6 +114,7 @@ class MobileAuthControllerAPI extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
+            'success' => true,
             'message' => 'Login berhasil',
             'user' => $user,
             'token' => $token
