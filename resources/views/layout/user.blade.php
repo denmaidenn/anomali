@@ -24,8 +24,8 @@
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Email</th>
-                                <th>No Telepon</th>
                                 <th>Username</th>
+                                <th>Password</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -36,8 +36,8 @@
                                     <td>{{ $formUser->id }}</td>
                                     <td>{{ $formUser->name }}</td>
                                     <td>{{ $formUser->email }}</td>
-                                    <td>{{ $formUser->no_telp }}</td>
                                     <td>{{ $formUser->username }}</td>
+                                    <td>{{ $formUser->password }}</td>
                                     <td>
                                         <a href="{{ route('user.edit', $formUser->id) }}" class="btn btn-primary btn-sm">Manage</a>
                                     </td>
