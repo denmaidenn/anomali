@@ -23,7 +23,6 @@ Route::prefix('formuser')->group(function () {
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
-   
     Route::prefix('formuser')->group(function () {
         Route::get('/{id}', [MobileAuthControllerAPI::class, 'show']);
         Route::put('/{id}', [MobileAuthControllerAPI::class,'update']);

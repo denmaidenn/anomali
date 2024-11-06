@@ -46,9 +46,17 @@ class MobileAuthControllerAPI extends Controller
     {
         $user = FormUser::find($id);
         if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found'
+            ], 404);
         }
-        return response()->json($user);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'User data retrieved successfully',
+            'data' => $user
+        ], 200);
     }
 
     // Method untuk memperbarui pengguna
