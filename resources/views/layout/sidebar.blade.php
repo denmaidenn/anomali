@@ -19,8 +19,15 @@
               </a>
             </li>
 
-            <li class="nav-item ">
-              <a class="nav-link" data-toggle="collapse" aria-expanded="false" aria-controls="User Data" href="#userdata">
+            <li class="nav-item {{ Request::is('userpages') ? 'active':'' }}">
+              <a class="nav-link" href="{{ route('user.index') }}">
+              <img src="{{ asset('images/logo_user.png') }}" alt="" >
+                <span class="menu-title">User Data</span>
+              </a>
+            </li>
+
+            <!-- <li class="nav-item ">
+              <a class="nav-link" data-toggle="collapse" aria-expanded="false" aria-controls="User Data" href="{{ route('user.index') }}">
               <img src="{{ asset('images/logo_user.png') }}" alt="" >
                 <span class="menu-title">User Data<i class="fa fa-sort-down"></i></span>
               </a>
@@ -41,7 +48,8 @@
                   </li>
                 </ul>
               </div>
-            </li>
+            </li> -->
+            
            <li class="nav-item {{ Request::is('pelatihan') ? 'active':'' }}">
               <a class="nav-link" href="{{ route('pelatihan.index') }}">
               <img src="{{ asset('images/pelatihan.png') }}" alt="" >
