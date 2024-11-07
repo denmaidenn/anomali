@@ -29,7 +29,7 @@ class MobileAuthControllerAPI extends Controller
         // Buat pengguna baru
         $user = FormUser::create($request->all());
 
-        return response()->json(['message' => 'User created successfully', 'user' => $user], 201);
+        return response()->json(['success' => true, 'message' => 'User created successfully', 'user' => $user], 201);
     }
 
     

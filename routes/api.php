@@ -26,7 +26,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('formuser')->group(function () {
         Route::get('/{id}', [MobileAuthControllerAPI::class, 'show']);
         Route::put('/{id}', [MobileAuthControllerAPI::class,'update']);
-        Route::delete('/{id}', [MobileAuthControllerAPI::class,'delete']);
+        Route::delete('/{id}', [MobileAuthControllerAPI::class,'destroy']);
     });
 
     Route::prefix('admin')->group(function () {
