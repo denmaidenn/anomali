@@ -7390,7 +7390,15 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fff; }
+  background: linear-gradient(45deg, #ff7e5f, #feb47b, #8e2de2, #4a00e0);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite; }
+
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
 [tabindex="-1"]:focus {
   outline: none !important; }
@@ -13438,16 +13446,22 @@ input[type="search"], input, .form-control {
   background: white; }
 
 .bg-primary-gradient, .navbar.navbar-default {
-  background: #318be3;
-  /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(90deg, #318be3, #04befe);
-  /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(90deg, #318be3, #04befe);
-  /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(90deg, #318be3, #04befe);
-  /* For Firefox 3.6 to 15 */
-  background: linear-gradient(90deg, #318be3, #04befe);
-  /* Standard syntax */ }
+  background: rgba(255, 255, 255, 0.7); /* Warna putih transparan */
+  backdrop-filter: blur(10px); /* Efek blur */
+  -webkit-backdrop-filter: blur(10px); /* Untuk Safari dan browser berbasis WebKit */
+  border-bottom: 1px solid rgba(200, 200, 200, 0.3); /* Garis bawah semi-transparan */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sedikit bayangan untuk efek depth */
+}
+
+.navbar-custom {
+  background: rgba(255, 255, 255, 0.2); /* White with opacity for transparency */
+  backdrop-filter: blur(15px); /* Blur effect */
+  -webkit-backdrop-filter: blur(15px); /* Blur for WebKit browsers */
+  border-radius: 15px; /* Rounded corners */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Semi-transparent border */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 10px 20px; /* Spacing inside the navbar */
+}
 
 .bg-success-gadient {
   background: #2bb415;
@@ -13638,12 +13652,21 @@ input:focus {
   outline: none; }
 
 .content-wrapper {
-  background: #f2f7f8;
+  background: linear-gradient(45deg, #ff7e5f, #feb47b, #8e2de2, #4a00e0);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
   margin-left: 215px;
   min-height: 100vh;
   padding: 2rem 1rem;
   transition: all .8s ease;
   width: calc(100% - 215px); }
+
+  
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
   @media (max-width: 991px) {
     .content-wrapper {
       margin-left: 0;

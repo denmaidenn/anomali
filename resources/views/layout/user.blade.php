@@ -57,3 +57,34 @@
         </div>
     </div>
 </div>
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: "http://127.0.0.1/api/formuser", // Ganti dengan URL API Anda
+            method: "GET",
+            success: function(data) {
+                console.log(data); // Menampilkan data yang diterima dari API
+                // Proses data yang diterima
+                var userData = data;
+                var tableBody = $('#user-table tbody');
+                userData.forEach(function(user, index) {
+                    tableBody.append(
+                        '<tr>' +
+                            '<td>' + (index + 1) + '</td>' +
+                            '<td>' + user.name + '</td>' +
+                            '<td>' + user.email + '</td>' +
+                            '<td>' + user.username + '</td>' +
+                            '<td><a href="/user/edit/' + user.id + '" class="btn btn-primary btn-sm">Manage</a></td>' +
+                            '<td><button class="btn btn-danger btn-sm" onclick="deleteUser(' + user.id + ')">Remove</button></td>' +
+                        '</tr>'
+                    );
+                });
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error); // Menangani error jika ada
+            }
+        });
+    });
+</script> -->
