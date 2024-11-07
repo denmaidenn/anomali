@@ -28,6 +28,9 @@
           <!-- Fishmart Table -->
           @include('layout.fishmart')
 
+          <!-- Feedback Table -->
+          @include('layout.feedback')
+
 
 </div>
 @endsection
