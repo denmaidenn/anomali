@@ -5,6 +5,7 @@ use App\Http\Controllers\API\AuthControllerAPI;
 use App\Http\Controllers\API\PelatihanControllerAPI;
 use App\Http\Controllers\API\FishpediaControllerAPI;
 use App\Http\Controllers\API\FishmartControllerAPI;
+use App\Http\Controllers\API\MobileAuthControllerAPI;
 
 
 
@@ -13,16 +14,29 @@ use App\Http\Controllers\API\FishmartControllerAPI;
 
 
 Route::post('/login', [AuthControllerAPI::class, 'in']);
+Route::prefix('formuser')->group(function () {
+    Route::get('/', [MobileAuthControllerAPI::class, 'index']);
+    Route::post('/create', [MobileAuthControllerAPI::class,'store']);
+    Route::post('/login', [MobileAuthControllerAPI::class,'login']);
+
+});
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
-    Route::prefix('user')->group(function () {
+    Route::prefix('formuser')->group(function () {
+        Route::get('/{id}', [MobileAuthControllerAPI::class, 'show']);
+        Route::put('/{id}', [MobileAuthControllerAPI::class,'update']);
+        Route::delete('/{id}', [MobileAuthControllerAPI::class,'delete']);
+    });
+
+    Route::prefix('admin')->group(function () {
         Route::get('/', [AuthControllerAPI::class, 'index']);
         Route::post('/create', [AuthControllerAPI::class,'store']);
         Route::get('/{id}', [AuthControllerAPI::class, 'show']);
         Route::put('/{id}', [AuthControllerAPI::class,'update']);
         Route::delete('/{id}', [AuthControllerAPI::class,'delete']);
     });
+
 
     Route::prefix('pelatihan')->group(function () {
         Route::get('/', [PelatihanControllerAPI::class, 'index']);
@@ -56,3 +70,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
 
+    
