@@ -10,7 +10,16 @@ use Illuminate\Support\Facades\Hash;
 
 class MobileAuthControllerAPI extends Controller
 {
+
     //
+
+    // Method untuk mengambil semua pengguna
+    public function index()
+    {
+        $users = FormUser::all();
+        return response()->json($users);
+    }
+    
 
     public function store(Request $request)
     {
@@ -34,12 +43,6 @@ class MobileAuthControllerAPI extends Controller
 
     
 
-    // Method untuk mengambil semua pengguna
-    public function index()
-    {
-        $users = FormUser::all();
-        return response()->json($users);
-    }
 
     // Method untuk mengambil pengguna berdasarkan ID
     public function show($id)

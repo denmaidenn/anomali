@@ -15,7 +15,7 @@
                             <textarea name="komentar" class="form-control p-input" id="komentar" placeholder="Masukkan komentar Anda" required></textarea>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </div>
