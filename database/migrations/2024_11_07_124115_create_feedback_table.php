@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('feedback', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Links to users table
-            $table->text('komentar'); // Feedback comment
+            $table->foreignId('user_id')->constrained('form_users')->onDelete('cascade'); // Links to form_users table
+            $table->text('komentar');
             $table->timestamps();
         });
     }

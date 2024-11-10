@@ -9,68 +9,69 @@ use Illuminate\Support\Facades\Auth;
 
 class FeedbackController extends Controller
 {
-    public function index() {
-        $feedback = Feedback::with('user')->get(); // Ensure 'user' relationship is set to FormUser in Feedback model
-        return view('feedback.index', ['title' => 'Fishmart', 'produk'=> $feedback]);
+    public function index()
+    {
+        // Load all feedback entries with associated user data
+        $feedback = Feedback::with('user')->get();
+        return view('feedback.index', ['title' => 'Feedback', 'feedback' => $feedback]);
     }
 
-    public function create() {
-        return view('feedback.create', ['title' => 'Fishmart']);
+    public function create()
+    {
+        // Load feedback creation view
+        $formuser = FormUser::all();
+        return view('feedback.create', ['title' => 'Feedback', 'formuser'=> $formuser]);
     }
 
     public function store(Request $request)
     {
+        // Validate the input
         $validatedData = $request->validate([
-            'komentar' => 'required|string',
+            'user_id' => 'required|exists:form_users,id',
+            'komentar' => 'required|string|max:1000',
         ]);
-
-        // Ensure the user is authenticated before proceeding
-        if (auth()->check()) {
+            // Create feedback with the authenticated user's ID
             Feedback::create([
-                'komentar' => $request->komentar,
-                'user_id' => auth()->guard('sanctum')->id(), // Use correct guard if needed
+                'user_id' => $validatedData['user_id'],
+                'komentar' => $validatedData['komentar'],
             ]);
 
             return redirect()->route('feedback.index')->with('success', 'Feedback berhasil ditambahkan!');
-        } else {
-            return redirect()->route('feedback.index')->with('error', 'Anda harus login untuk memberikan feedback.');
-        }
+    
+    }
+
+    public function edit($id)
+    {
+        // Find feedback by ID for editing
+        $feedback = Feedback::findOrFail($id);
+
+        return view('feedback.edit', compact('feedback'), ['title' => 'Edit Feedback']);
     }
 
     public function update(Request $request, $id)
     {
+        // Find the feedback entry by ID
         $feedback = Feedback::findOrFail($id);
 
-        $request->validate([
-            'komentar' => 'required|string',
+        // Validate updated data
+        $validatedData = $request->validate([
+            'komentar' => 'required|string|max:1000',
         ]);
 
+        // Update the feedback entry
         $feedback->update([
-            'komentar' => $request->komentar,
+            'komentar' => $validatedData['komentar'],
         ]);
 
         return redirect()->route('feedback.index')->with('success', 'Feedback berhasil diperbarui!');
     }
 
-    public function show($id)
+    public function destroy($id)
     {
+        // Find and delete the feedback entry
         $feedback = Feedback::findOrFail($id);
+        $feedback->delete();
 
-        return view('feedback.show', [
-            'title' => 'Feedback Details',
-            'feedback' => $feedback,
-        ]);
-    }
-
-    public function delete($id)
-    {
-        $feedback = Feedback::find($id);
-
-        if ($feedback) {
-            $feedback->delete();
-            return redirect()->route('feedback.index')->with('success', 'Feedback berhasil dihapus.');
-        } else {
-            return redirect()->route('feedback.index')->with('error', 'Feedback tidak ditemukan.');
-        }
+        return redirect()->route('feedback.index')->with('success', 'Feedback berhasil dihapus!');
     }
 }

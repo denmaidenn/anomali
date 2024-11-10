@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Feedback;
+use App\Models\FormUser;
 
 class FeedbackControllerAPI extends Controller
 {
@@ -13,7 +14,11 @@ class FeedbackControllerAPI extends Controller
     public function index()
     {
         $feedbacks = Feedback::with('user')->get();
-        return response()->json($feedbacks);
+        return response()->json([
+            'success'=> true,
+            'message' => 'All Feedbacks retrieved successfully',
+            'data'=> $feedbacks
+        ]);
     }
 
     // Store new feedback entry, linked to FormUser
@@ -23,15 +28,18 @@ class FeedbackControllerAPI extends Controller
             'komentar' => 'required|string|max:1000',
         ]);
 
-        // Create feedback with FormUser's ID
+        // Check if user is authenticated
+        $user = Auth::guard('sanctum')->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Anda harus login untuk memberikan feedback.'], 401);
+        }
+
+        // Create feedback with authenticated FormUser's ID
         $feedback = Feedback::create([
-            'user_id' => Auth::guard('sanctum')->user()->id, // Ensure using correct guard if needed
+            'user_id' => $user->id, // Use FormUser's ID
             'komentar' => $request->komentar,
         ]);
-
-        if (!$feedback) {
-            return response()->json(['error' => 'Anda harus login untuk memberikan feedback.']);
-        }
 
         return response()->json(['success' => true, 'feedback' => $feedback]);
     }

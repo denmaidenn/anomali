@@ -43,7 +43,14 @@
             <li class="nav-item {{ Request::is('fishmart') ? 'active':'' }}">
               <a class="nav-link" href="{{ route('fishmart.index') }}">
               <img src="{{ asset('images/logo_market.png') }}" alt="">
-                <span class="menu-title">FishMart</span>
+                <span class="menu-title">Fishmart</span>
+              </a>
+            </li>
+
+            <li class="nav-item {{ Request::is('feedback') ? 'active':'' }}">
+              <a class="nav-link" href="{{ route('feedback.index') }}">
+              <i class="fa fa-paper-plane" alt=""></i>
+                <span class="menu-title">Feedback</span>
               </a>
             </li>
 
