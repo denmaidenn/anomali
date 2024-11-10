@@ -14,12 +14,17 @@ class Fishpedia extends Model
 
     // Menentukan atribut yang dapat diisi (fillable)
     protected $fillable = [
+        'nama_ilmiah',
+        'kategori',
         'asal',
-        'jenis',
-        'deskripsi',
-        'nama',
-        'id_ikan',
-        'harga_pasar',
-        'gambar_ikan',
+        'ukuran',
+        'karakteristik',
+        'akuarium',
+        'suhu_ideal',
+        'ph_air',
+        'salinitas',
+        'pencahayaan',
+        'gambar_ikan'
     ];
+
 }

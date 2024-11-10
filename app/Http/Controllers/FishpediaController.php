@@ -23,15 +23,20 @@ class FishpediaController extends Controller
     {
         // Validasi input
         $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama_ilmiah' => 'required|string|max:255',
+            'kategori' => 'required|string|max:255',
             'asal' => 'required|string|max:255',
-            'jenis' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'harga_pasar' => 'required|numeric',
+            'ukuran' => 'required|string|max:255',
+            'karakteristik' => 'required|string',
+            'akuarium' => 'required|string|max:255',
+            'suhu_ideal' => 'required|numeric',
+            'ph_air' => 'required|numeric',
+            'salinitas' => 'required|numeric',
+            'pencahayaan' => 'required|string|max:255',
             'gambar_ikan' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // Menyimpan gambar ke storage jika ada
+        // Simpan gambar jika ada
         $gambarPath = null;
         if ($request->hasFile('gambar_ikan')) {
             $gambarPath = $request->file('gambar_ikan')->store('fishpedia', 'public');
@@ -39,15 +44,19 @@ class FishpediaController extends Controller
 
         // Membuat entri baru di database
         Fishpedia::create([
-            'nama' => $request->nama,
+            'nama_ilmiah' => $request->nama_ilmiah,
+            'kategori' => $request->kategori,
             'asal' => $request->asal,
-            'jenis' => $request->jenis,
-            'deskripsi' => $request->deskripsi,
-            'harga_pasar' => $request->harga_pasar,
-            'gambar_ikan' => $gambarPath, // Menyimpan path gambar
+            'ukuran' => $request->ukuran,
+            'karakteristik' => $request->karakteristik,
+            'akuarium' => $request->akuarium,
+            'suhu_ideal' => $request->suhu_ideal,
+            'ph_air' => $request->ph_air,
+            'salinitas' => $request->salinitas,
+            'pencahayaan' => $request->pencahayaan,
+            'gambar_ikan' => $gambarPath,
         ]);
 
-        // Redirect dengan pesan sukses
         return redirect()->route('fishpedia.index')->with('success', 'Data ikan berhasil ditambahkan.');
     }
 
@@ -60,45 +69,51 @@ class FishpediaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'jenis' => 'required|string|max:255',
+            'nama_ilmiah' => 'required|string|max:255',
+            'kategori' => 'required|string|max:255',
             'asal' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'harga_pasar' => 'required|numeric',
+            'ukuran' => 'required|string|max:255',
+            'karakteristik' => 'required|string',
+            'akuarium' => 'required|string|max:255',
+            'suhu_ideal' => 'required|numeric',
+            'ph_air' => 'required|numeric',
+            'salinitas' => 'required|numeric',
+            'pencahayaan' => 'required|string|max:255',
             'gambar_ikan' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
         ]);
-    
+
         $fish = Fishpedia::findOrFail($id);
-    
+
         // Simpan gambar baru jika diunggah
         if ($request->hasFile('gambar_ikan')) {
-            // Hapus gambar lama dari storage jika ada
             if ($fish->gambar_ikan) {
                 Storage::disk('public')->delete($fish->gambar_ikan);
             }
-    
-            // Simpan gambar baru
+
             $gambarPath = $request->file('gambar_ikan')->store('fishpedia', 'public');
-            $fish->gambar_ikan = $gambarPath; // Update path gambar
+            $fish->gambar_ikan = $gambarPath;
         }
-    
+
         // Update data lainnya
-        $fish->nama = $request->nama;
-        $fish->jenis = $request->jenis;
-        $fish->asal = $request->asal;
-        $fish->deskripsi = $request->deskripsi;
-        $fish->harga_pasar = $request->harga_pasar;
-    
-        $fish->save(); // Simpan perubahan
-    
+        $fish->update($request->only([
+            'nama_ilmiah', 'kategori', 'asal', 'ukuran', 'karakteristik', 'akuarium',
+            'suhu_ideal', 'ph_air', 'salinitas', 'pencahayaan'
+        ]));
+
         return redirect()->route('fishpedia.index')->with('success', 'Data ikan berhasil diperbarui!');
     }
-    
 
     public function destroy($id)
     {
         $fish = Fishpedia::findOrFail($id);
+
+        // Hapus gambar dari storage jika ada
+        if ($fish->gambar_ikan) {
+            Storage::disk('public')->delete($fish->gambar_ikan);
+        }
+
         $fish->delete();
+
         return redirect()->route('fishpedia.index')->with('success', 'Data ikan berhasil dihapus!');
     }
 }
