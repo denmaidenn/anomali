@@ -62,8 +62,8 @@ class FishpediaController extends Controller
 
     public function edit($id)
     {
-        $fish = Fishpedia::findOrFail($id);
-        return view('fishpedia.edit', ['title' => 'Edit Ikan', 'fish' => $fish]);
+        $fishpedia = Fishpedia::findOrFail($id);
+        return view('fishpedia.edit', ['title' => 'Edit Ikan', 'fish' => $fishpedia]);
     }
 
     public function update(Request $request, $id)
