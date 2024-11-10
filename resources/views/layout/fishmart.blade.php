@@ -26,6 +26,7 @@
                                     <th>No</th>
                                     <th>Nama Produk</th>
                                     <th>Deskripsi</th>
+                                    <th>Kategori</th>
                                     <th>Stok</th>
                                     <th>Harga</th>
                                     <th>Gambar</th>
@@ -40,6 +41,7 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $item->nama_produk }}</td>
                                         <td>{{ $item->deskripsi_produk }}</td>
+                                        <td>{{ $item->kategori }}</td>
                                         <td>{{ $item->stok }}</td>
                                         <td>Rp {{ number_format($item->harga, 2) }}</td>
                                         <td>

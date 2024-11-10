@@ -26,6 +26,7 @@ class FishmartController extends Controller
             'gambar_produk' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
             'stok' => 'required|integer',
             'harga' => 'required|numeric',
+            'kategori' => 'required|string|max:255', // Validasi kategori
         ]);
 
         $gambarPath = null;
@@ -37,6 +38,7 @@ class FishmartController extends Controller
             'deskripsi_produk'=> $request->deskripsi_produk,
             'stok' => $request->stok,
             'harga' => $request->harga,
+            'kategori' => $request->kategori,
             'gambar_produk' => $gambarPath,
         ]);
 
@@ -57,6 +59,7 @@ class FishmartController extends Controller
             'gambar_produk' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
             'stok' => 'required|integer',
             'harga' => 'required|numeric',
+            'kategori' => 'required|string|max:255'
         ]);
 
         $produk = Produk::findOrFail($id);
@@ -78,6 +81,7 @@ class FishmartController extends Controller
         $produk->deskripsi_produk = $request->deskripsi_produk;
         $produk->stok = $request->stok;
         $produk->harga = $request->harga;
+        $produk->kategori = $request->kategori;
 
         $produk->save();
 

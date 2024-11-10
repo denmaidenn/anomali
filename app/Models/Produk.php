@@ -17,6 +17,7 @@ class Produk extends Model
         'gambar_produk',
         'stok',
         'harga',
+        'kategori',
     ];
 
     public function transaksi()

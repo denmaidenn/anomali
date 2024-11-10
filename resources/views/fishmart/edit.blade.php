@@ -29,6 +29,21 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="kategori">Kategori</label>
+                            <select name="kategori" class="form-control p-input" id="kategori" required>
+                                <option value="">Pilih Kategori</option>
+                                <option value="Filter Air" {{ old('kategori', $produk->kategori) == 'Filter Air' ? 'selected' : '' }}>Filter Air</option>
+                                <option value="Pakan" {{ old('kategori', $produk->kategori) == 'Pakan' ? 'selected' : '' }}>Pakan</option>
+                                <option value="Tanaman Hias" {{ old('kategori', $produk->kategori) == 'Tanaman Hias' ? 'selected' : '' }}>Tanaman Hias</option>
+                                <option value="Batu Coral" {{ old('kategori', $produk->kategori) == 'Batu Coral' ? 'selected' : '' }}>Batu Coral</option>
+                                <option value="Aquascape" {{ old('kategori', $produk->kategori) == 'Aquascape' ? 'selected' : '' }}>Aquascape</option>
+                            </select>
+                            @error('kategori')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
                             <label for="stok">Stok</label>
                             <input name="stok" type="number" class="form-control p-input" id="stok" placeholder="Jumlah Stok" value="{{ old('stok', $produk->stok) }}" required>
                             @error('stok')

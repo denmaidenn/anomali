@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('gambar_produk')->nullable();
             $table->integer('stok');
             $table->decimal('harga', 10, 2); // Menyimpan harga dalam format decimal
+            $table->string('kategori'); // Kolom kategori baru
             $table->timestamps();
         });
     }

@@ -36,6 +36,18 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="kategori">Kategori Produk</label>
+                            <select class="form-control" id="kategori" name="kategori" required>
+                                <option value="">Pilih Kategori</option>
+                                <option value="Filter Air">Filter Air</option>
+                                <option value="Pakan">Pakan</option>
+                                <option value="Tanaman Hias">Tanaman Hias</option>
+                                <option value="Batu Coral">Batu Coral</option>
+                                <option value="Aquascape">Aquascape</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <label for="gambar_produk">Gambar Produk</label>
                             <input type="file" class="form-control-file" id="gambar_produk" name="gambar_produk" accept="image/*">
                         </div>
