@@ -6,6 +6,8 @@ use App\Http\Controllers\API\PelatihanControllerAPI;
 use App\Http\Controllers\API\FishpediaControllerAPI;
 use App\Http\Controllers\API\FishmartControllerAPI;
 use App\Http\Controllers\API\MobileAuthControllerAPI;
+use App\Http\Controllers\API\FeedbackControllerAPI;
+
 
 
 
@@ -23,6 +25,14 @@ Route::prefix('formuser')->group(function () {
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
+    Route::prefix('feedback')->group(function () {
+        Route::get('/', [FeedbackControllerAPI::class, 'index']); // For viewing feedback (e.g., for admin)
+        Route::post('/create', [FeedbackControllerAPI::class, 'store']);
+        Route::get('/{id}', [FeedbackControllerAPI::class, 'show']);
+        Route::put('/{id}', [FeedbackControllerAPI::class,'update']);
+        Route::delete('/{id}', [FeedbackControllerAPI::class,'delete']);
+    });
+
     Route::prefix('formuser')->group(function () {
         Route::get('/{id}', [MobileAuthControllerAPI::class, 'show']);
         Route::put('/{id}', [MobileAuthControllerAPI::class,'update']);
@@ -36,6 +46,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/{id}', [AuthControllerAPI::class,'update']);
         Route::delete('/{id}', [AuthControllerAPI::class,'delete']);
     });
+
+
 
 
     Route::prefix('pelatihan')->group(function () {

@@ -5,6 +5,7 @@ use App\Http\Controllers\SignController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\PelatihanController;
 use App\Http\Controllers\FishmartController;
 use App\Http\Controllers\FishpediaController;
@@ -25,8 +26,7 @@ Route::get('/', function () {
 
 
 
-Route::middleware(['auth:sanctum'])->group(function () {
-
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 
 
@@ -87,6 +87,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/{id}/update', [FishmartController::class,'update'])->name('fishmart.update');
         Route::delete('/{id}/delete', [FishmartController::class,'destroy'])->name('fishmart.destroy');
         Route::get('/{id}/show', [FishmartController::class,'show'])->name('fishmart.show');
+    
+    });
+
+    Route::prefix('feedback')->group(function () {
+        Route::get('/', [FeedbackController::class,'index'])->name('feedback.index');
+        Route::get('/create', [FeedbackController::class,'create'])->name('feedback.create');
+        Route::post('/store', [FeedbackController::class, 'store'])->name('feedback.store');
+        Route::get('/manage/{id}', [FeedbackController::class, 'edit'])->name('feedback.edit');
+        Route::put('/update/{id}', [FeedbackController::class, 'update'])->name('feedback.update');
+        Route::delete('/delete/{id}', [FeedbackController::class, 'destroy'])->name('feedback.delete');
     
     });
 

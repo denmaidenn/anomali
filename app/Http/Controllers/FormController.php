@@ -12,7 +12,6 @@ class FormController extends Controller
     {
         // Validate the request (optional but recommended)
         $validatedData = $request->validate([
-            'no_telp' => 'required|string|unique:form_users',
             'name' => 'required|string',
             'email' => 'required|string|email|unique:form_users',
             'username' => 'required|string|unique:form_users',
@@ -21,7 +20,6 @@ class FormController extends Controller
     
         // Create a new FormUser instance and save it to the database
         FormUser::create([
-            'no_telp' => $request->no_telp,
             'name' => $request->name,
             'email' => $request->email,
             'username' => $request->username,
@@ -37,7 +35,6 @@ class FormController extends Controller
         $formUser = FormUser::find($id);
     
         $request->validate([
-            'no_telp' => 'required|string|unique:form_users,no_telp,' . $formUser->id,
             'name' => 'required|string',
             'email' => 'required|string|email|unique:form_users,email,' . $formUser->id,
             'username' => 'required|string|unique:form_users,username,' . $formUser->id,

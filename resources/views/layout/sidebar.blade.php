@@ -19,29 +19,13 @@
               </a>
             </li>
 
-            <li class="nav-item ">
-              <a class="nav-link" data-toggle="collapse" aria-expanded="false" aria-controls="User Data" href="#userdata">
+            <li class="nav-item {{ Request::is('userpages') ? 'active':'' }}">
+              <a class="nav-link" href="{{ route('user.index') }}">
               <img src="{{ asset('images/logo_user.png') }}" alt="" >
-                <span class="menu-title">User Data<i class="fa fa-sort-down"></i></span>
+                <span class="menu-title">User Data</span>
               </a>
-              <div class="collapse" id="userdata">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item {{ Request::is('userpages') ? 'active':'' }}">
-                    <a class="nav-link" href=" {{ route('user.index') }}">
-                      <img src="{{ asset('images/icons/005-forms.png') }}" alt="">
-                      View Data
-                    </a>
-                  </li>
-
-                  <li class="nav-item {{ Request::is('formuser') ? 'active':'' }}">
-                    <a class="nav-link" href="{{ route('user.create') }}">
-                      <img src="{{ asset('images/icons/005-forms.png') }}" alt="">
-                      Add Data
-                    </a>
-                  </li>
-                </ul>
-              </div>
             </li>
+
            <li class="nav-item {{ Request::is('pelatihan') ? 'active':'' }}">
               <a class="nav-link" href="{{ route('pelatihan.index') }}">
               <img src="{{ asset('images/pelatihan.png') }}" alt="" >
@@ -59,7 +43,14 @@
             <li class="nav-item {{ Request::is('fishmart') ? 'active':'' }}">
               <a class="nav-link" href="{{ route('fishmart.index') }}">
               <img src="{{ asset('images/logo_market.png') }}" alt="">
-                <span class="menu-title">FishMart</span>
+                <span class="menu-title">Fishmart</span>
+              </a>
+            </li>
+
+            <li class="nav-item {{ Request::is('feedback') ? 'active':'' }}">
+              <a class="nav-link" href="{{ route('feedback.index') }}">
+              <i class="fa fa-paper-plane" alt=""></i>
+                <span class="menu-title">Feedback</span>
               </a>
             </li>
 

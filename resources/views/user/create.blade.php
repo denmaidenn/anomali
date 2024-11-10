@@ -19,10 +19,6 @@
                             <input name="email" type="email" class="form-control p-input" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputNoTelp">No Telepon</label>
-                            <input name="no_telp" type="text" class="form-control p-input" id="exampleInputNoTelp" placeholder="No Telepon" required>
-                        </div>
-                        <div class="form-group">
                             <label for="exampleInputUsername">Username</label>
                             <input name="username" type="text" class="form-control p-input" id="exampleInputUsername" placeholder="Username" required>
                         </div>

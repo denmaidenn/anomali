@@ -29,14 +29,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="exampleInputNoTelp">No Telepon</label>
-                            <input name="no_telp" type="text" class="form-control p-input" id="exampleInputNoTelp" placeholder="No Telepon" value="{{ old('no_telp', $formUser->no_telp) }}" required>
-                            @error('no_telp')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
                             <label for="exampleInputUsername">Username</label>
                             <input name="username" type="text" class="form-control p-input" id="exampleInputUsername" placeholder="Username" value="{{ old('username', $formUser->username) }}" required>
                             @error('username')
