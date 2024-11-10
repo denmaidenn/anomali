@@ -35,6 +35,7 @@ class FishmartControllerAPI extends Controller
             'gambar_produk' => 'required|string|max:255',
             'stok' => 'required|integer|min:0',
             'harga' => 'required|numeric|min:0',
+            'kategori' => 'required|string|in:Filter Air,Pakan,Tanaman Hias,Batu Coral,Aquascape', // Validasi kategori
         ]);
 
         if ($validator->fails()) {
@@ -94,6 +95,7 @@ class FishmartControllerAPI extends Controller
             'gambar_produk' => 'sometimes|required|string|max:255',
             'stok' => 'sometimes|required|integer|min:0',
             'harga' => 'sometimes|required|numeric|min:0',
+            'kategori' => 'sometimes|required|string|in:Filter Air,Pakan,Tanaman Hias,Batu Coral,Aquascape', // Validasi kategori untuk update
         ]);
 
         if ($validator->fails()) {
