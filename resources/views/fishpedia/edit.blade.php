@@ -85,7 +85,7 @@
                         <!-- Salinitas -->
                         <div class="form-group">
                             <label for="salinitas">Salinitas</label>
-                            <input name="salinitas" type="number" step="0.1" class="form-control" id="salinitas" value="{{ old('salinitas', $fish->salinitas) }}" required>
+                            <input name="salinitas" type="text"  class="form-control" id="salinitas" value="{{ old('salinitas', $fish->salinitas) }}" required>
                             @error('salinitas') <div class="text-danger">{{ $message }}</div> @enderror
                         </div>
                     

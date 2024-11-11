@@ -40,7 +40,7 @@ class FishpediaControllerAPI extends Controller
             'akuarium' => 'required|string|max:255',
             'suhu_ideal' => 'required|numeric',
             'ph_air' => 'required|numeric',
-            'salinitas' => 'required|numeric',
+            'salinitas' => 'required|string|max:255',
             'pencahayaan' => 'required|string|max:255',
             'gambar_ikan' => 'nullable|file|mimes:jpg,jpeg,png|max:2048', // jika ada gambar ikan
         ]);
@@ -125,7 +125,7 @@ class FishpediaControllerAPI extends Controller
             'akuarium' => 'sometimes|required|string|max:255',
             'suhu_ideal' => 'sometimes|required|numeric',
             'ph_air' => 'sometimes|required|numeric',
-            'salinitas' => 'sometimes|required|numeric',
+            'salinitas' => 'sometimes|required|string|max:255',
             'pencahayaan' => 'sometimes|required|string|max:255',
             'gambar_ikan' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
         ]);

@@ -109,9 +109,9 @@
                                     <td>
                                         ${fish.gambar_ikan ? `<img src="/storage/${fish.gambar_ikan}" alt="Gambar Ikan" style="width: 50px; height: auto;">` : 'No Image'}
                                     </td>
-                                    <td><a href="/fishpedia/${fish.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
+                                    <td><a href="/fishpedia/manage/${fish.id}" class="btn btn-primary btn-sm">Manage</a></td>
                                     <td>
-                                        <form action="/fishpedia/${fish.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');">
+                                        <form action="/fishpedia/delete/${fish.id}" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">Remove</button>

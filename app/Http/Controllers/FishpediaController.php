@@ -32,7 +32,7 @@ class FishpediaController extends Controller
             'akuarium' => 'required|string|max:255',
             'suhu_ideal' => 'required|numeric',
             'ph_air' => 'required|numeric',
-            'salinitas' => 'required|numeric',
+            'salinitas' => 'required|string|max:255',
             'pencahayaan' => 'required|string|max:255',
             'gambar_ikan' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
         ]);
@@ -80,7 +80,7 @@ class FishpediaController extends Controller
             'akuarium' => 'required|string|max:255',
             'suhu_ideal' => 'required|numeric',
             'ph_air' => 'required|numeric',
-            'salinitas' => 'required|numeric',
+            'salinitas' => 'required|string|max:255',
             'pencahayaan' => 'required|string|max:255',
             'gambar_ikan' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
         ]);
