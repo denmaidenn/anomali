@@ -1,15 +1,15 @@
-<div class="row mb-4">
+        <div class="row mb-2">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between m-2">
                             <h5 class="card-title mb-4">Tabel Pelatihan</h5>
                             <div class="d-flex justify-content-center flex-grow-1 mx-4">
-                            <div class="d-flex gap-2" style="width: 300px;">
-                                <input type="text" class="form-control" id="searchInput" placeholder="Search...">
-                                <button class="btn btn-outline-primary search-btn" type="submit">
-                                    <i class="fa fa-search" style="height: 20px"></i>
-                                </button>
+                                <div class="d-flex gap-2" style="width: 300px;">
+                                    <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+                                    <button class="btn btn-outline-primary search-btn" type="button" onclick="searchPelatihan()">
+                                        <i class="fa fa-search"></i>
+                                    </button>
                                 </div>
                             </div>
                             <a href="{{ route('pelatihan.create') }}" class="btn btn-primary">Tambah</a>
@@ -33,37 +33,21 @@
                                     <tr class="text-primary">
                                         <th>No</th>
                                         <th>User ID</th>
+                                        <th>Nama User</th>
                                         <th>Video Pelatihan</th>
                                         <th>Deskripsi</th>
                                         <th>Harga</th>
-                                        <th></th>
-                                        <th></th>
+                                        <th>Manage</th>
+                                        <th>Hapus</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach($pelatihan as $pelatihans)
-                                        <tr>
-                                            <td>{{ $pelatihans->id }}</td>
-                                            <td>{{ $pelatihans->id_user }}</td>
-                                            <td>{{ $pelatihans->video_pelatihan }}</td>
-                                            <td>{{ $pelatihans->deskripsi_pelatihan }}</td>
-                                            <td>Rp {{ number_format($pelatihans->harga, 2) }}</td>
-                                            <td>
-                                                <a href="{{ route('pelatihan.edit', $pelatihans->id) }}" class="btn btn-primary btn-sm">Manage</a>
-                                            </td>
-                                            <td>
-                                                <form action="{{ route('pelatihan.destroy', $pelatihans->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                <tbody id="pelatihan-table-body">
+                                    <!-- Data akan dimuat di sini menggunakan AJAX -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-          </div>
+        </div>
+

@@ -26,6 +26,6 @@ class Pelatihan extends Model
      */
     public function user()
     {
-        return $this->belongsTo(FormUser::class, 'id_user');
+        return $this->belongsTo(User::class, 'id_user');
     }
 }

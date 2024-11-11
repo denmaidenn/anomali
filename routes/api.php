@@ -23,8 +23,6 @@ Route::prefix('formuser')->group(function () {
 
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
-
     Route::prefix('feedback')->group(function () {
         Route::get('/', [FeedbackControllerAPI::class, 'index']); // For viewing feedback (e.g., for admin)
         Route::post('/create', [FeedbackControllerAPI::class, 'store']);
@@ -46,9 +44,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/{id}', [AuthControllerAPI::class,'update']);
         Route::delete('/{id}', [AuthControllerAPI::class,'delete']);
     });
-
-
-
 
     Route::prefix('pelatihan')->group(function () {
         Route::get('/', [PelatihanControllerAPI::class, 'index']);
@@ -74,6 +69,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/{id}', [FishmartControllerAPI::class, 'delete']);
     });
 
+Route::middleware(['auth:sanctum'])->group(function () {
+
+
+
 
 
 });
@@ -82,4 +81,3 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
 
-    
