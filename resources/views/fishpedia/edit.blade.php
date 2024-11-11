@@ -14,9 +14,9 @@
                         
                         <!-- Nama Ilmiah -->
                         <div class="form-group">
-                            <label for="name">Nama</label>
-                            <input name="name" type="text" class="form-control" id="name" value="{{ old('name', $fish->name) }}" required>
-                            @error('name') <div class="text-danger">{{ $message }}</div> @enderror
+                            <label for="nama">Nama</label>
+                            <input name="nama" type="text" class="form-control" id="nama" value="{{ old('nama', $fish->nama) }}" required>
+                            @error('nama') <div class="text-danger">{{ $message }}</div> @enderror
                         </div>
                         
                         <!-- Nama Ilmiah -->
