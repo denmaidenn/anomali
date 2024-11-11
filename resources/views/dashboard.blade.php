@@ -33,7 +33,6 @@
 @endsection
 
 @section('scripts')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
         // Load semua data saat halaman selesai dimuat
@@ -229,16 +228,22 @@
                             $('#feedback-table-body').append(`
                                 <tr>
                                     <td>${index + 1}</td>
-                                    <td>${feedback.id_user}</td>
-                                    <td>${feedback.judul_feedback}</td>
-                                    <td>${feedback.deskripsi_feedback}</td>
-                                    <td>${feedback.rating}</td>
+                                    <td>${feedback.user ? feedback.user.name : 'Unknown User'}</td>
+                                    <td>${feedback.komentar}</td>
                                     <td><a href="/feedback/${feedback.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
+                                    <td><a href="/feedback/${feedback.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
+                                    <td>
+                                        <form action="/feedback/${feedback.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             `);
                         });
                     } else {
-                        $('#feedback-table-body').append('<tr><td colspan="6" class="text-center">Tidak ada data feedback.</td></tr>');
+                        $('#feedback-table-body').append('<tr><td colspan="4" class="text-center">Tidak ada data feedback.</td></tr>');
                     }
                 },
                 error: function(xhr, status, error) {

@@ -25,6 +25,7 @@
                                     <th>No</th>
                                     <th>User</th>
                                     <th>Komentar</th>
+                                    <th>Detail</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
