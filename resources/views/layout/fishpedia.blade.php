@@ -32,6 +32,7 @@
                         <thead>
                             <tr class="text-primary">
                                 <th>No</th>
+                                <th>Nama</th>
                                 <th>Nama Ilmiah</th>
                                 <th>Kategori</th>
                                 <th>Asal</th>
@@ -51,6 +52,7 @@
                             @foreach($fish as $fishes)
                                 <tr>
                                     <td>{{ $fishes->id }}</td>
+                                    <td>{{ $fishes->nama}}</td>
                                     <td>{{ $fishes->nama_ilmiah }}</td>
                                     <td>{{ $fishes->kategori }}</td>
                                     <td>{{ $fishes->asal }}</td>

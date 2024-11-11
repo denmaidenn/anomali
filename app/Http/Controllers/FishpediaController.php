@@ -23,6 +23,7 @@ class FishpediaController extends Controller
     {
         // Validasi input
         $request->validate([
+            'nama' => 'required|string|max:255',
             'nama_ilmiah' => 'required|string|max:255',
             'kategori' => 'required|string|max:255',
             'asal' => 'required|string|max:255',
@@ -44,6 +45,7 @@ class FishpediaController extends Controller
 
         // Membuat entri baru di database
         Fishpedia::create([
+            'nama' => $request->nama,
             'nama_ilmiah' => $request->nama_ilmiah,
             'kategori' => $request->kategori,
             'asal' => $request->asal,
@@ -69,6 +71,7 @@ class FishpediaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            'nama' => 'required|string|max:255',
             'nama_ilmiah' => 'required|string|max:255',
             'kategori' => 'required|string|max:255',
             'asal' => 'required|string|max:255',
@@ -96,7 +99,7 @@ class FishpediaController extends Controller
 
         // Update data lainnya
         $fish->update($request->only([
-            'nama_ilmiah', 'kategori', 'asal', 'ukuran', 'karakteristik', 'akuarium',
+            'nama','nama_ilmiah', 'kategori', 'asal', 'ukuran', 'karakteristik', 'akuarium',
             'suhu_ideal', 'ph_air', 'salinitas', 'pencahayaan'
         ]));
 

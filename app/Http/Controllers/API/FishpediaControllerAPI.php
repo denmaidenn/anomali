@@ -31,6 +31,7 @@ class FishpediaControllerAPI extends Controller
     {
         // Validasi input sesuai dengan kolom yang ada pada model Fishpedia
         $validator = Validator::make($request->all(), [
+            'nama' => 'required|string|max:255',
             'nama_ilmiah' => 'required|string|max:255',
             'kategori' => 'required|string|max:255',
             'asal' => 'required|string|max:255',
@@ -59,6 +60,7 @@ class FishpediaControllerAPI extends Controller
 
         // Membuat data fishpedia
         $fishpedia = Fishpedia::create([
+            'nama' => $request->nama,
             'nama_ilmiah' => $request->nama_ilmiah,
             'kategori' => $request->kategori,
             'asal' => $request->asal,
@@ -114,6 +116,7 @@ class FishpediaControllerAPI extends Controller
         }
 
         $validator = Validator::make($request->all(), [
+            'nama' => 'sometimes|required|string|max:255',
             'nama_ilmiah' => 'sometimes|required|string|max:255',
             'kategori' => 'sometimes|required|string|max:255',
             'asal' => 'sometimes|required|string|max:255',
@@ -148,7 +151,7 @@ class FishpediaControllerAPI extends Controller
 
         // Update data lainnya
         $fishpedia->update($request->only([
-            'nama_ilmiah', 'kategori', 'asal', 'ukuran', 'karakteristik', 'akuarium',
+            'nama','nama_ilmiah', 'kategori', 'asal', 'ukuran', 'karakteristik', 'akuarium',
             'suhu_ideal', 'ph_air', 'salinitas', 'pencahayaan'
         ]));
 

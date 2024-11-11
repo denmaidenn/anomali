@@ -11,7 +11,14 @@
                         <form method="POST" action="{{ route('fishpedia.update', $fish->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT') <!-- Menggunakan PUT untuk update -->
-                    
+                        
+                        <!-- Nama Ilmiah -->
+                        <div class="form-group">
+                            <label for="name">Nama</label>
+                            <input name="name" type="text" class="form-control" id="name" value="{{ old('name', $fish->name) }}" required>
+                            @error('name') <div class="text-danger">{{ $message }}</div> @enderror
+                        </div>
+                        
                         <!-- Nama Ilmiah -->
                         <div class="form-group">
                             <label for="nama_ilmiah">Nama Ilmiah</label>

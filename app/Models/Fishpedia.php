@@ -14,6 +14,7 @@ class Fishpedia extends Model
 
     // Menentukan atribut yang dapat diisi (fillable)
     protected $fillable = [
+        'nama',
         'nama_ilmiah',
         'kategori',
         'asal',

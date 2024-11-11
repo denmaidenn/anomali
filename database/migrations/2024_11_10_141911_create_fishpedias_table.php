@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('fishpedias', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
             $table->string('nama_ilmiah');
             $table->enum('kategori', ['Ikan Hias Air Tawar', 'Ikan Hias Air Laut', 'Koi', 'Cupang', 'Gabus']);
             $table->string('asal');
