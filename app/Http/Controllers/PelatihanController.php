@@ -81,4 +81,10 @@ class PelatihanController extends Controller
 
         return redirect()->route('pelatihan.index')->with('success', 'Data pelatihan berhasil dihapus!');
     }
+
+    public function show($id)
+    {
+        $pelatihan = Pelatihan::findOrFail($id); // Pastikan ada relasi `user` untuk mengambil data user terkait
+        return view('pelatihan.show', compact('pelatihan'), ['title' => 'Pelatihan']);
+    }
 }

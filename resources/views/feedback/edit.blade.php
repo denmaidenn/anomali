@@ -7,31 +7,32 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title mb-4">Edit User Data</h5>
-                    <form class="forms-sample" method="POST" action="{{ route('user.update', $formUser->id) }}">
+                    <h5 class="card-title mb-4">Edit Feedback</h5>
+                    <form class="forms-sample" method="POST" action="{{ route('feedback.update', $feedback->id) }}">
                         @csrf
                         @method('PUT') <!-- Menggunakan PUT untuk update data -->
 
+                        <!-- Dropdown untuk memilih User -->
                         <div class="form-group">
-                            <label for="exampleInputName1">User ID</label>
-                            <input name="name" type="text" class="form-control p-input" id="exampleInputName1" placeholder="User ID" value="{{ old('name', $formUser->name) }}" required>
-                            @error('name')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <label for="user_id">User</label>
+                            <select class="form-control" id="user_id" name="user_id" required>
+                                <option value="" disabled>Pilih User</option>
+                                @foreach($formusers as $formuser)
+                                    <option value="{{ $formuser->id }}" {{ $formuser->id == $feedback->user_id ? 'selected' : '' }}>
+                                        {{ $formuser->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Komentar</label>
-                            <input name="email" type="email" class="form-control p-input" id="exampleInputEmail1" placeholder="Enter komentar" value="{{ old('email', $formUser->email) }}" required>
-                            @error('email')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <label for="komentar">Komentar</label>
+                            <textarea name="komentar" class="form-control p-input" id="komentar" placeholder="Masukkan komentar Anda" required>{{ old('komentar', $feedback->komentar) }}</textarea>
                         </div>
-
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Update</button>
-                            <a href="{{ route('user.index') }}" class="btn btn-secondary">Batal</a>
+                            <a href="{{ route('feedback.index') }}" class="btn btn-secondary">Batal</a>
                         </div>
 
                     </form>

@@ -42,10 +42,10 @@
                                 <th>Suhu Ideal</th>
                                 <th>pH Air</th>
                                 <th>Salinitas</th>
-                                <th>Pencahayaan</th>
                                 <th>Gambar</th>
-                                <th>Manage</th>
-                                <th>Action</th>
+                                <th>Details</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="fishpedia-table-body">
@@ -57,5 +57,7 @@
         </div>
     </div>
 </div>
+
+
 
 

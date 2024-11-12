@@ -119,4 +119,10 @@ class FishpediaController extends Controller
 
         return redirect()->route('fishpedia.index')->with('success', 'Data ikan berhasil dihapus!');
     }
+
+    public function show($id) {
+        $fish = Fishpedia::findOrFail($id); // Mengambil data ikan berdasarkan ID
+        return view('fishpedia.show', compact('fish'), ['title' => 'Fishpedia']);
+}
+
 }

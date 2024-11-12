@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/{id}/edituser', [UserController::class,'edit'])->name('user.edit');
         Route::put('/{id}/manageuser', [FormController::class,'update'])->name('user.update');
         Route::delete('/{id}/deleteuser', [FormController::class,'delete'])->name('user.delete');
+        Route::get('/{id}/show', [UserController::class,'show'])->name('user.show');
     
     });
 
@@ -60,6 +61,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/{id}/edit', [PelatihanController::class, 'edit'])->name('pelatihan.edit');
         Route::put('/{id}/update', [PelatihanController::class,'update'])->name('pelatihan.update');
         Route::delete('/{id}/delete', [PelatihanController::class,'destroy'])->name('pelatihan.destroy');
+        Route::get('/{id}/show', [PelatihanController::class,'show'])->name('pelatihan.show');
     
     });
 
@@ -70,10 +72,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', [FishpediaController::class,'index'])->name('fishpedia.index');
         Route::get('/create', [FishpediaController::class,'create'])->name('fishpedia.create');
         Route::post('/store', [FishpediaController::class, 'store'])->name('fishpedia.store');
-        Route::get('/manage/{id}', [FishpediaController::class, 'edit'])->name('fishpedia.edit');
-        Route::put('/update/{id}', [FishpediaController::class, 'update'])->name('fishpedia.update');
-        Route::delete('/delete/{id}', [FishpediaController::class, 'destroy'])->name('fishpedia.delete');
-    
+        Route::get('/{id}/edit', [FishpediaController::class, 'edit'])->name('fishpedia.edit');
+        Route::put('/{id}/update', [FishpediaController::class, 'update'])->name('fishpedia.update');
+        Route::delete('/{id}/delete', [FishpediaController::class, 'destroy'])->name('fishpedia.delete');
+        Route::get('/{id}/show', [FishpediaController::class, 'show'])->name('fishpedia.show');
     });
 
     # FISHMART VIEW 
@@ -94,9 +96,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', [FeedbackController::class,'index'])->name('feedback.index');
         Route::get('/create', [FeedbackController::class,'create'])->name('feedback.create');
         Route::post('/store', [FeedbackController::class, 'store'])->name('feedback.store');
-        Route::get('/manage/{id}', [FeedbackController::class, 'edit'])->name('feedback.edit');
-        Route::put('/update/{id}', [FeedbackController::class, 'update'])->name('feedback.update');
-        Route::delete('/delete/{id}', [FeedbackController::class, 'destroy'])->name('feedback.delete');
+        Route::get('/{id}/edit', [FeedbackController::class, 'edit'])->name('feedback.edit');
+        Route::put('/{id}/update', [FeedbackController::class, 'update'])->name('feedback.update');
+        Route::delete('/{id}/delete', [FeedbackController::class, 'destroy'])->name('feedback.delete');
+        Route::get('/{id}/show', [FeedbackController::class, 'show'])->name('feedback.show');
     
     });
 

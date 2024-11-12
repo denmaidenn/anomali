@@ -44,8 +44,9 @@ class FeedbackController extends Controller
     {
         // Find feedback by ID for editing
         $feedback = Feedback::findOrFail($id);
+        $formusers = FormUser::all();
 
-        return view('feedback.edit', compact('feedback'), ['title' => 'Edit Feedback']);
+        return view('feedback.edit', compact('feedback', 'formusers'), ['title' => 'Edit Feedback']);
     }
 
     public function update(Request $request, $id)
@@ -74,4 +75,11 @@ class FeedbackController extends Controller
 
         return redirect()->route('feedback.index')->with('success', 'Feedback berhasil dihapus!');
     }
+
+    public function show($id)
+    {
+        $feedback = Feedback::with('user')->findOrFail($id); // Pastikan ada relasi `user` untuk mengambil data user terkait
+        return view('feedback.show', compact('feedback'), ['title' => 'Show Feedback']);
+    }
+    
 }

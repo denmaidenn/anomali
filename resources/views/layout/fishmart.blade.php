@@ -30,9 +30,9 @@
                                 <th>Stok</th>
                                 <th>Harga</th>
                                 <th>Gambar</th>
-                                <th>Detail</th>
-                                <th>Manage</th>
-                                <th>Hapus</th>
+                                <th>Details</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="fishmart-table-body">

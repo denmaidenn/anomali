@@ -33,11 +33,13 @@
 @endsection
 
 @section('scripts')
+
 <script>
-    $(document).ready(function() {
+
+
         // Load semua data saat halaman selesai dimuat
         // GET
-        loadUserData();
+        loadUserData(); 
         loadFishpediaData();
         loadPelatihanData();
         loadFishmartData();
@@ -59,7 +61,7 @@
                                     <td>${user.name}</td>
                                     <td>${user.email}</td>
                                     <td>${user.username}</td>
-                                    <td>${user.password}</td>
+                                    <td><a href="/user/${user.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
                                     <td><a href="/user/${user.id}/edituser" class="btn btn-primary btn-sm">Manage</a></td>
                                     <td>
                                         <form action="/user/${user.id}/deleteuser" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');">
@@ -105,13 +107,13 @@
                                     <td>${fish.suhu_ideal} °C</td>
                                     <td>${fish.ph_air}</td>
                                     <td>${fish.salinitas}</td>
-                                    <td>${fish.pencahayaan}</td>
                                     <td>
                                         ${fish.gambar_ikan ? `<img src="/storage/${fish.gambar_ikan}" alt="Gambar Ikan" style="width: 50px; height: auto;">` : 'No Image'}
                                     </td>
-                                    <td><a href="/fishpedia/manage/${fish.id}" class="btn btn-primary btn-sm">Manage</a></td>
+                                   <td><a href="/fishpedia/${fish.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
+                                    <td><a href="/fishpedia/${fish.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
                                     <td>
-                                        <form action="/fishpedia/delete/${fish.id}" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');">
+                                        <form action="/fishpedia/${fish.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">Remove</button>
@@ -149,6 +151,7 @@
                                     <td><a href="${item.video_pelatihan}" target="_blank">Lihat Video</a></td>
                                     <td>${item.deskripsi_pelatihan}</td>
                                     <td>Rp ${parseFloat(item.harga).toLocaleString()}</td>
+                                    <td><a href="/pelatihan/${item.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
                                     <td><a href="/pelatihan/${item.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
                                     <td>
                                         <form action="/pelatihan/${item.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
@@ -252,6 +255,5 @@
                 }
             });
         }
-    });
 </script>
 @endsection

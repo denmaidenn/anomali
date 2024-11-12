@@ -2,12 +2,12 @@
 
 @section('content')
 <div class="content-wrapper">
-    <h3 class="page-heading mb-4 font-weight-bold">Detail Pelatihan</h3>
+    <h3 class="page-heading mb-4 font-weight-bold">Detail Feedback</h3>
     <div class="row mb-2">
         <div class="col-lg-12">
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">{{ $pelatihan->deskripsi_pelatihan }}</h5>
+                    <h5 class="mb-0">Feedback oleh {{ $feedback->user->name ?? 'User Tidak Ditemukan' }}</h5>
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
@@ -15,36 +15,28 @@
                             <strong>User:</strong>
                         </div>
                         <div class="col-md-8">
-                            <p>{{ $pelatihan->user->name ?? 'User Tidak Ditemukan' }}</p>
+                            <p>{{ $feedback->user->name ?? 'Tidak ada user.' }}</p>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <strong>Deskripsi Pelatihan:</strong>
+                            <strong>Komentar:</strong>
                         </div>
                         <div class="col-md-8">
-                            <p>{{ $pelatihan->deskripsi_pelatihan ?? 'Tidak ada deskripsi.' }}</p>
+                            <p>{{ $feedback->komentar ?? 'Tidak ada komentar.' }}</p>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <strong>Video Pelatihan:</strong>
+                            <strong>Tanggal Dibuat:</strong>
                         </div>
                         <div class="col-md-8">
-                            <a href="{{ $pelatihan->video_pelatihan }}" target="_blank">{{ $pelatihan->video_pelatihan }}</a>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <strong>Harga:</strong>
-                        </div>
-                        <div class="col-md-8">
-                            <p>Rp {{ number_format($pelatihan->harga, 2) }}</p>
+                            <p>{{ $feedback->created_at->format('d M Y H:i') }}</p>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end mt-4">
-                        <a href="{{ route('pelatihan.index') }}" class="btn btn-secondary me-2">Kembali</a>
-                        <a href="{{ route('pelatihan.edit', $pelatihan->id) }}" class="btn btn-primary">Edit Pelatihan</a>
+                        <a href="{{ route('feedback.index') }}" class="btn btn-secondary me-2">Kembali</a>
+                        <a href="{{ route('feedback.edit', $feedback->id) }}" class="btn btn-primary">Edit Feedback</a>
                     </div>
                 </div>
             </div>

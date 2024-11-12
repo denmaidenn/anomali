@@ -36,9 +36,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="deskripsi">Deskripsi Pelatihan</label>
-                            <textarea name="deskripsi" class="form-control" id="deskripsi" rows="4" placeholder="Masukkan deskripsi pelatihan" required>{{ old('deskripsi', $pelatihan->deskripsi) }}</textarea>
-                            @error('deskripsi')
+                            <label for="deskripsi_pelatihan">Deskripsi Pelatihan</label>
+                            <textarea name="deskripsi_pelatihan" class="form-control" id="deskripsi_pelatihan" rows="4" placeholder="Masukkan Deskripsi pelatihan" required>{{ old('deskripsi_pelatihan', $pelatihan->deskripsi_pelatihan) }}</textarea>
+                            @error('deskripsi_pelatihan')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>

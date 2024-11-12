@@ -37,8 +37,9 @@
                                         <th>Video Pelatihan</th>
                                         <th>Deskripsi</th>
                                         <th>Harga</th>
-                                        <th>Manage</th>
-                                        <th>Hapus</th>
+                                        <th>Details</th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody id="pelatihan-table-body">
