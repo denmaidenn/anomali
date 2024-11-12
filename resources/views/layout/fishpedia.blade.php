@@ -58,6 +58,61 @@
     </div>
 </div>
 
+@section('fishpedia_ajax')
+    <script>
+        loadFishpediaData();
+
+        // Fungsi untuk memuat data Fishpedia
+        function loadFishpediaData() {
+            $.ajax({
+                url: '/api/fishpedia',
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    $('#fishpedia-table-body').empty();
+                    if (response.success && response.data.length > 0) {
+                        response.data.forEach(function(fish, index) {
+                            $('#fishpedia-table-body').append(`
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${fish.nama}</td>
+                                    <td>${fish.nama_ilmiah}</td>
+                                    <td>${fish.kategori}</td>
+                                    <td>${fish.asal}</td>
+                                    <td>${fish.ukuran}</td>
+                                    <td>${fish.karakteristik}</td>
+                                    <td>${fish.akuarium}</td>
+                                    <td>${fish.suhu_ideal} °C</td>
+                                    <td>${fish.ph_air}</td>
+                                    <td>${fish.salinitas}</td>
+                                    <td>
+                                        ${fish.gambar_ikan ? `<img src="/storage/${fish.gambar_ikan}" alt="Gambar Ikan" style="width: 50px; height: auto;">` : 'No Image'}
+                                    </td>
+                                   <td><a href="/fishpedia/${fish.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
+                                    <td><a href="/fishpedia/${fish.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
+                                    <td>
+                                        <form action="/fishpedia/${fish.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            `);
+                        });
+                    } else {
+                        $('#fishpedia-table-body').append('<tr><td colspan="15" class="text-center">No fish data available.</td></tr>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    alert('Terjadi kesalahan saat memuat data Fishpedia.');
+                }
+            });
+        }        
+    </script>    
+@endsection
+
 
 
 

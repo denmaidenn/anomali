@@ -41,7 +41,7 @@
     </div>
 
     <!-- Script for AJAX to fetch feedback data -->
-     @section('ajax')
+     @section('feedback_ajax')
         <script>
             loadFeedbackData();
 

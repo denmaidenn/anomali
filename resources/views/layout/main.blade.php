@@ -54,6 +54,12 @@
   <script src="/js/maps.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   @yield('scripts')
+  @yield('user_ajax')
+  @yield('fishpedia_ajax')
+  @yield('pelatihan_ajax')
+  @yield('fishmart_ajax')
+  @yield('feedback_ajax')
+
 </body>
 
 </html>

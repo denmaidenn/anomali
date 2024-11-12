@@ -52,3 +52,49 @@
             </div>
         </div>
 
+        @section('pelatihan_ajax')
+            <script>
+                loadPelatihanData();
+                // Fungsi untuk memuat data Pelatihan
+                function loadPelatihanData() {
+                    $.ajax({
+                        url: '/api/pelatihan',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(response) {
+                            $('#pelatihan-table-body').empty();
+                            if (response.success && Array.isArray(response.data) && response.data.length > 0) {
+                                response.data.forEach(function(item, index) {
+                                    $('#pelatihan-table-body').append(`
+                                        <tr>
+                                            <td>${index + 1}</td>
+                                            <td>${item.id_user}</td>
+                                            <td>${item.user.name}</td>
+                                            <td><a href="${item.video_pelatihan}" target="_blank">Lihat Video</a></td>
+                                            <td>${item.deskripsi_pelatihan}</td>
+                                            <td>Rp ${parseFloat(item.harga).toLocaleString()}</td>
+                                            <td><a href="/pelatihan/${item.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
+                                            <td><a href="/pelatihan/${item.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
+                                            <td>
+                                                <form action="/pelatihan/${item.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    `);
+                                });
+                            } else {
+                                $('#pelatihan-table-body').append('<tr><td colspan="8" class="text-center">Tidak ada data pelatihan.</td></tr>');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                            alert('Terjadi kesalahan saat memuat data pelatihan.');
+                        }
+                    });
+                }             
+            </script>
+        @endsection
+
