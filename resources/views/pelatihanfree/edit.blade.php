@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <h5 class="card-title mb-4">Form Edit Data Pelatihan</h5>
 
-                    <!-- Notifikasi sukses dan error -->
+                    <!-- Notification for success and error -->
                     @if (session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
@@ -21,11 +21,11 @@
                         </div>
                     @endif
 
-                    <form class="forms-sample" method="POST" action="{{ route('pelatihan.update', $pelatihan->id) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('pelatihanfree.update', $pelatihan->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
-                        <!-- Dropdown untuk memilih Pelatih -->
+                        <!-- Dropdown for selecting trainer -->
                         <div class="form-group">
                             <label for="id_user">Pelatih</label>
                             <select class="form-control" id="id_user" name="id_user" required>
@@ -41,7 +41,7 @@
                             @enderror
                         </div>
 
-                        <!-- Judul Pelatihan -->
+                        <!-- Training Title -->
                         <div class="form-group">
                             <label for="judul">Judul Pelatihan</label>
                             <input name="judul" type="text" class="form-control" id="judul" placeholder="Masukkan judul pelatihan" value="{{ old('judul', $pelatihan->judul) }}" required>
@@ -50,7 +50,7 @@
                             @enderror
                         </div>
 
-                        <!-- Video Pelatihan -->
+                        <!-- Training Video -->
                         <div class="form-group">
                             <label for="video_pelatihan">Video Pelatihan</label>
                             <input name="video_pelatihan" type="file" class="form-control" id="video_pelatihan">
@@ -63,7 +63,7 @@
                             @enderror
                         </div>
 
-                        <!-- Gambar Pelatihan -->
+                        <!-- Training Image -->
                         <div class="form-group">
                             <label for="gambar_pelatihan">Gambar Pelatihan (Optional)</label>
                             <input name="gambar_pelatihan" type="file" class="form-control" id="gambar_pelatihan">
@@ -77,7 +77,7 @@
                             @enderror
                         </div>
 
-                        <!-- Deskripsi Pelatihan -->
+                        <!-- Training Description -->
                         <div class="form-group">
                             <label for="deskripsi_pelatihan">Deskripsi Pelatihan</label>
                             <textarea name="deskripsi_pelatihan" class="form-control" id="deskripsi_pelatihan" rows="4" placeholder="Masukkan deskripsi pelatihan" required>{{ old('deskripsi_pelatihan', $pelatihan->deskripsi_pelatihan) }}</textarea>
@@ -87,7 +87,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                        <a href="{{ route('pelatihan.index') }}" class="btn btn-secondary">Batal</a>
+                        <a href="{{ route('pelatihanfree.index') }}" class="btn btn-secondary">Batal</a>
                     </form>
                 </div>
             </div>

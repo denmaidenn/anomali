@@ -13,13 +13,13 @@ class PelatihanfreeController extends Controller
     public function index()
     {
         $pelatihan = PelatihanFree::with('user')->get();
-        return view('pelatihan.index', ['title' => 'Pelatihan', 'pelatihan' => $pelatihan]);
+        return view('pelatihanfree.index', ['title' => 'Pelatihan', 'pelatihan' => $pelatihan]);
     }
 
     public function create()
     {
         $pelatih = Pelatih::all(); // Ambil semua pelatih
-        return view('pelatihan.create', ['title' => 'Pelatihan', 'pelatih' => $pelatih]);
+        return view('pelatihanfree.create', ['title' => 'Pelatihan', 'pelatih' => $pelatih]);
     }
 
     public function store(Request $request)
@@ -51,7 +51,7 @@ class PelatihanfreeController extends Controller
             'deskripsi_pelatihan' => $validatedData['deskripsi_pelatihan'],
         ]);
 
-        return redirect()->route('pelatihan.index')->with('success', 'Pelatihan berhasil ditambahkan');
+        return redirect()->route('pelatihanfree.index')->with('success', 'Pelatihan berhasil ditambahkan');
     }
 
     public function edit($id)
@@ -59,7 +59,7 @@ class PelatihanfreeController extends Controller
         $pelatihan = PelatihanFree::findOrFail($id);
         $pelatih = Pelatih::all();
 
-        return view('pelatihan.edit', compact('pelatihan', 'pelatih'), ['title' => 'Pelatihan']);
+        return view('pelatihanfree.edit', compact('pelatihan', 'pelatih'), ['title' => 'Pelatihan']);
     }
 
     public function update(Request $request, $id)
@@ -96,19 +96,19 @@ class PelatihanfreeController extends Controller
         // Save the updates
         $pelatihan->save();
 
-        return redirect()->route('pelatihan.index')->with('success', 'Pelatihan berhasil diperbarui');
+        return redirect()->route('pelatihanfree.index')->with('success', 'Pelatihan berhasil diperbarui');
     }
 
     public function destroy($id)
     {
         $pelatihan = PelatihanFree::findOrFail($id);
         $pelatihan->delete();
-        return redirect()->route('pelatihan.index')->with('success', 'Pelatihan berhasil dihapus');
+        return redirect()->route('pelatihanfree.index')->with('success', 'Pelatihan berhasil dihapus');
     }
 
     public function show($id)
     {
         $pelatihan = PelatihanFree::with('user')->findOrFail($id);
-        return view('pelatihan.show', compact('pelatihan'), ['title' => 'Pelatihan']);
+        return view('pelatihanfree.show', compact('pelatihan'), ['title' => 'Pelatihan']);
     }
 }

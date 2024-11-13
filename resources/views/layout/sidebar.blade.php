@@ -33,7 +33,7 @@
               </a>
             </li>
 
-            <li class="nav-item {{ Request::is('pelatihan') ? 'active':'' }}">
+            <li class="nav-item {{ Request::is('pelatihanfree') ? 'active':'' }}">
               <a class="nav-link" href="{{ route('pelatihanfree.index') }}">
               <img src="{{ asset('images/pelatihan.png') }}" alt="" >
                 <span class="menu-title">Pelatihan (Free)</span>

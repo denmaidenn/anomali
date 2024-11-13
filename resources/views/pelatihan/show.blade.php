@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-4"><strong>Pelatih:</strong></div>
-                        <div class="col-md-8">{{ $pelatihan->pelatih->name ?? 'Pelatih Tidak Ditemukan' }}</div>
+                        <div class="col-md-8">{{ $pelatihan->user->nama ?? 'Pelatih Tidak Ditemukan' }}</div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-4"><strong>Deskripsi Pelatihan:</strong></div>
