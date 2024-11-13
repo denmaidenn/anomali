@@ -57,9 +57,11 @@
   @yield('user_ajax')
   @yield('fishpedia_ajax')
   @yield('pelatihan_ajax')
+  @yield('pelatihanfree_ajax')
   @yield('pelatih_ajax')
   @yield('fishmart_ajax')
   @yield('feedback_ajax')
+  
 
 </body>
 

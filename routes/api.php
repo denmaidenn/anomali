@@ -7,6 +7,7 @@ use App\Http\Controllers\API\FishpediaControllerAPI;
 use App\Http\Controllers\API\FishmartControllerAPI;
 use App\Http\Controllers\API\MobileAuthControllerAPI;
 use App\Http\Controllers\API\FeedbackControllerAPI;
+use App\Http\Controllers\API\PelatihanfreeControllerAPI;
 use App\Http\Controllers\API\PelatihControllerAPI;
 
 
@@ -53,6 +54,15 @@ Route::prefix('formuser')->group(function () {
         Route::put('/{id}', [PelatihanControllerAPI::class, 'update']);
         Route::delete('/{id}', [PelatihanControllerAPI::class, 'delete']);
     });
+
+    Route::prefix('pelatihanfree')->group(function () {
+        Route::get('/', [PelatihanfreeControllerAPI::class, 'index']);
+        Route::post('/create', [PelatihanfreeControllerAPI::class,'store']);
+        Route::get('/{id}', [PelatihanfreeControllerAPI::class, 'show']);
+        Route::put('/{id}', [PelatihanfreeControllerAPI::class, 'update']);
+        Route::delete('/{id}', [PelatihanfreeControllerAPI::class, 'delete']);
+    });
+
 
     Route::prefix('pelatih')->group(function () {
         Route::get('/', [PelatihControllerAPI::class, 'index']);

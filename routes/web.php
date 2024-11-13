@@ -7,6 +7,7 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\PelatihanController;
+use App\Http\Controllers\PelatihanfreeController;
 use App\Http\Controllers\FishmartController;
 use App\Http\Controllers\FishpediaController;
 use App\Http\Controllers\PelatihController;
@@ -63,6 +64,17 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/{id}/update', [PelatihanController::class,'update'])->name('pelatihan.update');
         Route::delete('/{id}/delete', [PelatihanController::class,'destroy'])->name('pelatihan.destroy');
         Route::get('/{id}/show', [PelatihanController::class,'show'])->name('pelatihan.show');
+    
+    });
+
+    Route::prefix('pelatihanfree')->group(function () {
+        Route::get('/', [PelatihanfreeController::class,'index'])->name('pelatihanfree.index');
+        Route::get('/create', [PelatihanfreeController::class, 'create'])->name('pelatihanfree.create');
+        Route::post('/store', [PelatihanfreeController::class, 'store'])->name('pelatihanfree.store');
+        Route::get('/{id}/edit', [PelatihanfreeController::class, 'edit'])->name('pelatihanfree.edit');
+        Route::put('/{id}/update', [PelatihanfreeController::class,'update'])->name('pelatihanfree.update');
+        Route::delete('/{id}/delete', [PelatihanfreeController::class,'destroy'])->name('pelatihanfree.destroy');
+        Route::get('/{id}/show',[ PelatihanfreeController::class,'show'])->name('pelatihanfree.show');
     
     });
 

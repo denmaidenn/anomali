@@ -4,6 +4,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center m-2">
                     <h5 class="card-title mb-0">Pelatihan Table</h5>
+                    <p class="designation">Free</p>
                     <div class="d-flex justify-content-center flex-grow-1 mx-4">
                         <div class="d-flex gap-2" style="width: 300px;">
                             <input type="text" class="form-control" id="searchInput" placeholder="Search...">
@@ -37,13 +38,12 @@
                                 <th>Video Pelatihan</th>
                                 <th>Deskripsi</th>
                                 <th>Gambar Pelatihan</th>
-                                <th>Harga</th>
                                 <th>Details</th>
                                 <th></th>
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody id="pelatihan-table-body">
+                        <tbody id="pelatihanfree-table-body">
                             <!-- Data akan dimuat di sini menggunakan AJAX -->
                         </tbody>
                     </table>
@@ -53,21 +53,21 @@
     </div>
 </div>
 
-@section('pelatihan_ajax')
+@section('pelatihanfree_ajax')
     <script>
         loadPelatihanData();
 
         // Fungsi untuk memuat data Pelatihan
         function loadPelatihanData() {
             $.ajax({
-                url: '/api/pelatihan',
+                url: '/api/pelatihanfree',
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {
-                    $('#pelatihan-table-body').empty(); // Clear the table body
+                    $('#pelatihanfree-table-body').empty(); // Clear the table body
                     if (response.success && response.data.length > 0) {
                         response.data.forEach(function(item, index) {
-                            $('#pelatihan-table-body').append(`
+                            $('#pelatihanfree-table-body').append(`
                                 <tr>
                                     <td>${index + 1}</td>
                                     <td>${item.user ? item.user.nama : 'No Pelatih'}</td>
@@ -77,11 +77,10 @@
                                     <td>
                                         ${item.gambar_pelatihan ? `<img src="/storage/${item.gambar_pelatihan}" alt="Gambar Pelatihan" style="width: 100px; height: auto;">` : 'No Image'}
                                     </td>
-                                    <td>Rp ${parseFloat(item.harga).toLocaleString()}</td>
-                                    <td><a href="/pelatihan/${item.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
-                                    <td><a href="/pelatihan/${item.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
+                                    <td><a href="/pelatihanfree/${item.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
+                                    <td><a href="/pelatihanfree/${item.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
                                     <td>
-                                        <form action="/pelatihan/${item.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
+                                        <form action="/pelatihanfree/${item.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">Remove</button>
@@ -91,7 +90,7 @@
                             `);
                         });
                     } else {
-                        $('#pelatihan-table-body').append('<tr><td colspan="10" class="text-center">Tidak ada data pelatihan.</td></tr>');
+                        $('#pelatihanfree-table-body').append('<tr><td colspan="10" class="text-center">Tidak ada data pelatihan.</td></tr>');
                     }
                 },
                 error: function(xhr, status, error) {
@@ -104,7 +103,7 @@
         // Fungsi pencarian untuk filter berdasarkan input
         function searchPelatihan() {
             const searchTerm = $('#searchInput').val().toLowerCase();
-            $('#pelatihan-table-body tr').each(function() {
+            $('#pelatihanfree-table-body tr').each(function() {
                 const rowText = $(this).text().toLowerCase();
                 if (rowText.indexOf(searchTerm) !== -1) {
                     $(this).show();

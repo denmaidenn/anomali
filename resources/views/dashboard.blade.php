@@ -24,6 +24,9 @@
     <!-- Tabel Pelatihan -->
     @include('layout.pelatihan')
 
+    <!-- Tabel Pelatihan(Free) -->
+    @include('layout.pelatihanfree')
+
     <!-- Table Pelatih -->
     @include('layout.pelatih')
 

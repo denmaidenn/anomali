@@ -41,7 +41,7 @@
                         <!-- Judul Pelatihan -->
                         <div class="form-group">
                             <label for="judul">Judul Pelatihan</label>
-                            <input name="judul" type="text" class="form-control" id="judul" placeholder="Masukkan judul pelatihan" value="{{ old('judul') }}" required>
+                            <input name="judul" type="text" class="form-control" id="judul" placeholder="Masukkan judul pelatihan"  required>
                             @error('judul')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
