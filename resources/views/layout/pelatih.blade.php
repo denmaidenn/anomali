@@ -3,8 +3,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between m-2">
-                        <h5 class="card-title mb-4">Feedback Table</h5>
-                        <a href="{{ route('feedback.create') }}" class="btn btn-primary">Tambah</a>
+                        <h5 class="card-title mb-4">Pelatih Table</h5>
+                        <a href="{{ route('pelatih.create') }}" class="btn btn-primary">Tambah</a>
                     </div>
                     <div class="table-responsive">
                         <!-- Success or error message -->
@@ -23,15 +23,17 @@
                             <thead>
                                 <tr class="text-primary">
                                     <th>No</th>
-                                    <th>User</th>
-                                    <th>Komentar</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>No. Telepon</th>
+                                    <th>Alamat</th>
                                     <th>Details</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody id="feedback-table-body">
-                                <!-- Feedback data will be loaded here with AJAX -->
+                            <tbody id="pelatih-table-body">
+                                <!-- Pelatih data will be loaded here with AJAX -->
                             </tbody>
                         </table>
                     </div>
@@ -40,29 +42,31 @@
         </div>
     </div>
 
-    <!-- Script for AJAX to fetch feedback data -->
-     @section('feedback_ajax')
+    <!-- Script for AJAX to fetch Pelatih data -->
+    @section('pelatih_ajax')
         <script>
-            loadFeedbackData();
+            loadPelatihData();
 
-            function loadFeedbackData() {
+            function loadPelatihData() {
                 $.ajax({
-                    url: '/api/feedback',
+                    url: '/api/pelatih',
                     type: 'GET',
                     dataType: 'json',
                     success: function(response) {
-                        $('#feedback-table-body').empty();
+                        $('#pelatih-table-body').empty();
                         if (response.data.length > 0) {
-                            response.data.forEach(function(feedback, index) {
-                                $('#feedback-table-body').append(`
+                            response.data.forEach(function(pelatih, index) {
+                                $('#pelatih-table-body').append(`
                                     <tr>
                                         <td>${index + 1}</td>
-                                        <td>${feedback.user ? feedback.user.name : 'Unknown User'}</td>
-                                        <td>${feedback.komentar}</td>
-                                        <td><a href="/feedback/show/${feedback.id}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
-                                        <td><a href="/feedback/edit/${feedback.id}" class="btn btn-primary btn-sm">Manage</a></td>
+                                        <td>${pelatih.nama}</td>
+                                        <td>${pelatih.email}</td>
+                                        <td>${pelatih.no_telp}</td>
+                                        <td>${pelatih.alamat}</td>
+                                        <td><a href="/pelatih/${pelatih.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
+                                        <td><a href="/pelatih/${pelatih.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
                                         <td>
-                                            <form action="/feedback/${feedback.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
+                                            <form action="/pelatih/${pelatih.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm">Remove</button>
@@ -72,15 +76,14 @@
                                 `);
                             });
                         } else {
-                            $('#feedback-table-body').append('<tr><td colspan="4" class="text-center">Tidak ada data feedback.</td></tr>');
+                            $('#pelatih-table-body').append('<tr><td colspan="7" class="text-center">Tidak ada data pelatih.</td></tr>');
                         }
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
-                        alert('Terjadi kesalahan saat memuat data feedback.');
+                        alert('Terjadi kesalahan saat memuat data pelatih.');
                     }
                 });
             }
         </script>
-     @endsection
-
+    @endsection

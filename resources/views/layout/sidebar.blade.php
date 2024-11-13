@@ -22,14 +22,7 @@
             <li class="nav-item {{ Request::is('user') ? 'active':'' }}">
               <a class="nav-link" href="{{ route('user.index') }}">
               <img src="{{ asset('images/logo_user.png') }}" alt="" >
-                <span class="menu-title">User Data</span>
-              </a>
-            </li>
-
-            <li class="nav-item {{ Request::is('fishpedia') ? 'active':'' }}">
-              <a class="nav-link" href="{{ route('fishpedia.index') }}">
-              <img src="{{ asset('images/lucide_fish.png') }}" alt=""  >
-                <span class="menu-title">Fishpedia</span>
+                <span class="menu-title">Mobile User</span>
               </a>
             </li>
 
@@ -37,6 +30,20 @@
               <a class="nav-link" href="{{ route('pelatihan.index') }}">
               <img src="{{ asset('images/pelatihan.png') }}" alt="" >
                 <span class="menu-title">Pelatihan</span>
+              </a>
+            </li>
+
+            <li class="nav-item {{ Request::is('pelatih') ? 'active':'' }}">
+              <a class="nav-link" href="{{ route('pelatih.index') }}">
+              <img src="{{ asset('images/pelatih.png') }}" alt="">
+                <span class="menu-title">Pelatih</span>
+              </a>
+            </li>
+
+            <li class="nav-item {{ Request::is('fishpedia') ? 'active':'' }}">
+              <a class="nav-link" href="{{ route('fishpedia.index') }}">
+              <img src="{{ asset('images/lucide_fish.png') }}" alt=""  >
+                <span class="menu-title">Fishpedia</span>
               </a>
             </li>
 

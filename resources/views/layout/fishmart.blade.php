@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between m-2">
-                    <h5 class="card-title mb-4">Tabel Fishmart</h5>
+                    <h5 class="card-title mb-4">Fishmart Table</h5>
                     <a href="{{ route('fishmart.create') }}" class="btn btn-primary">Tambah</a>
                 </div>
 
@@ -76,7 +76,7 @@
                                             <form action="/fishmart/${item.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
                                             </form>
                                         </td>
                                     </tr>

@@ -4,7 +4,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between m-2">
-                            <h5 class="card-title mb-4">User Data Table</h5>
+                            <h5 class="card-title mb-4">Mobile User Table</h5>
                             <a href="{{ route('user.create') }}" class="btn btn-primary">Tambah</a>
                         </div>
                         <div class="table-responsive">

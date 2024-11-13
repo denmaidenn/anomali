@@ -24,6 +24,9 @@
     <!-- Tabel Pelatihan -->
     @include('layout.pelatihan')
 
+    <!-- Table Pelatih -->
+    @include('layout.pelatih')
+
     <!-- Tabel Fishmart -->
     @include('layout.fishmart')
 

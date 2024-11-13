@@ -3,7 +3,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between m-2">
-                            <h5 class="card-title mb-4">Tabel Pelatihan</h5>
+                            <h5 class="card-title mb-4">Pelatihan Table</h5>
                             <div class="d-flex justify-content-center flex-grow-1 mx-4">
                                 <div class="d-flex gap-2" style="width: 300px;">
                                     <input type="text" class="form-control" id="searchInput" placeholder="Search...">
@@ -79,7 +79,7 @@
                                                 <form action="/pelatihan/${item.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
                                                 </form>
                                             </td>
                                         </tr>

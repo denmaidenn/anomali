@@ -88,7 +88,7 @@ class MobileAuthControllerAPI extends Controller
     }
 
     // Method untuk menghapus pengguna
-    public function destroy($id)
+    public function delete($id)
     {
         $user = FormUser::find($id);
         if (!$user) {

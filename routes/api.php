@@ -7,6 +7,7 @@ use App\Http\Controllers\API\FishpediaControllerAPI;
 use App\Http\Controllers\API\FishmartControllerAPI;
 use App\Http\Controllers\API\MobileAuthControllerAPI;
 use App\Http\Controllers\API\FeedbackControllerAPI;
+use App\Http\Controllers\API\PelatihControllerAPI;
 
 
 
@@ -34,7 +35,7 @@ Route::prefix('formuser')->group(function () {
     Route::prefix('formuser')->group(function () {
         Route::get('/{id}', [MobileAuthControllerAPI::class, 'show']);
         Route::put('/{id}', [MobileAuthControllerAPI::class,'update']);
-        Route::delete('/{id}', [MobileAuthControllerAPI::class,'destroy']);
+        Route::delete('/{id}', [MobileAuthControllerAPI::class,'delete']);
     });
 
     Route::prefix('admin')->group(function () {
@@ -51,6 +52,14 @@ Route::prefix('formuser')->group(function () {
         Route::get('/{id}', [PelatihanControllerAPI::class, 'show']);
         Route::put('/{id}', [PelatihanControllerAPI::class, 'update']);
         Route::delete('/{id}', [PelatihanControllerAPI::class, 'delete']);
+    });
+
+    Route::prefix('pelatih')->group(function () {
+        Route::get('/', [PelatihControllerAPI::class, 'index']);
+        Route::post('/create', [PelatihControllerAPI::class,'store']);
+        Route::get('/{id}', [PelatihControllerAPI::class, 'show']);
+        Route::put('/{id}', [PelatihControllerAPI::class, 'update']);
+        Route::delete('/{id}', [PelatihControllerAPI::class, 'delete']);
     });
 
     Route::prefix('fishpedia')->group(function () {

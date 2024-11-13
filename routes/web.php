@@ -9,6 +9,7 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\PelatihanController;
 use App\Http\Controllers\FishmartController;
 use App\Http\Controllers\FishpediaController;
+use App\Http\Controllers\PelatihController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SearchController; 
 //menampilkan view sign
@@ -100,6 +101,17 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/{id}/update', [FeedbackController::class, 'update'])->name('feedback.update');
         Route::delete('/{id}/delete', [FeedbackController::class, 'destroy'])->name('feedback.delete');
         Route::get('/{id}/show', [FeedbackController::class, 'show'])->name('feedback.show');
+    
+    });
+
+    Route::prefix('pelatih')->group(function () {
+        Route::get('/', [PelatihController::class,'index'])->name('pelatih.index');
+        Route::get('/create', [PelatihController::class,'create'])->name('pelatih.create');
+        Route::post('/store', [PelatihController::class, 'store'])->name('pelatih.store');
+        Route::get('/{id}/edit', [PelatihController::class, 'edit'])->name('pelatih.edit');
+        Route::put('/{id}/update', [PelatihController::class, 'update'])->name('pelatih.update');
+        Route::delete('/{id}/delete', [PelatihController::class, 'destroy'])->name('pelatih.delete');
+        Route::get('/{id}/show', [PelatihController::class, 'show'])->name('pelatih.show');
     
     });
 
