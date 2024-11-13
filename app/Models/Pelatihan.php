@@ -15,7 +15,9 @@ class Pelatihan extends Model
     // Kolom yang bisa diisi melalui mass assignment
     protected $fillable = [
         'id_user',
+        'judul',
         'video_pelatihan',
+        'gambar_pelatihan',
         'deskripsi_pelatihan',
         'harga',
     ];
@@ -26,6 +28,6 @@ class Pelatihan extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(Pelatih::class, 'id_user');
     }
 }

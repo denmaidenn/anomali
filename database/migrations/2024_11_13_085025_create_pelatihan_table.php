@@ -15,10 +15,12 @@ class CreatePelatihanTable extends Migration
     {
         Schema::create('pelatihan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
+            $table->foreignId('id_user')->constrained('pelatih');
+            $table->string('judul');
             $table->string('video_pelatihan');
+            $table->string('gambar_pelatihan')->nullable();
             $table->text('deskripsi_pelatihan');
-            $table->decimal('harga', 10, 2); // Menggunakan decimal untuk menyimpan harga
+            $table->decimal('harga', 10, 2);
             $table->timestamps();
         });
     }

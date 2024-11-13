@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="content-wrapper">
-    <h3 class="page-heading mb-4" style="font-weight: bold">Pelatihan</h3>
+    <h3 class="page-heading mb-4" style="font-weight: bold">Tambah Pelatihan</h3>
     <div class="row mb-2">
         <div class="col-lg-12">
             <div class="card">
@@ -11,50 +11,81 @@
 
                     <!-- Notifikasi sukses dan error -->
                     @if (session('success'))
-                      <div class="alert alert-success">
-                        {{ session('success') }}
-                      </div>
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
                     @endif
                     @if (session('error'))
-                      <div class="alert alert-danger">
-                        {{ session('error') }}
-                      </div>
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
                     @endif
 
-                    <!-- Form untuk menambah pelatihan baru -->
-                    <form id="pelatihan-form" action="{{ route('pelatihan.store') }}" method="POST">
+                    <form class="forms-sample" method="POST" action="{{ route('pelatihan.store') }}" enctype="multipart/form-data">
                         @csrf
 
-                        <!-- Dropdown untuk memilih User ID -->
+                        <!-- Dropdown untuk memilih Pelatih -->
                         <div class="form-group">
-                            <label for="id_user">User</label>
+                            <label for="id_user">Pelatih</label>
                             <select class="form-control" id="id_user" name="id_user" required>
-                                <option value="" disabled selected>Pilih User</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                <option value="" disabled selected>Pilih Pelatih</option>
+                                @foreach($pelatih as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
                                 @endforeach
                             </select>
+                            @error('id_user')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
+                        <!-- Judul Pelatihan -->
+                        <div class="form-group">
+                            <label for="judul">Judul Pelatihan</label>
+                            <input name="judul" type="text" class="form-control" id="judul" placeholder="Masukkan judul pelatihan" value="{{ old('judul') }}" required>
+                            @error('judul')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Video Pelatihan -->
                         <div class="form-group">
                             <label for="video_pelatihan">Video Pelatihan</label>
-                            <input type="text" class="form-control" id="video_pelatihan" name="video_pelatihan" placeholder="Masukkan URL video pelatihan" required>
+                            <input name="video_pelatihan" type="file" class="form-control" id="video_pelatihan" required>
+                            @error('video_pelatihan')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
+                        <!-- Gambar Pelatihan -->
+                        <div class="form-group">
+                            <label for="gambar_pelatihan">Gambar Pelatihan (Optional)</label>
+                            <input name="gambar_pelatihan" type="file" class="form-control" id="gambar_pelatihan">
+                            @error('gambar_pelatihan')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Deskripsi Pelatihan -->
                         <div class="form-group">
                             <label for="deskripsi_pelatihan">Deskripsi Pelatihan</label>
-                            <textarea class="form-control" id="deskripsi_pelatihan" name="deskripsi_pelatihan" rows="4" placeholder="Masukkan deskripsi pelatihan" required></textarea>
+                            <textarea name="deskripsi_pelatihan" class="form-control" id="deskripsi_pelatihan" rows="4" placeholder="Masukkan deskripsi pelatihan" required>{{ old('deskripsi_pelatihan') }}</textarea>
+                            @error('deskripsi_pelatihan')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
+                        <!-- Harga Pelatihan -->
                         <div class="form-group">
                             <label for="harga">Harga</label>
-                            <input type="number" class="form-control" id="harga" name="harga" placeholder="Masukkan harga pelatihan" required>
+                            <input name="harga" type="number" class="form-control" id="harga" placeholder="Masukkan harga pelatihan" value="{{ old('harga') }}" required>
+                            @error('harga')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a href="{{ route('pelatihan.index') }}" class="btn btn-secondary">Kembali</a>
+                        <button type="submit" class="btn btn-primary">Tambah Pelatihan</button>
+                        <a href="{{ route('pelatihan.index') }}" class="btn btn-secondary">Batal</a>
                     </form>
-
                 </div>
             </div>
         </div>
