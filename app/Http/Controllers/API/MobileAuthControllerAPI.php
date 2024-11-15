@@ -33,12 +33,7 @@ class MobileAuthControllerAPI extends Controller
         }
 
         // Buat pengguna baru
-        $user = FormUser::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'username' => $request->username,
-            'password' => bcrypt($request->password),
-        ]);
+        $user = FormUser::create($request->all());
 
         return response()->json(['success' => true, 'message' => 'User created successfully', 'user' => $user], 201);
     }
@@ -113,6 +108,7 @@ class MobileAuthControllerAPI extends Controller
 
     public function login(Request $request)
     {
+        // Validasi input
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
             'password' => 'required|string',
@@ -122,12 +118,17 @@ class MobileAuthControllerAPI extends Controller
             return response()->json($validator->errors(), 422);
         }
 
+        // Mencari pengguna berdasarkan email
         $user = FormUser::where('email', $request->email)->first();
 
+        // Memeriksa apakah pengguna ditemukan dan password cocok
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Email atau password salah'], 401);
+            return response()->json([
+                'message' => 'Email atau password salah'
+            ], 401);
         }
 
+        // Membuat token untuk pengguna
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -135,7 +136,7 @@ class MobileAuthControllerAPI extends Controller
             'message' => 'Login berhasil',
             'user' => $user,
             'token' => $token
-        ], 200);    
+        ], 200);
     }
 
     public function updatePaymentInfo(Request $request, $id)
