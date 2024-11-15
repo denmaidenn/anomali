@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('email')->unique(); // email (string, unique)
             $table->string('username')->unique(); // username (string, unique)
             $table->string('password'); // password (string)
+            $table->string('alamat')->nullable();
+            $table->string('no_telp')->nullable();
+            $table->string('gambar_profile')->nullable();
             $table->timestamps();
               // created_at and updated_at
         });

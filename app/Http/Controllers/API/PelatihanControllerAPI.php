@@ -58,21 +58,27 @@ class PelatihanControllerAPI extends Controller
 
     public function show($id)
     {
+        // Ambil data pelatihan dengan informasi user terkait (pelatih)
         $pelatihan = Pelatihan::with('user')->find($id);
-
+    
         if (!$pelatihan) {
             return response()->json([
                 'success' => false,
                 'message' => 'Pelatihan not found'
             ], 404);
         }
-
+    
+        // Ambil semua data pelatih untuk dropdown pemilihan pelatih
+        $pelatihList = Pelatih::where('role', 'pelatih')->get(['id', 'nama']); // Sesuaikan field 'nama' sesuai struktur
+    
         return response()->json([
             'success' => true,
             'message' => 'Pelatihan retrieved successfully',
-            'data' => $pelatihan
+            'data' => $pelatihan,
+            'pelatih' => $pelatihList
         ], 200);
     }
+    
 
     public function update(Request $request, $id)
     {

@@ -15,6 +15,9 @@ class FormUser extends Model
         'email',
         'username',
         'password',
+        'alamat', 
+        'no_telp',
+        'gambar_profile'
     ];
 
     protected $hidden = [

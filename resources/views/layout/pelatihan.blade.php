@@ -81,11 +81,11 @@
                                     <td><a href="/pelatihan/${item.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
                                     <td><a href="/pelatihan/${item.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
                                     <td>
-                                        <form action="/pelatihan/${item.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                                        </form>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="deletePelatihan(${item.id})">
+                                            Remove
+                                        </button>
+                                    </td>
                                     </td>
                                 </tr>
                             `);
@@ -100,6 +100,32 @@
                 }
             });
         }
+
+        // Function to delete a Pelatihan record
+        function deletePelatihan(id) {
+            if (confirm('Apakah Anda yakin menghapus data ini?')) {
+                $.ajax({
+                    url: `/api/pelatihan/${id}`,
+                    type: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`, // Replace with the actual token if required
+                    },
+                    success: function(response) {
+                        if (response.message === 'Pelatihan deleted successfully') {
+                            alert('Data pelatihan berhasil dihapus.');
+                            loadPelatihanData(); // Reload data after deletion
+                        } else {
+                            alert('Gagal menghapus data pelatihan.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                        alert('Terjadi kesalahan saat menghapus data pelatihan.');
+                    }
+                });
+            }
+        }
+
 
         // Fungsi pencarian untuk filter berdasarkan input
         function searchPelatihan() {

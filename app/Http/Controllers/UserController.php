@@ -27,7 +27,7 @@ class UserController extends Controller
 
     public function show($id) {
         $formuser = FormUser::findOrfail($id);
-        return view('user.show', compact('formuser'), ['title' => 'Pelatihan']);
+        return view('user.show', compact('formuser'), ['title' => 'Mobile User']);
     }
 
     
