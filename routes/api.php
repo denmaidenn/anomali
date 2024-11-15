@@ -17,7 +17,18 @@ use App\Http\Controllers\API\PelatihControllerAPI;
 // Route untuk menampilkan semua data ikan
 
 
+// Untuk Admin Login
 Route::post('/login', [AuthControllerAPI::class, 'in']);
+
+Route::prefix('admin')->group(function () {
+    Route::get('/', [AuthControllerAPI::class, 'index']);
+    Route::post('/create', [AuthControllerAPI::class,'store']);
+    Route::get('/{id}', [AuthControllerAPI::class, 'show']);
+    Route::put('/{id}', [AuthControllerAPI::class,'update']);
+    Route::delete('/{id}', [AuthControllerAPI::class,'delete']);
+});
+
+// Untuk Mobile User Register dan Login
 Route::prefix('formuser')->group(function () {
     Route::get('/', [MobileAuthControllerAPI::class, 'index']);
     Route::post('/create', [MobileAuthControllerAPI::class,'store']);
@@ -40,13 +51,7 @@ Route::prefix('formuser')->group(function () {
     Route::put('/{id}/paymentinfo', [MobileAuthControllerAPI::class,'updatePaymentInfo']);
 });
 
-Route::prefix('admin')->group(function () {
-    Route::get('/', [AuthControllerAPI::class, 'index']);
-    Route::post('/create', [AuthControllerAPI::class,'store']);
-    Route::get('/{id}', [AuthControllerAPI::class, 'show']);
-    Route::put('/{id}', [AuthControllerAPI::class,'update']);
-    Route::delete('/{id}', [AuthControllerAPI::class,'delete']);
-});
+
 
 Route::prefix('pelatihan')->group(function () {
     Route::get('/', [PelatihanControllerAPI::class, 'index']);
@@ -91,9 +96,11 @@ Route::prefix('fishmart')->group(function () {
 
 
 
-Route::middleware(['auth:sanctum'])->group(function () {
 
-    
+
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+
+
 
 
 

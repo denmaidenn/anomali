@@ -12,7 +12,7 @@ use App\Http\Controllers\FishmartController;
 use App\Http\Controllers\FishpediaController;
 use App\Http\Controllers\PelatihController;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\SearchController; 
+use App\Http\Controllers\SearchController;
 //menampilkan view sign
 Route::get('/', function () {
     return view('sign.index', ['title' => 'Sign In']);
@@ -28,7 +28,7 @@ Route::get('/', function () {
 
 
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['admin']], function () {
     Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 
 
@@ -47,7 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/{id}/manageuser', [FormController::class,'update'])->name('user.update');
         Route::delete('/{id}/deleteuser', [FormController::class,'delete'])->name('user.delete');
         Route::get('/{id}/show', [UserController::class,'show'])->name('user.show');
-    
+
     });
 
 
@@ -64,7 +64,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/{id}/update', [PelatihanController::class,'update'])->name('pelatihan.update');
         Route::delete('/{id}/delete', [PelatihanController::class,'destroy'])->name('pelatihan.destroy');
         Route::get('/{id}/show', [PelatihanController::class,'show'])->name('pelatihan.show');
-    
+
     });
 
     Route::prefix('pelatihanfree')->group(function () {
@@ -75,7 +75,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/{id}/update', [PelatihanfreeController::class,'update'])->name('pelatihanfree.update');
         Route::delete('/{id}/delete', [PelatihanfreeController::class,'destroy'])->name('pelatihanfree.destroy');
         Route::get('/{id}/show',[ PelatihanfreeController::class,'show'])->name('pelatihanfree.show');
-    
+
     });
 
     # FISHPEDIA VIEW
@@ -91,7 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/{id}/show', [FishpediaController::class, 'show'])->name('fishpedia.show');
     });
 
-    # FISHMART VIEW 
+    # FISHMART VIEW
     //untuk menampilkan view fishmart
 
     Route::prefix('fishmart')->group(function () {
@@ -102,7 +102,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/{id}/update', [FishmartController::class,'update'])->name('fishmart.update');
         Route::delete('/{id}/delete', [FishmartController::class,'destroy'])->name('fishmart.destroy');
         Route::get('/{id}/show', [FishmartController::class,'show'])->name('fishmart.show');
-    
+
     });
 
     Route::prefix('feedback')->group(function () {
@@ -113,7 +113,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/{id}/update', [FeedbackController::class, 'update'])->name('feedback.update');
         Route::delete('/{id}/delete', [FeedbackController::class, 'destroy'])->name('feedback.delete');
         Route::get('/{id}/show', [FeedbackController::class, 'show'])->name('feedback.show');
-    
+
     });
 
     Route::prefix('pelatih')->group(function () {
@@ -124,7 +124,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/{id}/update', [PelatihController::class, 'update'])->name('pelatih.update');
         Route::delete('/{id}/delete', [PelatihController::class, 'destroy'])->name('pelatih.delete');
         Route::get('/{id}/show', [PelatihController::class, 'show'])->name('pelatih.show');
-    
+
     });
 
 
