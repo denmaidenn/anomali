@@ -133,6 +133,27 @@ class SignController extends Controller
     return view('sign.edit', compact('user'), ['title' =>'Admin']);
     }
 
+    public function show($id)
+{
+    // Find the user by ID
+    $user = User::findOrFail($id);
+
+    // Return the view with the user data
+    return view('sign.show', compact('user'), ['title' =>'Admin']);
+}
+
+public function delete($id)
+{
+    // Mencari user berdasarkan ID
+    $user = User::findOrFail($id);
+
+    // Hapus data user
+    $user->delete();
+
+    // Redirect dengan pesan sukses setelah penghapusan
+    return redirect()->route('user.index')->with('success', 'Admin berhasil dihapus.');
+}
+
 
 
 }

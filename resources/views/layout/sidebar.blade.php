@@ -6,9 +6,9 @@
 
           </div>
           <div class="user-info">
-              <img src="{{ Auth::user()->gambar_profile ? asset('storage/' . Auth::user()->gambar_profile) : asset('images/user.png') }}" alt="User Photo" class="rounded-circle" style="width: 80px; height: 80px;">
-              <p class="name">{{ Auth::user()->name }}</p>
-              <p class="designation">{{ Auth::user()->email }}</p>
+              <img id="user-photo" src="{{ asset('images/user.png') }}" alt="User Photo" class="rounded-circle" style="width: 80px; height: 80px;">
+              <p id="user-name" class="name">Loading...</p>
+              <p id="user-email" class="designation">Loading...</p>
               <p class="designation">Admin</p>
               <span class="online"></span>
           </div>
@@ -70,11 +70,11 @@
               </a>
             </li>
 
-            <li class="nav-item {{ Request::is('admin') ? 'active':'' }}">
-              <a class="nav-link" href="{{ route('sign.edit', ['id' => Auth::user()->id] ) }}">
-              <img src="{{ asset('images/settings.png') }}" alt="" >
-                <span class="menu-title">Setting</span>
-              </a>
+            <li class="nav-item {{ Request::is('admin/*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('sign.show', ['id' => Auth::user()->id]) }}">
+                    <img src="{{ asset('images/settings.png') }}" alt="Settings Icon">
+                    <span class="menu-title">Settings</span>
+                </a>
             </li>
 
             <li class="nav-item {{ Request::is('logout') ? 'active':'' }}">
@@ -88,3 +88,36 @@
             </li>
           </ul>
         </nav>
+
+  <script>
+      // Fetch user data from the API
+      const userId = {{ Auth::user()->id }};
+      console.log("Fetching data for userId:", userId);
+
+      fetch(`/api/admin/${userId}`)
+          .then(response => {
+              console.log("API response status:", response.status);
+              return response.json();
+          })
+          .then(data => {
+              console.log("API response data:", data);
+              if (data.success) {
+                  const user = data.data;
+
+                  // Update user photo
+                  const userPhoto = user.gambar_profile ? `/storage/${user.gambar_profile}` : '/images/user.png';
+                  document.getElementById('user-photo').src = userPhoto;
+
+                  // Update user name and email
+                  document.getElementById('user-name').textContent = user.name;
+                  document.getElementById('user-email').textContent = user.email;
+
+                  console.log("User data successfully updated in the UI.");
+              } else {
+                  console.error("User not found:", data.message);
+              }
+          })
+          .catch(error => {
+              console.error("Error fetching user data:", error);
+          });
+  </script>

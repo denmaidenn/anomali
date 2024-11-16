@@ -83,7 +83,7 @@ Route::prefix('fishpedia')->group(function () {
 
 Route::prefix('fishmart')->group(function () {
     Route::get('/', [FishmartControllerAPI::class, 'index']);
-    Route::post('/create', [FishmartControllerAPI::class,'store']);
+    Route::post('/create', [FishmartControllerAPI::class,'store']);     
     Route::get('/{id}', [FishmartControllerAPI::class, 'show']);
     Route::put('/{id}', [FishmartControllerAPI::class, 'update']);
     Route::delete('/{id}', [FishmartControllerAPI::class, 'delete']);

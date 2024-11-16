@@ -101,7 +101,7 @@
                             `);
                         });
                     } else {
-                        $('#fishpedia-table-body').append('<tr><td colspan="15" class="text-center">No fish data available.</td></tr>');
+                        $('#fishpedia-table-body').append('<tr><td colspan="15" class="text-center">Tidak ada data Fishpedia.</td></tr>');
                     }
                 },
                 error: function(xhr, status, error) {

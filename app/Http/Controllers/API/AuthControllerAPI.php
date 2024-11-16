@@ -15,32 +15,34 @@ class AuthControllerAPI extends Controller
      * Membuat akun admin baru.
      */
     public function in(Request $request) {
-        // Validasi input
+        // Validate input
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
     
-        // Mencari pengguna berdasarkan email
+        // Find the user by email
         $user = User::where('email', $request->input('email'))->first();
     
-        // Memeriksa apakah pengguna ditemukan dan password cocok
+        // Check if user is found and the password matches
         if ($user && Hash::check($request->input('password'), $user->password)) {
-            // Login pengguna
+            // Login the user
             Auth::login($user);
     
-            // Membuat token setelah login
+            // Create token after login
             $token = $user->createToken('token_name')->plainTextToken;
     
-            // Kirim respons JSON dengan token
+            // Return success with the token
             return response()->json([
-                'message' => 'Login berhasil!',
+                'message' => 'Login successful!',
                 'token' => $token,
-            ]);
+            ], 200);
         } else {
-            return response()->json(['message' => 'Email atau password salah.'], 401);
+            // Return error if login fails
+            return response()->json(['message' => 'Email or password is incorrect.'], 401);
         }
     }
+    
     
 
     public function index()
@@ -119,6 +121,33 @@ class AuthControllerAPI extends Controller
     
         $user->update($validated);
     
-        return redirect()->route('admin.index')->with('success', 'User updated successfully!');
-    }  
+        return response()->json([
+            'success' => true,
+            'message' => 'User updated successfully!',
+        ]);    
+    }
+
+    public function delete($id)
+{
+    // Mencari pengguna berdasarkan ID
+    $user = User::find($id);
+
+    // Jika pengguna tidak ditemukan
+    if (!$user) {
+        return response()->json([
+            'success' => false,
+            'message' => 'User not found'
+        ], 404);
+    }
+
+    // Hapus pengguna
+    $user->delete();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'User deleted successfully'
+    ], 200);
+}
+    
+    
 }

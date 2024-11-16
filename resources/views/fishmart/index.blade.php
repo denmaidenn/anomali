@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="content-wrapper">
-    <h3 class="page-heading mb-4" style="font-weight: Bold">Fish Mart</h3>
+    <h3 class="page-heading mb-4" style="font-weight: Bold">Fishmart</h3>
 
     <!-- Sales Chart Card -->
     <div class="row mb-4">
