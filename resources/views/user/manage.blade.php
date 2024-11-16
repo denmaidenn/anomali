@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="content-wrapper">
-    <h3 class="page-heading mb-4">Forms</h3>
+    <h3 class="page-heading mb-4">Edit User Data</h3>
     <div class="row mb-2">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-4">Edit User Data</h5>
-                    <form id="userForm" class="forms-sample">
+                    <form id="userForm" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="name">Nama</label>
                             <input name="name" type="text" class="form-control p-input" id="name" placeholder="Nama" required>
@@ -64,63 +64,79 @@
 
 
 @section('user_ajax')
-
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const userId = {{ $formuser->id }};
-        const userForm = document.getElementById('userForm');
+document.addEventListener("DOMContentLoaded", function () {
+    const userId = {{ $formuser->id }}; // User ID
+    const userForm = document.getElementById('userForm');
 
-        // Fetch and populate user data
-        fetch(`/api/formuser/${userId}`)
-            .then(response => response.json())
-            .then(response => {
-                console.log("API Response:", response); // Log untuk melihat respons API
-            
-                if (response.success && response.data) {
-                    const user = response.data; // Akses data user di dalam objek data
-                
-                    // Populate form fields
-                    document.getElementById('name').value = user.name;
-                    document.getElementById('email').value = user.email;
-                    document.getElementById('username').value = user.username;
-                    document.getElementById('no_telp').value = user.no_telp;
-                    document.getElementById('alamat').value = user.alamat;
-                
-                    if (user.gambar_profile) {
-                        const currentImageContainer = document.getElementById('currentImageContainer');
-                        currentImageContainer.innerHTML = `
-                            <img src="/storage/${user.gambar_profile}" alt="Profile Picture" width="100" height="100">
-                            <p class="form-text text-muted">Gambar profil saat ini</p>
-                        `;
-                    }
-                } else {
-                    console.error('Error: User data not found or failed to fetch');
+    // Populate form fields from API
+    fetch(`/api/formuser/${userId}`)
+        .then(response => response.json())
+        .then(response => {
+            if (response.success && response.data) {
+                const user = response.data;
+                document.getElementById('name').value = user.name;
+                document.getElementById('email').value = user.email;
+                document.getElementById('username').value = user.username;
+                document.getElementById('no_telp').value = user.no_telp;
+                document.getElementById('alamat').value = user.alamat;
+
+                // Display current profile image if available
+                if (user.gambar_profile) {
+                    const currentImageContainer = document.getElementById('currentImageContainer');
+                    currentImageContainer.innerHTML = `
+                        <img src="/storage/${user.gambar_profile}" alt="Profile Picture" width="100" height="100">
+                        <p class="form-text text-muted">Gambar profil saat ini</p>
+                    `;
                 }
-            })
-            .catch(error => console.error('Error fetching user data:', error));
+            } else {
+                console.error('Data user tidak ditemukan.');
+            }
+        })
+        .catch(error => console.error('Error fetching user data:', error));
 
+    // Handle form submission
+    userForm.addEventListener('submit', function (e) {
+        e.preventDefault();
 
-        // Handle form submission
-        userForm.addEventListener('submit', function (e) {
-            e.preventDefault();
+        const formData = new FormData(userForm);
+        formData.append('_method', 'PUT'); // Laravel requires _method=PUT for PUT requests via form
 
-            const formData = new FormData(userForm);
-            fetch(`/api/formuser/${userId}`, {
-                method: 'PUT',
-                body: formData,
-
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message) {
-                    alert(data.message);
-                    window.location.href = "{{ route('user.index') }}";
-                }
-            })
-            .catch(error => {
-                console.error('Error updating user data:', error);
-            });
+        fetch(`/api/formuser/${userId}`, {
+            method: 'POST', // Using POST with _method=PUT
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            },
+            body: formData,
+        })
+        .then(response => {
+            if (!response.ok) throw response;
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                alert('User updated successfully!');
+                window.location.href = "{{ route('user.index') }}";
+            } else {
+                alert('Failed to update user.');
+            }
+        })
+        .catch(async error => {
+            if (error.status === 422) { // Validation error
+                const errorData = await error.json();
+                Object.keys(errorData).forEach(field => {
+                    document.getElementById(`error${capitalize(field)}`).innerText = errorData[field][0];
+                });
+            } else {
+                console.error('Update error:', error);
+            }
         });
     });
+
+    // Capitalize first letter for error message display
+    function capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+});
 </script>
 @endsection
