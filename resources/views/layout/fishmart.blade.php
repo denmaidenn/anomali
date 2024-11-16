@@ -83,7 +83,7 @@
                                 `);
                             });
                         } else {
-                            $('#fishmart-table-body').append('<tr><td colspan="10" class="text-center">No product data available.</td></tr>');
+                            $('#fishmart-table-body').append('<tr><td colspan="10" class="text-center">Tidak ada data Fishmart.</td></tr>');
                         }
                     },
                     error: function(xhr, status, error) {

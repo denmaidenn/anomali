@@ -49,6 +49,7 @@ Route::prefix('formuser')->group(function () {
     Route::put('/{id}', [MobileAuthControllerAPI::class,'update']);
     Route::delete('/{id}', [MobileAuthControllerAPI::class,'delete']);
     Route::put('/{id}/paymentinfo', [MobileAuthControllerAPI::class,'updatePaymentInfo']);
+    Route::put('/{id}/picture', [MobileAuthControllerAPI::class,'updatePicture']);
 });
 
 
@@ -88,7 +89,7 @@ Route::prefix('fishpedia')->group(function () {
 
 Route::prefix('fishmart')->group(function () {
     Route::get('/', [FishmartControllerAPI::class, 'index']);
-    Route::post('/create', [FishmartControllerAPI::class,'store']);
+    Route::post('/create', [FishmartControllerAPI::class,'store']);     
     Route::get('/{id}', [FishmartControllerAPI::class, 'show']);
     Route::put('/{id}', [FishmartControllerAPI::class, 'update']);
     Route::delete('/{id}', [FishmartControllerAPI::class, 'delete']);

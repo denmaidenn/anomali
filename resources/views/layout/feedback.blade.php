@@ -59,8 +59,8 @@
                                         <td>${index + 1}</td>
                                         <td>${feedback.user ? feedback.user.name : 'Unknown User'}</td>
                                         <td>${feedback.komentar}</td>
-                                        <td><a href="/feedback/show/${feedback.id}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
-                                        <td><a href="/feedback/edit/${feedback.id}" class="btn btn-primary btn-sm">Manage</a></td>
+                                        <td><a href="/feedback/${feedback.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
+                                        <td><a href="/feedback/${feedback.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
                                         <td>
                                             <form action="/feedback/${feedback.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
                                                 @csrf

@@ -16,7 +16,7 @@ class FishpediaController extends Controller
 
     public function create()
     {
-        return view('fishpedia.tambahikan', ['title' => 'Tambah Ikan']);
+        return view('fishpedia.tambahikan', ['title' => 'Fishpedia']);
     }
 
     public function store(Request $request)
@@ -65,7 +65,7 @@ class FishpediaController extends Controller
     public function edit($id)
     {
         $fishpedia = Fishpedia::findOrFail($id);
-        return view('fishpedia.edit', ['title' => 'Edit Ikan', 'fish' => $fishpedia]);
+        return view('fishpedia.edit', ['title' => 'Fishpedia', 'fish' => $fishpedia]);
     }
 
     public function update(Request $request, $id)

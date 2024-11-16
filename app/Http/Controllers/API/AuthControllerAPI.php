@@ -12,48 +12,39 @@ use Illuminate\Support\Facades\Auth;
 class AuthControllerAPI extends Controller
 {
     /**
-     * Login pengguna dan membuat token.
+     * Membuat akun admin baru.
      */
-    public function in(Request $request)
-    {
-        // Validasi input
+    public function in(Request $request) {
+        // Validate input
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
-        // Mencari pengguna berdasarkan email
+    
+        // Find the user by email
         $user = User::where('email', $request->input('email'))->first();
-
-        // Memeriksa apakah pengguna ditemukan dan password cocok
+    
+        // Check if user is found and the password matches
         if ($user && Hash::check($request->input('password'), $user->password)) {
-            // Login pengguna
+            // Login the user
             Auth::login($user);
-
-            // Buat token setelah login
+    
+            // Create token after login
             $token = $user->createToken('token_name')->plainTextToken;
-
-            // Memeriksa dan menetapkan peran jika tidak `admin`
-            if ($user->role !== 'admin') {
-                $user->role = 'admin';
-                $user->save();
-            }
-
-            // Kirim respons JSON dengan token dan informasi tambahan
+    
+            // Return success with the token
             return response()->json([
-                'success' => true,
-                'message' => 'Login berhasil!',
+                'message' => 'Login successful!',
                 'token' => $token,
-                'user' => $user,
             ], 200);
         } else {
-            return response()->json(['success' => false, 'message' => 'Email atau password salah.'], 401);
+            // Return error if login fails
+            return response()->json(['message' => 'Email or password is incorrect.'], 401);
         }
     }
+    
+    
 
-    /**
-     * Mengambil semua data pengguna.
-     */
     public function index()
     {
         // Mengambil semua data pengguna
@@ -61,14 +52,11 @@ class AuthControllerAPI extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Semua pengguna berhasil diambil',
-            'data' => $admins,
+            'message' => 'All Users retrieved successfully',
+            'data' => $admins
         ], 200);
     }
 
-    /**
-     * Menyimpan data pengguna baru.
-     */
     public function store(Request $request)
     {
         // Validasi data yang masuk
@@ -77,21 +65,21 @@ class AuthControllerAPI extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
         ]);
-
-        // Membuat pengguna baru dengan hash password
+    
+        // Membuat pengguna baru
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password), // Hash password
-            'role' => 'admin', // Menetapkan peran sebagai admin
+            'password' => bcrypt($request->password), // Hash password
         ]);
-
+    
         return response()->json([
             'success' => true,
-            'message' => 'Pengguna berhasil dibuat',
-            'data' => $user,
+            'message' => 'User created successfully',
+            'data' => $user
         ], 201);
     }
+
 
     /**
      * Mendapatkan data pengguna berdasarkan ID.
@@ -104,54 +92,62 @@ class AuthControllerAPI extends Controller
         if (!$admin) {
             return response()->json([
                 'success' => false,
-                'message' => 'Pengguna tidak ditemukan',
+                'message' => 'User not found'
             ], 404);
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Pengguna berhasil diambil',
-            'data' => $admin,
+            'message' => 'User retrieved successfully',
+            'data' => $admin
         ], 200);
     }
 
-    /**
-     * Memperbarui data pengguna.
-     */
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json(['success' => false, 'message' => 'Pengguna tidak ditemukan'], 404);
+        $user = User::findOrFail($id);
+    
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'gambar_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+    
+        // Upload gambar jika ada file baru
+        if ($request->hasFile('gambar_profile')) {
+            $filePath = $request->file('gambar_profile')->store('profile_pictures', 'public');
+            $validated['gambar_profile'] = $filePath;
         }
-
-        // Memperbarui nama dan email pengguna
-        $user->update($request->only(['name', 'email']));
-
+    
+        $user->update($validated);
+    
         return response()->json([
             'success' => true,
-            'message' => 'Pengguna berhasil diperbarui',
-            'data' => $user,
-        ], 200);
+            'message' => 'User updated successfully!',
+        ]);    
     }
 
-    /**
-     * Menghapus data pengguna.
-     */
     public function delete($id)
-    {
-        $user = User::find($id);
+{
+    // Mencari pengguna berdasarkan ID
+    $user = User::find($id);
 
-        if (!$user) {
-            return response()->json(['success' => false, 'message' => 'Pengguna tidak ditemukan'], 404);
-        }
-
-        $user->delete();
-
+    // Jika pengguna tidak ditemukan
+    if (!$user) {
         return response()->json([
-            'success' => true,
-            'message' => 'Pengguna berhasil dihapus',
-        ], 200);
+            'success' => false,
+            'message' => 'User not found'
+        ], 404);
     }
+
+    // Hapus pengguna
+    $user->delete();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'User deleted successfully'
+    ], 200);
+}
+    
+    
 }

@@ -32,7 +32,14 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 
 
-    //untuk logout
+    //untuk Edit Data Admin dan Update
+    Route::prefix('admin')->group(function () {
+        Route::get('/{id}/show', [SignController::class, 'show'])->name('sign.show');
+        Route::get('/{id}/edit', [SignController::class, 'edit'])->name('sign.edit');
+        Route::put('/{id}/update', [SignController::class, 'update'])->name('sign.update');
+        Route::delete('/{id}/delete', [SignController::class, 'delete'])->name('sign.delete');
+    });
+    
     Route::post('/logout', [SignController::class,'logout']);
 
 

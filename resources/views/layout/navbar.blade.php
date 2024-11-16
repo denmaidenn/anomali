@@ -7,6 +7,9 @@
         <button class="navbar-toggler d-lg-none navbar-dark" type="button" data-toggle="offcanvas">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <span class="menu-title">{{ Auth::user()->name}}</span>
+
+        <div>
+            <span>{{ Auth::user()->name }}</span>    
+        </div>
     </div>
 </nav>

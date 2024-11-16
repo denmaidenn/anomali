@@ -2,76 +2,52 @@
 
 @section('content')
 <div class="content-wrapper">
-    <h3 class="page-heading mb-4">Forms</h3>
+    <h3 class="page-heading mb-4">Edit User Data</h3>
     <div class="row mb-2">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-4">Edit User Data</h5>
-                    <form class="forms-sample" method="POST" action="{{ route('user.update', $formuser->id) }}" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-
+                    <form id="userForm" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="name">Nama</label>
-                            <input name="name" type="text" class="form-control p-input" id="name" placeholder="Nama" value="{{ old('name', $formuser->name) }}" required>
-                            @error('name')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <input name="name" type="text" class="form-control p-input" id="name" placeholder="Nama" required>
+                            <div id="errorName" class="text-danger"></div>
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email address</label>
-                            <input name="email" type="email" class="form-control p-input" id="email" placeholder="Enter email" value="{{ old('email', $formuser->email) }}" required>
-                            @error('email')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <input name="email" type="email" class="form-control p-input" id="email" placeholder="Enter email" required>
+                            <div id="errorEmail" class="text-danger"></div>
                         </div>
 
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input name="username" type="text" class="form-control p-input" id="username" placeholder="Username" value="{{ old('username', $formuser->username) }}" required>
-                            @error('username')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <input name="username" type="text" class="form-control p-input" id="username" placeholder="Username" required>
+                            <div id="errorUsername" class="text-danger"></div>
                         </div>
 
                         <div class="form-group">
                             <label for="password">Password (Kosongkan jika tidak ingin diubah)</label>
                             <input name="password" type="password" class="form-control p-input" id="password" placeholder="Password">
-                            <small class="form-text text-muted">Kosongkan jika tidak ingin mengubah password.</small>
                         </div>
 
                         <div class="form-group">
                             <label for="no_telp">Nomor Telepon</label>
-                            <input name="no_telp" type="text" class="form-control p-input" id="no_telp" placeholder="Nomor Telepon" value="{{ old('no_telp', $formuser->no_telp) }}">
-                            @error('no_telp')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <input name="no_telp" type="text" class="form-control p-input" id="no_telp" placeholder="Nomor Telepon">
+                            <div id="errorNoTelp" class="text-danger"></div>
                         </div>
 
                         <div class="form-group">
                             <label for="alamat">Alamat</label>
-                            <textarea name="alamat" class="form-control p-input" id="alamat" placeholder="Alamat">{{ old('alamat', $formuser->alamat) }}</textarea>
-                            @error('alamat')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <textarea name="alamat" class="form-control p-input" id="alamat" placeholder="Alamat"></textarea>
+                            <div id="errorAlamat" class="text-danger"></div>
                         </div>
 
                         <div class="form-group">
                             <label for="gambar_profile">Gambar Profil</label>
                             <input name="gambar_profile" type="file" class="form-control-file" id="gambar_profile">
-                            <small class="form-text text-muted">Unggah gambar profil baru jika ingin mengubahnya.</small>
-                            @error('gambar_profile')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-
-                            @if ($formuser->gambar_profile)
-                                <div class="mt-2">
-                                    <img src="{{ asset('storage/' . $formuser->gambar_profile) }}" alt="Profile Picture" width="100" height="100">
-                                    <p class="form-text text-muted">Gambar profil saat ini</p>
-                                </div>
-                            @endif
+                            <div id="currentImageContainer"></div>
                         </div>
 
                         <div class="form-group">
@@ -88,77 +64,79 @@
 
 
 @section('user_ajax')
-
 <script>
-    const userId = {{ $formuser->id }}; // User ID passed from the controller
+document.addEventListener("DOMContentLoaded", function () {
+    const userId = {{ $formuser->id }}; // User ID
+    const userForm = document.getElementById('userForm');
 
-    // Fetch user data from the API
-    window.onload = function() {
-        fetch(`/api/formuser/${userId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.user) {
-                    const user = data.user;
-
-                    // Pre-fill form fields with the user data
-                    document.getElementById('name').value = user.name;
-                    document.getElementById('email').value = user.email;
-                    document.getElementById('username').value = user.username;
-                    document.getElementById('no_telp').value = user.no_telp;
-                    document.getElementById('alamat').value = user.alamat;
-
-                    if (user.gambar_profile) {
-                        const imgElement = document.createElement('img');
-                        imgElement.src = `/storage/${user.gambar_profile}`;
-                        imgElement.alt = "Profile Picture";
-                        imgElement.width = 100;
-                        imgElement.height = 100;
-
-                        const currentImageContainer = document.getElementById('currentImageContainer');
-                        currentImageContainer.appendChild(imgElement);
-                    }
-                }
-            })
-            .catch(error => console.error('Error fetching user data:', error));
-    };
-
-    // Handle form submission
-    document.getElementById('userForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const formData = new FormData(this);
-        
-        fetch(`/api/formuser/${userId}`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${yourAuthToken}`,
-                'Accept': 'application/json',
-            },
-            body: formData
-        })
+    // Populate form fields from API
+    fetch(`/api/formuser/${userId}`)
         .then(response => response.json())
-        .then(data => {
-            if (data.message) {
-                alert(data.message); // Success message
-                window.location.href = "{{ route('user.index') }}"; // Redirect to user list
+        .then(response => {
+            if (response.success && response.data) {
+                const user = response.data;
+                document.getElementById('name').value = user.name;
+                document.getElementById('email').value = user.email;
+                document.getElementById('username').value = user.username;
+                document.getElementById('no_telp').value = user.no_telp;
+                document.getElementById('alamat').value = user.alamat;
+
+                // Display current profile image if available
+                if (user.gambar_profile) {
+                    const currentImageContainer = document.getElementById('currentImageContainer');
+                    currentImageContainer.innerHTML = `
+                        <img src="/storage/${user.gambar_profile}" alt="Profile Picture" width="100" height="100">
+                        <p class="form-text text-muted">Gambar profil saat ini</p>
+                    `;
+                }
+            } else {
+                console.error('Data user tidak ditemukan.');
             }
         })
-        .catch(error => {
-            console.error('Error updating user data:', error);
-            if (error.response && error.response.data) {
-                const errors = error.response.data.errors;
+        .catch(error => console.error('Error fetching user data:', error));
 
-                // Display validation errors in the form
-                Object.keys(errors).forEach(key => {
-                    document.getElementById('error' + capitalizeFirstLetter(key)).innerText = errors[key].join(', ');
+    // Handle form submission
+    userForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(userForm);
+        formData.append('_method', 'PUT'); // Laravel requires _method=PUT for PUT requests via form
+
+        fetch(`/api/formuser/${userId}`, {
+            method: 'POST', // Using POST with _method=PUT
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            },
+            body: formData,
+        })
+        .then(response => {
+            if (!response.ok) throw response;
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                alert('User updated successfully!');
+                window.location.href = "{{ route('user.index') }}";
+            } else {
+                alert('Failed to update user.');
+            }
+        })
+        .catch(async error => {
+            if (error.status === 422) { // Validation error
+                const errorData = await error.json();
+                Object.keys(errorData).forEach(field => {
+                    document.getElementById(`error${capitalize(field)}`).innerText = errorData[field][0];
                 });
+            } else {
+                console.error('Update error:', error);
             }
         });
     });
 
-    // Helper function to capitalize the first letter of string
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
+    // Capitalize first letter for error message display
+    function capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
+});
 </script>
 @endsection

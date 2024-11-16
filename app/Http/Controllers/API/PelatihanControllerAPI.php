@@ -69,13 +69,12 @@ class PelatihanControllerAPI extends Controller
         }
     
         // Ambil semua data pelatih untuk dropdown pemilihan pelatih
-        $pelatihList = Pelatih::where('role', 'pelatih')->get(['id', 'nama']); // Sesuaikan field 'nama' sesuai struktur
+
     
         return response()->json([
             'success' => true,
             'message' => 'Pelatihan retrieved successfully',
             'data' => $pelatihan,
-            'pelatih' => $pelatihList
         ], 200);
     }
     
