@@ -32,7 +32,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 
 
-    //untuk logout
+    //untuk Edit Data Admin dan Update
+    Route::prefix('admin')->group(function () {
+        Route::get('/{id}/edit', [SignController::class, 'edit'])->name('sign.edit');
+        Route::put('/{id}/update', [SignController::class, 'update'])->name('sign.update');
+    });
+    
     Route::post('/logout', [SignController::class,'logout']);
 
 

@@ -103,13 +103,22 @@ class AuthControllerAPI extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+        $user = User::findOrFail($id);
+    
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'gambar_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+    
+        // Upload gambar jika ada file baru
+        if ($request->hasFile('gambar_profile')) {
+            $filePath = $request->file('gambar_profile')->store('profile_pictures', 'public');
+            $validated['gambar_profile'] = $filePath;
         }
-
-        $user->update($request->only(['name', 'email']));
-
-        return response()->json($user, 200);
-    }   
+    
+        $user->update($validated);
+    
+        return redirect()->route('admin.index')->with('success', 'User updated successfully!');
+    }  
 }

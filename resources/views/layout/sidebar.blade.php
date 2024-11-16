@@ -6,11 +6,13 @@
 
           </div>
           <div class="user-info">
-          <img src="{{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : asset('images/user.png') }}" alt="User Photo" class="rounded-circle" style="width: 80px; height: 80px;">            <p class="name">{{ Auth::user()->name}}</p>
-            <p class="designation">{{ Auth::user()->email}}</p>
-            <p class="designation">Admin</p>
-            <span class="online"></span>
+              <img src="{{ Auth::user()->gambar_profile ? asset('storage/' . Auth::user()->gambar_profile) : asset('images/user.png') }}" alt="User Photo" class="rounded-circle" style="width: 80px; height: 80px;">
+              <p class="name">{{ Auth::user()->name }}</p>
+              <p class="designation">{{ Auth::user()->email }}</p>
+              <p class="designation">Admin</p>
+              <span class="online"></span>
           </div>
+
           <ul class="nav">
             <li class="nav-item {{ Request::is('dashboard') ? 'active':'' }}">
               <a class="nav-link" href="/dashboard">
@@ -65,6 +67,13 @@
               <a class="nav-link" href="{{ route('feedback.index') }}">
               <img src="{{ asset('images/logo_feedback.png') }}" alt="">
                 <span class="menu-title">Feedback</span>
+              </a>
+            </li>
+
+            <li class="nav-item {{ Request::is('admin') ? 'active':'' }}">
+              <a class="nav-link" href="{{ route('sign.edit', ['id' => Auth::user()->id] ) }}">
+              <img src="{{ asset('images/settings.png') }}" alt="" >
+                <span class="menu-title">Setting</span>
               </a>
             </li>
 

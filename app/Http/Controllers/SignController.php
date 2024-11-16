@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Storage;
 
 class SignController extends Controller
 {
@@ -80,6 +81,56 @@ class SignController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/')->with('success', 'Logout berhasil!');
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validate input
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:8|confirmed', // password is optional
+            'gambar_profile' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Max 2MB
+        ]);
+    
+        // Find the user by ID
+        $user = User::findOrFail($id);
+    
+        // Handle profile image upload if present
+        if ($request->hasFile('gambar_profile')) {
+            // Delete old image if it exists
+            if ($user->gambar_profile) {
+                Storage::disk('public')->delete($user->gambar_profile);
+            }
+    
+            // Store new image
+            $validatedData['gambar_profile'] = $request->file('gambar_profile')->store('gambar_admin', 'public');
+        }
+    
+        // If a password is provided, hash and include it in the update data
+        if ($request->filled('password')) {
+            $validatedData['password'] = bcrypt($request->password);
+        } else {
+            // If no password is provided, remove it from the validated data to prevent updating it to null
+            unset($validatedData['password']);
+        }
+    
+        // Update user data with validated data
+        $user->update($validatedData);
+    
+        // Redirect with success message
+        return redirect()->route('dashboard')->with('success_login', 'Data Admin berhasil diperbarui.');
+    }
+    
+    
+
+    public function edit($id) 
+    {
+    // Temukan user berdasarkan ID
+    $user = User::findOrFail($id);
+
+    // Return view dengan data user
+    return view('sign.edit', compact('user'), ['title' =>'Admin']);
     }
 
 
