@@ -190,7 +190,7 @@ class MobileAuthControllerAPI extends Controller
         // Check if a new picture is uploaded
         if ($request->hasFile('gambar_profile')) {
             // If the user already has a profile picture, delete the old one
-            if ($user->gambar_profile) {
+            if ($user->gambar_profile) {    
                 Storage::disk('public')->delete($user->gambar_profile);
             }
 

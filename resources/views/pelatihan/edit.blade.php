@@ -7,7 +7,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title mb-4">Form Edit Data Pelatihan</h5>
+                    <h5 class="card-title mb-4">Pelatihan</h5>
 
                     <div id="notification"></div>
 
@@ -87,13 +87,17 @@
 
                     // Populate dropdown untuk memilih pelatih
                     const pelatihSelect = document.getElementById('id_user');
-                    data.pelatih.forEach(trainer => {
-                        let option = document.createElement('option');
-                        option.value = trainer.id;
-                        option.text = trainer.nama;
-                        option.selected = trainer.id === pelatihan.id_user; // Tandai pelatih yang sudah dipilih
-                        pelatihSelect.appendChild(option);
-                    });
+                    if (Array.isArray(data.pelatih) && data.pelatih.length > 0) {
+                        data.pelatih.forEach(trainer => {
+                            let option = document.createElement('option');
+                            option.value = trainer.id;
+                            option.text = trainer.nama;
+                            option.selected = trainer.id === pelatihan.id_user; // Tandai pelatih yang sudah dipilih
+                            pelatihSelect.appendChild(option);
+                        });
+                    } else {
+                        console.error('No pelatih data available');
+                    }
 
                     // Menampilkan video jika ada
                     if (pelatihan.video_pelatihan) {
@@ -122,42 +126,56 @@
             });
     };
 
-    // Menangani pengiriman form untuk memperbarui pelatihan
     document.getElementById('submitButton').addEventListener('click', function(e) {
-        e.preventDefault(); // Mencegah pengiriman form standar
+    e.preventDefault();
 
-        const formData = new FormData(document.getElementById('editPelatihanForm'));
+    const formData = new FormData(document.getElementById('editPelatihanForm'));
+    formData.append('_method', 'PUT'); // Tambahkan _method untuk mengakali PUT dengan POST
+    const token = 'yourActualTokenHere'; // Masukkan token autentikasi yang benar
 
-        // Pastikan Anda mengganti 'yourAuthToken' dengan token autentikasi yang benar
-        const token = 'yourAuthToken'; // Ganti ini dengan token autentikasi yang valid
+    fetch(`/api/pelatihan/${pelatihanId}`, {
+        method: 'POST', // Gunakan POST, karena kita mengakali PUT dengan _method
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Accept': 'application/json'
+        },
+        body: formData
+    })
+    .then(response => {
+        console.log("Status:", response.status);
+        console.log("Headers:", response.headers);
+        if (!response.ok) {
+            return response.json().then(errorData => Promise.reject(errorData));
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Response data:", data);
 
-        fetch(`/api/pelatihan/${pelatihanId}`, {
-            method: 'PUT', // Gunakan PUT untuk memperbarui data
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Accept': 'application/json',
-            },
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message) {
-                document.getElementById('notification').innerText = data.message;
-                window.location.href = "{{ route('pelatihan.index') }}"; // Redirect ke daftar pelatihan setelah berhasil
-            }
-        })
-        .catch(error => {
-            console.error('Error updating pelatihan data:', error);
+        if(data.success) {
+            alert(data.message);
+        // Arahkan ke halaman index pelatihan
+        window.location.href = "{{ route('pelatihan.index') }}";
+        } else {
+            alert('Failed to update');
+        }
 
-            // Menangani error validasi jika ada
-            if (error && error.errors) {
-                const errors = error.errors;
-                Object.keys(errors).forEach(key => {
-                    document.getElementById('error_' + key).innerText = errors[key].join(', ');
-                });
-            }
-        });
+
+    })
+    .catch(error => {
+        console.error('Error updating pelatihan data:', error);
+        if (error && error.errors) {
+            Object.keys(error.errors).forEach(key => {
+                document.getElementById('error_' + key).innerText = error.errors[key].join(', ');
+            });
+        }
     });
+});
+
+
+
+
 
     // Fungsi pembantu untuk mengkapitalisasi huruf pertama
     function capitalizeFirstLetter(string) {
