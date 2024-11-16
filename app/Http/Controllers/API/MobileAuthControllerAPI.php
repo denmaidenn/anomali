@@ -74,7 +74,7 @@ class MobileAuthControllerAPI extends Controller
             'password' => 'sometimes|required|string|min:8',
             'no_telp' => 'nullable|string|max:15',
             'alamat' => 'nullable|string|max:255',
-            'gambar_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'gambar_profile' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         if ($validator->fails()) {
@@ -176,5 +176,43 @@ class MobileAuthControllerAPI extends Controller
         $user->update($request->only('no_telp', 'alamat'));
         return response()->json(['message' => 'Payment info updated successfully']);
     }
+
+    public function updatePicture(Request $request, $id)
+    {
+        // Validate if the request contains a file and if it's an image
+        $request->validate([
+            'gambar_profile' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Find the user by id
+        $user = FormUser::find($id);
+        
+        // If user not found, return an error response
+        if (!$user) {
+            return response()->json(['message' => 'User not found.'], 404);
+        }
+
+        // Check if a new picture is uploaded
+        if ($request->hasFile('gambar_profile')) {
+            // If the user already has a profile picture, delete the old one
+            if ($user->gambar_profile) {
+                Storage::disk('public')->delete($user->gambar_profile);
+            }
+
+            // Store the new image in the 'profile_pictures' directory
+            $gambarPath = $request->file('gambar_profile')->store('profile_pictures', 'public');
+
+            // Update the user's profile picture field
+            $user->gambar_profile = $gambarPath;
+            $user->save(); // Save the user with the updated profile picture
+
+            // Return a success response with the new picture path
+            return response()->json(['message' => 'Profile picture updated successfully.', 'data' => $user], 200);
+        }
+
+        // If no file was uploaded, return a validation error
+        return response()->json(['message' => 'No image file uploaded.'], 400);
+    }
+
 }
 
