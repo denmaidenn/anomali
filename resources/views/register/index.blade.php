@@ -32,7 +32,6 @@
 
               <h3 class="card-title text-left mb-3">Register</h3>
               <form id="createUserForm">
-                  @csrf
                   <div class="form-group">
                       <input type="text" class="form-control p_input" placeholder="Name" name="name" required>
                   </div>

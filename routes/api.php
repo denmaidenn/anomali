@@ -99,7 +99,7 @@ Route::prefix('fishmart')->group(function () {
 
 
 
-Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+Route::middleware(['auth:sanctum', 'auth'])->group(function () {
 
 
 
