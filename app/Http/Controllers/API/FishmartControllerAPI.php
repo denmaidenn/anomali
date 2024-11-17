@@ -137,7 +137,7 @@ class FishmartControllerAPI extends Controller
         $validator = Validator::make($request->all(), [
             'nama_produk' => 'sometimes|required|string|max:255',
             'deskripsi_produk' => 'sometimes|required|string',
-            'gambar_produk' => 'sometimes|required|string|max:255',
+            'gambar_produk' => 'sometimes|file|image|mimes:jpeg,png,jpg|max:2048',
             'stok' => 'sometimes|required|integer|min:0',
             'harga' => 'sometimes|required|numeric|min:0',
             'kategori' => 'sometimes|required|string|in:Filter Air,Pakan,Tanaman Hias,Batu Coral,Aquascape', // Validasi kategori untuk update
@@ -150,7 +150,17 @@ class FishmartControllerAPI extends Controller
             ], 422);
         }
 
-        $produk->update($request->all());
+        // Update data lainnya
+        $produk->fill($request->except('gambar_produk'));
+
+        // Proses file gambar jika ada
+        if ($request->hasFile('gambar_produk')) {
+            $file = $request->file('gambar_produk');
+            $path = $file->store('produk_images', 'public'); // Simpan di storage/public/produk_images
+            $produk->gambar_produk = $path; // Simpan path gambar ke database
+        }
+
+        $produk->save();
 
         return response()->json([
             'success' => true,

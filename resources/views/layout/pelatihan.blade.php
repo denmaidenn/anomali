@@ -54,7 +54,6 @@
 </div>
 
 @section('pelatihan_ajax')
-    @if (session('token'))
         <script>
             loadPelatihanData();
 
@@ -144,5 +143,4 @@
                 });
             }
         </script>
-    @endif
 @endsection

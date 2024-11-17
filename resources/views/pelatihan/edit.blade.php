@@ -12,7 +12,6 @@
                     <div id="notification"></div>
 
                     <form id="editPelatihanForm" enctype="multipart/form-data">
-                        @csrf
 
                         <div class="form-group">
                             <label for="id_user">Pelatih</label>

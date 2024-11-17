@@ -44,46 +44,60 @@
 
     <!-- Script for AJAX to fetch Pelatih data -->
     @section('pelatih_ajax')
-        <script>
-            loadPelatihData();
+    <script>
+        loadPelatihData();
 
-            function loadPelatihData() {
+        function loadPelatihData() {
+            $.ajax({
+                url: '/api/pelatih', // pastikan API route yang benar
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    $('#pelatih-table-body').empty();
+                    if (response.data.length > 0) {
+                        response.data.forEach(function(pelatih, index) {
+                            $('#pelatih-table-body').append(`
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${pelatih.nama}</td>
+                                    <td>${pelatih.email}</td>
+                                    <td>${pelatih.no_telp}</td>
+                                    <td>${pelatih.alamat}</td>
+                                    <td><a href="/pelatih/${pelatih.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
+                                    <td><a href="/pelatih/${pelatih.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="deletePelatih(${pelatih.id})">Remove</button>
+                                    </td>
+                                </tr>
+                            `);
+                        });
+                    } else {
+                        $('#pelatih-table-body').append('<tr><td colspan="7" class="text-center">Tidak ada data pelatih.</td></tr>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    alert('Terjadi kesalahan saat memuat data pelatih.');
+                }
+            });
+        }
+
+        function deletePelatih(id) {
+            if (confirm('Apakah Anda yakin menghapus data pelatih ini?')) {
                 $.ajax({
-                    url: '/api/pelatih',
-                    type: 'GET',
+                    url: `/api/pelatih/${id}`, // pastikan API route yang benar
+                    type: 'DELETE',
                     dataType: 'json',
                     success: function(response) {
-                        $('#pelatih-table-body').empty();
-                        if (response.data.length > 0) {
-                            response.data.forEach(function(pelatih, index) {
-                                $('#pelatih-table-body').append(`
-                                    <tr>
-                                        <td>${index + 1}</td>
-                                        <td>${pelatih.nama}</td>
-                                        <td>${pelatih.email}</td>
-                                        <td>${pelatih.no_telp}</td>
-                                        <td>${pelatih.alamat}</td>
-                                        <td><a href="/pelatih/${pelatih.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
-                                        <td><a href="/pelatih/${pelatih.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
-                                        <td>
-                                            <form action="/pelatih/${pelatih.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                `);
-                            });
-                        } else {
-                            $('#pelatih-table-body').append('<tr><td colspan="7" class="text-center">Tidak ada data pelatih.</td></tr>');
-                        }
+                        alert(response.message);
+                        loadPelatihData(); // Reload data setelah penghapusan
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
-                        alert('Terjadi kesalahan saat memuat data pelatih.');
+                        alert('Terjadi kesalahan saat menghapus data pelatih.');
                     }
                 });
             }
-        </script>
-    @endsection
+        }
+    </script>
+@endsection
