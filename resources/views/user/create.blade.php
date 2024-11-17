@@ -37,40 +37,49 @@
 @endsection
 
 @section('scripts')
-    <script> 
-        document.getElementById('submitForm').addEventListener('click', function () {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+<script>
+document.getElementById('submitForm').addEventListener('click', function () {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-            fetch('/api/formuser/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    username: username,
-                    password: password
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('User created successfully!');
-                    console.log(data.data); // New user data
+    // Validasi input
+    if (!name || !email || !username || !password) {
+        alert('All fields are required!');
+        return;
+    }
 
-                    // Redirect to the home page after successful account creation
-                    window.location.href = '{{ route("user.index") }}'; // Redirect to the home page
-                } else {
-                    alert('Failed to create user: ' + JSON.stringify(data));
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
+    // Kirim data ke API
+    fetch('/api/formuser/create', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            username: username,
+            password: password
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('User created successfully!');
+            console.log(data.user); // Data pengguna yang baru dibuat
 
-    </script>
+            // Redirect ke halaman lain setelah berhasil
+            window.location.href = '{{ route("user.index") }}'; // Gantilah dengan route sesuai kebutuhan
+        } else {
+            alert('Failed to create user: ' + JSON.stringify(data.error));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    });
+});
+</script>
 @endsection
