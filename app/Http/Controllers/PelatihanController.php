@@ -27,7 +27,7 @@ class PelatihanController extends Controller
         $validatedData = $request->validate([
             'id_user' => 'required|exists:pelatih,id',
             'judul' => 'required|string|max:255',
-            'video_pelatihan' => 'required|file|mimes:mp4,avi,mkv|max:20480',  // max 20MB
+            'video_pelatihan' => 'required|file|mimes:mp4,avi,mkv|max:102400',  // max 20MB
             'gambar_pelatihan' => 'nullable|file|image|max:2048', // max 2MB
             'deskripsi_pelatihan' => 'required|string',
             'harga' => 'required|numeric',
@@ -69,7 +69,7 @@ class PelatihanController extends Controller
         $validatedData = $request->validate([
             'id_user' => 'required|exists:pelatih,id',
             'judul' => 'required|string|max:255',
-            'video_pelatihan' => 'nullable|file|mimes:mp4,avi,mkv|max:20480',  // max 20MB
+            'video_pelatihan' => 'nullable|file|mimes:mp4,avi,mkv|max:102400',  // max 20MB
             'gambar_pelatihan' => 'nullable|file|image|max:2048', // max 2MB
             'deskripsi_pelatihan' => 'required|string',
             'harga' => 'required|numeric',

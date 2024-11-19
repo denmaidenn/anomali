@@ -87,7 +87,7 @@ class PelatihanfreeControllerAPI extends Controller
         $validatedData = $request->validate([
             'id_user' => 'sometimes|required|exists:pelatih,id',
             'judul' => 'sometimes|required|string|max:255',
-            'video_pelatihan' => 'nullable|file|mimes:mp4,mov,avi|max:20480', // Validasi untuk video
+            'video_pelatihan' => 'nullable|file|mimes:mp4,mov,avi|max:102400', // Validasi untuk video
             'gambar_pelatihan' => 'nullable|file|mimes:jpeg,png,jpg|max:10240',
             'deskripsi_pelatihan' => 'sometimes|required|string',
         ]);
