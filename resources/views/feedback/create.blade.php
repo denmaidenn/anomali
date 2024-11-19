@@ -21,8 +21,7 @@
                       </div>
                     @endif
 
-                    <form class="forms-sample" onsubmit="event.preventDefault(); submitFeedback();">
-                        @csrf
+                    <form class="forms-sample" method="POST" action="{{ route('feedback.store') }}">                        @csrf
 
                         <div class="form-group">
                             <label for="user_id">User</label>
@@ -64,42 +63,42 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error fetching users:', error));
 });
 
-function submitFeedback() {
-    const form = document.querySelector('.forms-sample');
-    const formData = new FormData(form);
+// function submitFeedback() {
+//     const form = document.querySelector('.forms-sample');
+//     const formData = new FormData(form);
 
-    fetch('/api/feedback/create', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-        },
-        body: formData,
-    })
-    .then(response => {
-        if (!response.ok) {
-            return response.json().then(err => {
-                throw err;
-            });
-        }
-        return response.json();
-    })
-    .then(data => {
-        alert('Feedback submitted successfully!');
-        console.log(data.feedback); // Log the feedback data
+//     fetch('/api/feedback/create', {
+//         method: 'POST',
+//         headers: {
+//             'Accept': 'application/json',
+//             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+//         },
+//         body: formData,
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             return response.json().then(err => {
+//                 throw err;
+//             });
+//         }
+//         return response.json();
+//     })
+//     .then(data => {
+//         alert('Feedback submitted successfully!');
+//         console.log(data.feedback); // Log the feedback data
 
-        // Redirect or clear form fields after successful submission
-        form.reset();
-    })
-    .catch(error => {
-        if (error.errors) {
-            for (const key in error.errors) {
-                alert(error.errors[key]); // Show validation errors
-            }
-        } else {
-            console.error('Error:', error);
-        }
-    });
-}
+//         // Redirect or clear form fields after successful submission
+//         form.reset();
+//     })
+//     .catch(error => {
+//         if (error.errors) {
+//             for (const key in error.errors) {
+//                 alert(error.errors[key]); // Show validation errors
+//             }
+//         } else {
+//             console.error('Error:', error);
+//         }
+//     });
+// }
 </script>
 @endsection
