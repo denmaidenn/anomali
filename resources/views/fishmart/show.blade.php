@@ -57,7 +57,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    console.log(data);
+                    console.log("API response data:", data);
                     const produk = data.data;
 
                     // Update the product name and other details

@@ -22,7 +22,7 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                console.log(data);
+                console.log("API response data:", data);
                 const feedback = data.data;
 
                 // Tampilkan data di dalam HTML

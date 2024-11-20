@@ -22,6 +22,7 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                console.log("API response data:", data);
                 const pelatihan = data.data;
 
                 // Tampilkan data di dalam HTML

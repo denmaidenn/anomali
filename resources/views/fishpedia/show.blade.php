@@ -78,7 +78,7 @@
         .then(data => {
             if (data.success) {
                 // Menampilkan data ikan di halaman
-                console.log(data);
+                console.log("API response data:", data);
                 const fish = data.data;
                 document.getElementById('fish-name').textContent = fish.nama;
                 document.getElementById('scientific-name').textContent = fish.nama_ilmiah || 'Tidak ada nama ilmiah';
