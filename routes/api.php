@@ -45,11 +45,11 @@ Route::prefix('feedback')->group(function () {
 });
 
 Route::prefix('formuser')->group(function () {
+    Route::put('/{id}/picture', [MobileAuthControllerAPI::class,'updatePicture']);
     Route::get('/{id}', [MobileAuthControllerAPI::class, 'show']);
     Route::put('/{id}', [MobileAuthControllerAPI::class,'update']);
     Route::delete('/{id}', [MobileAuthControllerAPI::class,'delete']);
     Route::put('/{id}/paymentinfo', [MobileAuthControllerAPI::class,'updatePaymentInfo']);
-    Route::put('/{id}/picture', [MobileAuthControllerAPI::class,'updatePicture']);
 });
 
 
