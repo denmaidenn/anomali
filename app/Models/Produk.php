@@ -24,4 +24,9 @@ class Produk extends Model
     {
         return $this->hasMany(Transaksi::class, 'id_produk');
     }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

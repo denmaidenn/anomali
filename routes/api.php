@@ -9,11 +9,8 @@ use App\Http\Controllers\API\MobileAuthControllerAPI;
 use App\Http\Controllers\API\FeedbackControllerAPI;
 use App\Http\Controllers\API\PelatihanfreeControllerAPI;
 use App\Http\Controllers\API\PelatihControllerAPI;
-
-
-
-
-
+use App\Http\Controllers\API\CartControllerAPI;
+use App\Http\Controllers\API\CartItemControllerAPI;
 // Route untuk menampilkan semua data ikan
 
 
@@ -94,6 +91,30 @@ Route::prefix('fishmart')->group(function () {
     Route::put('/{id}', [FishmartControllerAPI::class, 'update']);
     Route::delete('/{id}', [FishmartControllerAPI::class, 'delete']);
 });
+
+
+
+
+Route::prefix('cart')->group(function () {
+    Route::post('/add', [CartControllerAPI::class, 'addToCart']);
+    Route::get('/view/{id}', [CartControllerAPI::class, 'viewCartWithItems']);
+    Route::delete('/delete/{id}', [CartControllerAPI::class, 'removeFromCart']);
+});
+
+Route::prefix('cart-items')->group(function () {
+    Route::post('/add', [CartItemControllerAPI::class, 'addItem']);
+    Route::put('/update/{id}', [CartItemControllerAPI::class, 'updateItem']);
+    Route::delete('/remove/{id}', [CartItemControllerAPI::class, 'removeItem']);
+    Route::get('/{cart_id}', [CartItemControllerAPI::class, 'getItemsByCart']);
+});
+
+
+
+
+
+
+
+
 
 
 

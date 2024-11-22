@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaksi', function (Blueprint $table) {
+        Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('form_users')->onDelete('cascade');
-            $table->string('order_id')->unique();
-            $table->decimal('amount', 15, 2); // Jumlah total pembayaran
-            $table->string('payment_type')->nullable(); // Tipe pembayaran
-            $table->string('status')->default('pending'); // Status pembayaran
-            $table->json('midtrans_response')->nullable(); // Data respons Midtrans
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaksi');
+        Schema::dropIfExists('carts');
     }
 };
