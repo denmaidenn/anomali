@@ -9,8 +9,10 @@ use App\Http\Controllers\API\MobileAuthControllerAPI;
 use App\Http\Controllers\API\FeedbackControllerAPI;
 use App\Http\Controllers\API\PelatihanfreeControllerAPI;
 use App\Http\Controllers\API\PelatihControllerAPI;
+
 use App\Http\Controllers\API\CartControllerAPI;
 use App\Http\Controllers\API\CartItemControllerAPI;
+use App\Http\Controllers\API\CheckoutControllerAPI;
 // Route untuk menampilkan semua data ikan
 
 
@@ -107,6 +109,11 @@ Route::prefix('cart-items')->group(function () {
     Route::delete('/remove/{id}', [CartItemControllerAPI::class, 'removeItem']);
     Route::get('/{cart_id}', [CartItemControllerAPI::class, 'getItemsByCart']);
 });
+
+Route::post('/checkout', [CheckoutControllerAPI::class, 'checkout']);
+Route::get('/orders/{user_id}', [CheckoutControllerAPI::class, 'getUserOrders']);
+Route::get('/order/{order_id}', [CheckoutControllerAPI::class, 'getOrderDetail']);
+Route::put('/order/{order_id}/status', [CheckoutControllerAPI::class, 'updateOrderStatus']);
 
 
 
