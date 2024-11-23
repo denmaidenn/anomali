@@ -1,45 +1,36 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const loader = document.querySelector('.loader-wrapper');
-    
-    // Fungsi untuk menampilkan loader dengan delay
-    function showLoader() {
-        loader.classList.remove('hidden');
-    }
 
-    // Fungsi untuk menyembunyikan loader dengan delay
-    function hideLoader() {
-        setTimeout(function() {
-            loader.classList.add('hidden');
-        }, 500);
-    }
+    // Helper function to toggle loader visibility
+    const toggleLoader = (show = true) => {
+        loader.classList.toggle('hidden', !show);
+    };
 
-    // Handle initial page load
-    showLoader();
-    window.addEventListener('load', hideLoader);
+    // Display the loader when the page starts loading
+    toggleLoader(true);
 
-    // Handle AJAX requests
-    $(document).ajaxStart(showLoader);
-    $(document).ajaxComplete(hideLoader);
+    // Hide the loader when the page fully loads
+    window.addEventListener('load', () => toggleLoader(false));
 
-    // Handle page navigation
-    window.addEventListener('pageshow', function(event) {
-        if (event.persisted) {
-            hideLoader();
-        }
+    // Automatically handle AJAX requests
+    $(document).on({
+        ajaxStart: () => toggleLoader(true),
+        ajaxComplete: () => toggleLoader(false),
     });
 
-    // Handle clicking links
-    document.addEventListener('click', function(e) {
-        const link = e.target.closest('a');
-        if (link && !link.hasAttribute('data-no-loader')) {
-            showLoader();
-        }
+    // Handle navigation events, including "back" and "forward"
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) toggleLoader(false);
     });
+
+    // Handle clicks on links
+
 
     // Handle form submissions
-    document.addEventListener('submit', function(e) {
-        if (!e.target.hasAttribute('data-no-loader')) {
-            showLoader();
+    document.body.addEventListener('submit', (event) => {
+        const form = event.target;
+        if (!form.hasAttribute('data-no-loader')) {
+            toggleLoader(true);
         }
     });
 });

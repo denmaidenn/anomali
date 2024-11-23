@@ -56,12 +56,36 @@
               </a>
             </li>
 
-            <li class="nav-item {{ Request::is('fishmart') ? 'active':'' }}">
-              <a class="nav-link" href="{{ route('fishmart.index') }}">
-              <img src="{{ asset('images/logo_market.png') }}" alt="">
-                <span class="menu-title">Fishmart</span>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#fishmart-menu" aria-expanded="false" aria-controls="fishmart-menu">
+                <img src="{{ asset('images/logo_market.png') }}" alt="">
+                <span class="menu-title">Fishmart <i class="fa fa-sort-down"></i></span>
               </a>
+              <div class="collapse" id="fishmart-menu">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item {{ Request::is('fishmart') ? 'active':'' }}">
+                    <a class="nav-link" href="{{ route('fishmart.index') }}">
+                      <img src="{{ asset('images/logo_market.png') }}" alt="Market Icon">
+                      Produk
+                    </a>
+                  </li>
+                  <li class="nav-item {{ Request::is('cart') ? 'active':'' }}">
+                    <a class="nav-link" href="{{ route('cart.index') }}">
+                      <img src="{{ asset('images/cart.png') }}" alt="Cart Icon">
+                      Cart
+                    </a>
+                  </li>
+                  <li class="nav-item {{ Request::is('checkout') ? 'active':'' }}">
+                    <a class="nav-link" href="{{ route('checkout.index') }}">
+                      <img src="{{ asset('images/checkout.png') }}" alt="Checkout Icon">
+                      Checkout
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
+
+
 
             <li class="nav-item {{ Request::is('feedback') ? 'active':'' }}">
               <a class="nav-link" href="{{ route('feedback.index') }}">

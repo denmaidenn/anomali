@@ -62,6 +62,8 @@
   @yield('pelatih_ajax')
   @yield('fishmart_ajax')
   @yield('feedback_ajax')
+  @yield('cart_ajax')
+  @yield('checkout_ajax')
   
 
 </body>

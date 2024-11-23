@@ -35,6 +35,12 @@
 
     <!-- Tabel Feedback -->
     @include('layout.feedback')
+
+    <!-- Tabel Cart -->
+    @include('layout.cart')
+
+    <!-- Tabel Checkout -->
+    @include('layout.checkout')
 </div>
 @endsection
 

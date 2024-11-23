@@ -29,9 +29,11 @@ class FormUser extends Model
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function carts()
+
+
+    public function cart()
     {
-        return $this->hasMany(Cart::class);
+        return $this->hasOne(Cart::class, 'user_id', 'id'); // Sesuaikan kolom foreign key jika berbeda
     }
 
 

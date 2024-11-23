@@ -11,6 +11,8 @@ use App\Http\Controllers\PelatihanfreeController;
 use App\Http\Controllers\FishmartController;
 use App\Http\Controllers\FishpediaController;
 use App\Http\Controllers\PelatihController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SearchController;
 //menampilkan view sign
@@ -131,6 +133,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/{id}/update', [PelatihController::class, 'update'])->name('pelatih.update');
         Route::delete('/{id}/delete', [PelatihController::class, 'destroy'])->name('pelatih.delete');
         Route::get('/{id}/show', [PelatihController::class, 'show'])->name('pelatih.show');
+
+    });
+
+    Route::prefix('cart')->group(function () {
+        Route::get('/', [CartController::class,'index'])->name('cart.index');
+
+    });
+
+    Route::prefix('checkout')->group(function () {
+        Route::get('/', [CheckoutController::class,'index'])->name('checkout.index');
 
     });
 

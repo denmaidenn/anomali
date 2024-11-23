@@ -16,7 +16,7 @@ class Cart extends Model
     // Relasi ke FormUser
     public function user()
     {
-        return $this->belongsTo(FormUser::class, 'user_id');
+        return $this->belongsTo(FormUser::class, 'user_id', 'id');
     }
 
     // Relasi ke CartItem

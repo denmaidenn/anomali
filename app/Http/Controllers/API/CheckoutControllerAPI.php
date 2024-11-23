@@ -145,6 +145,79 @@ public function getOrderDetail($order_id)
         $order->status = $request->status;
         $order->save();
 
-        return response()->json(['message' => 'Status pesanan berhasil diperbarui']);
+        return response()->json([        
+            'success' => true,
+            'message' => 'Status berhasil diperbarui.',
+            'data' => $order
+        ]);
     }
+
+    public function getUsersWhoCheckedOut(Request $request)
+    {
+        // Ambil parameter status dari request (opsional)
+        $status = $request->query('status');
+    
+        // Query pesanan dengan relasi user dan item
+        $ordersQuery = Order::with(['items.produk', 'user']);
+    
+        // Jika ada parameter status, tambahkan filter berdasarkan status
+        if ($status) {
+            $ordersQuery->where('status', $status);
+        }
+    
+        // Ambil semua data pesanan
+        $orders = $ordersQuery->get();
+    
+        // Jika tidak ada data pesanan
+        if ($orders->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tidak ada pesanan yang ditemukan.'
+            ], 404);
+        }
+    
+        // Format data pesanan
+        $formattedOrders = $orders->map(function ($order) {
+            return [
+                'id' => $order->id,
+                'user_id' => $order->user_id,
+                'total_price' => $order->total_price,
+                'status' => $order->status,
+                'created_at' => $order->created_at->toIso8601String(),
+                'updated_at' => $order->updated_at->toIso8601String(),
+                'username' => $order->user->name,
+                'email' => $order->user->email, // Menambahkan email pengguna
+                'items' => $order->items->map(function ($item) {
+                    return [
+                        'id' => $item->id,
+                        'order_id' => $item->order_id,
+                        'produk_id' => $item->produk_id,
+                        'quantity' => $item->quantity,
+                        'price' => $item->price,
+                        'created_at' => $item->created_at->toIso8601String(),
+                        'updated_at' => $item->updated_at->toIso8601String(),
+                        'produk' => [
+                            'id' => $item->produk->id,
+                            'nama_produk' => $item->produk->nama_produk,
+                            'deskripsi_produk' => $item->produk->deskripsi_produk,
+                            'gambar_produk' => $item->produk->gambar_produk,
+                            'stok' => $item->produk->stok,
+                            'harga' => $item->produk->harga,
+                            'kategori' => $item->produk->kategori,
+                            'created_at' => $item->produk->created_at->toIso8601String(),
+                            'updated_at' => $item->produk->updated_at->toIso8601String(),
+                        ]
+                    ];
+                })
+            ];
+        });
+    
+        // Mengembalikan data dalam format JSON
+        return response()->json([
+            'success' => true,
+            'message' => 'Data pesanan berhasil diambil',
+            'data' => $formattedOrders
+        ]);
+    }
+    
 }
