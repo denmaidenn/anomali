@@ -75,7 +75,9 @@
                                         <td>${index + 1}</td>
                                         <td>${item.user ? item.user.nama : 'No Pelatih'}</td>
                                         <td>${item.judul}</td>
-                                        <td><a href="/storage/${item.video_pelatihan}" target="_blank">Lihat Video</a></td>
+                                        <td>
+                                            <a href="/storage/${item.video_pelatihan}" target="_blank">Lihat Video</a>
+                                        </td>
                                         <td>${item.deskripsi_pelatihan}</td>
                                         <td>
                                             ${item.gambar_pelatihan ? `<img src="/storage/${item.gambar_pelatihan}" alt="Gambar Pelatihan" style="width: 100px; height: auto;">` : 'No Image'}

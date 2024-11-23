@@ -111,6 +111,8 @@ Route::prefix('cart-items')->group(function () {
 });
 
 Route::post('/checkout', [CheckoutControllerAPI::class, 'checkout']);
+Route::post('/direct-checkout', [CheckoutControllerAPI::class, 'directCheckout']);
+
 Route::get('/orders/{user_id}', [CheckoutControllerAPI::class, 'getUserOrders']);
 Route::get('/order/{order_id}', [CheckoutControllerAPI::class, 'getOrderDetail']);
 Route::put('/order/{order_id}/status', [CheckoutControllerAPI::class, 'updateOrderStatus']);
