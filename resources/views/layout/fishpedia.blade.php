@@ -12,7 +12,10 @@
                             </button>
                         </div>
                     </div>
-                    <a href="{{ route('fishpedia.create') }}" class="btn btn-primary">Tambah</a>
+                    <div class="d-flex gap-2">
+                        <button id="printFishpediaTable" class="btn btn-secondary me-2">Print PDF</button>
+                        <a href="{{ route('fishpedia.create') }}" class="btn btn-primary">Tambah</a>
+                    </div>
                 </div>
 
                 <!-- Notifikasi sukses dan error -->
@@ -28,7 +31,7 @@
                 @endif
 
                 <div class="table-responsive">
-                    <table class="table center-aligned-table">
+                    <table id="fishpediaTable" class="table center-aligned-table">
                         <thead>
                             <tr class="text-primary">
                                 <th>No</th>
@@ -59,6 +62,18 @@
 </div>
 
 @section('fishpedia_ajax')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+
 <script>
     loadFishpediaData();
 
@@ -96,6 +111,26 @@
                             </tr>
                         `);
                     });
+
+                    // Inisialisasi DataTable
+                    let table = new DataTable('#fishpediaTable', {
+                        dom: 'Bfrtip',
+                        buttons: [
+                            {
+                                extend: 'print',
+                                text: 'Print',
+                                title: 'Fishpedia Table',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            }
+                        ]
+                    });
+
+                    // Tombol Print
+                    $('#printFishpediaTable').on('click', function() {
+                        printFishpediaDataAsPDF(); // Panggil fungsi untuk mencetak PDF
+                    });
                 } else {
                     $('#fishpedia-table-body').append('<tr><td colspan="15" class="text-center">Tidak ada data Fishpedia.</td></tr>');
                 }
@@ -109,17 +144,17 @@
 
     // Fungsi untuk menghapus data Fishpedia
     function deleteFishpedia(fishId) {
-        if (confirm('Apakah Anda yakin menghapus data ini?')) {
+        if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
             $.ajax({
                 url: `/fishpedia/${fishId}`,
                 type: 'DELETE',
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Pastikan meta tag CSRF ada di layout utama
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
                     if (response.success) {
-                        $(`#fish-row-${fishId}`).remove(); // Hapus baris tabel secara langsung
                         alert('Data ikan berhasil dihapus!');
+                        $(`#fish-row-${fishId}`).remove(); // Hapus baris tabel secara langsung
                     } else {
                         alert('Gagal menghapus data.');
                     }
@@ -130,6 +165,78 @@
                 }
             });
         }
+    }
+
+    function printFishpediaDataAsPDF() {
+        $.ajax({
+            url: '/api/fishpedia',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    // Buat konten untuk PDF
+                    let pdfContent = `
+                        <h1 style="text-align: center; font-size: 16px;">Fishpedia Data</h1>
+                        <table border="1" style="width: 100%; border-collapse: collapse; font-size: 9px; table-layout: auto;">
+                            <thead>
+                                <tr style="background-color: #f2f2f2;">
+                                    <th style="padding: 2px;">No</th>
+                                    <th style="padding: 2px;">Nama</th>
+                                    <th style="padding: 2px;">Nama Ilmiah</th>
+                                    <th style="padding: 2px;">Kategori</th>
+                                    <th style="padding: 2px;">Asal</th>
+                                    <th style="padding: 2px;">Ukuran</th>
+                                    <th style="padding: 2px;">Karakteristik</th>
+                                    <th style="padding: 2px;">Akuarium</th>
+                                    <th style="padding: 2px;">Suhu Ideal</th>
+                                    <th style="padding: 2px;">pH Air</th>
+                                    <th style="padding: 2px;">Salinitas</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                    
+                    response.data.forEach(function(fish, index) {
+                        pdfContent += `
+                            <tr>
+                                <td style="padding: 2px; text-align: center;">${index + 1}</td>
+                                <td style="padding: 2px;">${fish.nama}</td>
+                                <td style="padding: 2px;">${fish.nama_ilmiah}</td>
+                                <td style="padding: 2px;">${fish.kategori}</td>
+                                <td style="padding: 2px;">${fish.asal}</td>
+                                <td style="padding: 2px;">${fish.ukuran}</td>
+                                <td style="padding: 2px;">${fish.karakteristik}</td>
+                                <td style="padding: 2px;">${fish.akuarium}</td>
+                                <td style="padding: 2px;">${fish.suhu_ideal} °C</td>
+                                <td style="padding: 2px;">${fish.ph_air}</td>
+                                <td style="padding: 2px;">${fish.salinitas}</td>
+                            </tr>`;
+                    });
+                    
+                    pdfContent += `
+                            </tbody>
+                        </table>`;
+
+                    // Menggunakan html2pdf untuk menghasilkan PDF
+                    const element = document.createElement('div');
+                    element.innerHTML = pdfContent;
+                    html2pdf()
+                        .from(element)
+                        .set({
+                            margin: 0.25, // Sesuaikan margin
+                            filename: 'fishpedia_data.pdf',
+                            html2canvas: { scale: 2 }, // Meningkatkan kualitas gambar
+                            jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' } // Ubah ke landscape
+                        })
+                        .save();
+                } else {
+                    alert('Gagal mengambil data untuk dicetak.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert('Terjadi kesalahan saat mengambil data untuk dicetak.');
+            }
+        });
     }
 </script>
 

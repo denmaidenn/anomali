@@ -37,6 +37,7 @@
 @endsection
 
 @section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 document.getElementById('submitForm').addEventListener('click', function () {
     const name = document.getElementById('name').value;
@@ -46,7 +47,7 @@ document.getElementById('submitForm').addEventListener('click', function () {
 
     // Validasi input
     if (!name || !email || !username || !password) {
-        alert('All fields are required!');
+        Swal.fire('Error', 'All fields are required!', 'error');
         return;
     }
 
@@ -67,18 +68,22 @@ document.getElementById('submitForm').addEventListener('click', function () {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert('User created successfully!');
+            Swal.fire({
+                title: 'Success!',
+                text: 'User created successfully!',
+                icon: 'success',
+                willClose: () => {
+                    window.location.href = '{{ route("user.index") }}';
+                }
+            });
             console.log(data.user); // Data pengguna yang baru dibuat
-
-            // Redirect ke halaman lain setelah berhasil
-            window.location.href = '{{ route("user.index") }}'; // Gantilah dengan route sesuai kebutuhan
         } else {
-            alert('Failed to create user: ' + JSON.stringify(data.error));
+            Swal.fire('Error', 'Failed to create user: ' + JSON.stringify(data.error), 'error');
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred. Please try again.');
+        Swal.fire('Error', 'An error occurred. Please try again.', 'error');
     });
 });
 </script>

@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="/node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css" />
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="shortcut icon" href="/images/favicon.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     .logo {
       display: block;
@@ -71,7 +73,11 @@ function createUser() {
     const passwordConfirmation = formData.get('password_confirmation');
 
     if (password !== passwordConfirmation) {
-        alert('Passwords do not match');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Passwords do not match',
+        });
         return;
     }
 
@@ -92,16 +98,24 @@ function createUser() {
         return response.json();
     })
     .then(data => {
-        alert(data.message); // Display success message
-        console.log(data.data); // New user data
-
-        // Redirect to the home page after successful account creation
-        window.location.href = '/'; // Redirect to the home page
+        Swal.fire({
+            title: 'Sukses!',
+            text: 'User created successfully',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            // Redirect to the home page after alert is closed
+            window.location.href = '/'; // Ganti dengan URL yang sesuai
+        });
     })
     .catch(error => {
         if (error.errors) {
             for (const key in error.errors) {
-                alert(error.errors[key]); // Show validation errors
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.errors[key],
+                });
             }
         } else {
             console.error('Error:', error);

@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -21,14 +23,25 @@
             <div class="card-body px-5 py-5">
 
               @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses',
+                        text: '{{ session('success') }}',
+                    }).then(() => {
+                        // Redirect to the intended page after alert is closed
+                        window.location.href = '{{ url()->previous() }}'; // Ganti dengan URL yang sesuai
+                    });
+                </script>
               @endif
               @if (session('error'))
-                  <div class="alert alert-danger">
-                      {{ session('error') }}
-                  </div>
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: '{{ session('error') }}',
+                    });
+                </script>
               @endif
               <h3 class="card-title text-left mb-3">Login</h3>
 
@@ -48,7 +61,6 @@
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary btn-block enter-btn" value="SIGN IN ">LOG IN</button>
                 </div>
-                <a href="#" class="google-login btn btn-google btn-block">Sign in with Google+</a>
                 <a href="/register" class="google-login btn btn-create-account btn-block">Create An Account</a>
               </form>
             </div>

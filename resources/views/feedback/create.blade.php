@@ -11,17 +11,18 @@
 
                     <!-- Notifications for success and error -->
                     @if (session('success'))
-                      <div class="alert alert-success">
-                        {{ session('success') }}
-                      </div>
+                      <script>
+                          Swal.fire('Success', '{{ session('success') }}', 'success'); // Ganti alert dengan SweetAlert
+                      </script>
                     @endif
                     @if (session('error'))
-                      <div class="alert alert-danger">
-                        {{ session('error') }}
-                      </div>
+                      <script>
+                          Swal.fire('Error', '{{ session('error') }}', 'error'); // Ganti alert dengan SweetAlert
+                      </script>
                     @endif
 
-                    <form class="forms-sample" method="POST" action="{{ route('feedback.store') }}">                        @csrf
+                    <form class="forms-sample" method="POST" action="{{ route('feedback.store') }}" id="feedbackForm"> <!-- Tambahkan id untuk form -->
+                        @csrf
 
                         <div class="form-group">
                             <label for="user_id">User</label>
@@ -46,6 +47,7 @@
 </div>
 
 <!-- JavaScript to fetch and populate the user data -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Tambahkan SweetAlert CDN -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Fetch user data from the API and populate the dropdown
@@ -63,42 +65,45 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error fetching users:', error));
 });
 
-// function submitFeedback() {
-//     const form = document.querySelector('.forms-sample');
-//     const formData = new FormData(form);
+// Menangani pengiriman form dengan SweetAlert
+document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Mencegah pengiriman form default
 
-//     fetch('/api/feedback/create', {
-//         method: 'POST',
-//         headers: {
-//             'Accept': 'application/json',
-//             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-//         },
-//         body: formData,
-//     })
-//     .then(response => {
-//         if (!response.ok) {
-//             return response.json().then(err => {
-//                 throw err;
-//             });
-//         }
-//         return response.json();
-//     })
-//     .then(data => {
-//         alert('Feedback submitted successfully!');
-//         console.log(data.feedback); // Log the feedback data
+    const form = event.target;
+    const formData = new FormData(form);
 
-//         // Redirect or clear form fields after successful submission
-//         form.reset();
-//     })
-//     .catch(error => {
-//         if (error.errors) {
-//             for (const key in error.errors) {
-//                 alert(error.errors[key]); // Show validation errors
-//             }
-//         } else {
-//             console.error('Error:', error);
-//         }
-//     });
-// }
+    fetch(form.action, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+        },
+        body: formData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => {
+                throw err;
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        Swal.fire('Success', 'Feedback submitted successfully!', 'success'); // Ganti alert dengan SweetAlert
+        console.log(data.feedback); // Log the feedback data
+
+        // Redirect or clear form fields after successful submission
+        form.reset();
+    })
+    .catch(error => {
+        if (error.errors) {
+            for (const key in error.errors) {
+                Swal.fire('Error', error.errors[key], 'error'); // Ganti alert dengan SweetAlert
+            }
+        } else {
+            console.error('Error:', error);
+        }
+    });
+});
 </script>
 @endsection

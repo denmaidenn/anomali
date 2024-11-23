@@ -181,7 +181,15 @@
             })
             .then(data => {
                 if (data.success) {
-                    alert(data.message);
+                    Swal.fire({
+                        title: 'Sukses!',
+                        text: data.message,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        // Redirect after alert is closed
+                        window.location.href = "{{ route('fishpedia.index') }}";
+                    });
 
                     // Update or create image element
                     const imgElement = document.getElementById("currentImage") || document.createElement("img");
@@ -191,11 +199,12 @@
                     imgElement.classList.add("img-fluid", "rounded", "shadow-sm");
                     imgElement.width = 200;
                     document.getElementById('gambarContainer').appendChild(imgElement);
-
-                    // Redirect
-                    window.location.href = "{{ route('fishpedia.index') }}";
                 } else {
-                    alert('Failed to update fish data');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Failed to update fish data',
+                    });
                 }
             })
             .catch(error => {

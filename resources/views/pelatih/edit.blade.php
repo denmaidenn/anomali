@@ -53,7 +53,11 @@
     document.addEventListener('DOMContentLoaded', function () {
         const pelatihId = {{ $pelatih->id ?? 'null' }};
         if (!pelatihId) {
-            alert('Pelatih ID tidak ditemukan. Pastikan data pelatih ada.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Pelatih ID tidak ditemukan. Pastikan data pelatih ada.',
+            });
             return;
         }
 
@@ -72,8 +76,12 @@
                     document.getElementById('email').value = data.data.email || '';
                     document.getElementById('no_telp').value = data.data.no_telp || '';
                     document.getElementById('alamat').value = data.data.alamat || '';
-                    } else {
-                    alert('Pelatih tidak ditemukan.');
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Pelatih tidak ditemukan.',
+                    });
                 }
             })
             .catch(error => {
@@ -103,10 +111,20 @@
                 })
                 .then(data => {
                     if (data.success) {
-                        alert('Pelatih berhasil diperbarui.');
-                        window.location.href = "{{ route('pelatih.index') }}";
+                        Swal.fire({
+                            title: 'Sukses!',
+                            text: 'Pelatih berhasil diperbarui.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href = "{{ route('pelatih.index') }}";
+                        });
                     } else {
-                        alert('Gagal memperbarui pelatih.');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: 'Gagal memperbarui pelatih.',
+                        });
                     }
                 })
                 .catch(error => {

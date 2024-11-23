@@ -113,7 +113,15 @@
         })
         .then(data => {
             if (data.success) {
-                alert(data.message);
+                Swal.fire({
+                    title: 'Sukses!',
+                    text: 'Sukses mengedit produk!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                // Pindah ke halaman index setelah alert ditutup
+                    window.location.href = "{{ route('fishmart.index') }}";
+                });
                                     // Update or create image element
                 const imgElement = document.getElementById("currentImage") || document.createElement("img");
                 imgElement.src = `/storage/${data.data.gambar_produk}`;
@@ -124,7 +132,11 @@
                 document.getElementById('gambarContainer').appendChild(imgElement);
                 window.location.href = "{{ route('fishmart.index') }}";
             } else {
-                alert('Gagal memperbarui data produk');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to added item',
+                });
             }
         })
         .catch(error => {

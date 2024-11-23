@@ -11,14 +11,25 @@
 
                     <!-- Notifikasi sukses dan error -->
                     @if (session('success'))
-                      <div class="alert alert-success">
-                        {{ session('success') }}
-                      </div>
+                        <script>
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Sukses',
+                                text: '{{ session('success') }}',
+                            }).then(() => {
+                                // Redirect to the fishpedia index after alert is closed
+                                window.location.href = '{{ route('fishpedia.index') }}'; // Ganti dengan URL yang sesuai
+                            });
+                        </script>
                     @endif
                     @if (session('error'))
-                      <div class="alert alert-danger">
-                        {{ session('error') }}
-                      </div>
+                        <script>
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: '{{ session('error') }}',
+                            });
+                        </script>
                     @endif
 
                     <!-- Form untuk menambah ikan baru -->

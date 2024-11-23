@@ -19,6 +19,7 @@ class PelatihanSeeder extends Seeder
             'video_pelatihan' => 'video_link_1.mp4',
             'deskripsi_pelatihan' => 'Pelatihan dasar pemrograman web.',
             'harga' => 50000,
+            'judul' => 'Dasar Pemrograman Web',
         ]);
 
         Pelatihan::create([
@@ -26,6 +27,7 @@ class PelatihanSeeder extends Seeder
             'video_pelatihan' => 'video_link_2.mp4',
             'deskripsi_pelatihan' => 'Pelatihan lanjut pemrograman mobile.',
             'harga' => 75000,
+            'judul' => 'Pemrograman Mobile Lanjutan',
         ]);
 
         Pelatihan::create([
@@ -33,6 +35,7 @@ class PelatihanSeeder extends Seeder
             'video_pelatihan' => 'video_link_3.mp4',
             'deskripsi_pelatihan' => 'Pelatihan desain UI/UX.',
             'harga' => 60000,
+            'judul' => 'Desain UI/UX',
         ]);
     }
 }

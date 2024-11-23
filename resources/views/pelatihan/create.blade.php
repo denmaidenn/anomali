@@ -11,14 +11,25 @@
 
                     <!-- Success and error notifications -->
                     @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
+                        <script>
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Sukses',
+                                text: '{{ session('success') }}',
+                            }).then(() => {
+                                // Redirect to the pelatihan index after alert is closed
+                                window.location.href = '{{ route('pelatihan.index') }}';
+                            });
+                        </script>
                     @endif
                     @if (session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
+                        <script>
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: '{{ session('error') }}',
+                            });
+                        </script>
                     @endif
 
                     <form method="POST" action="{{ route('pelatihan.store') }}" enctype="multipart/form-data">

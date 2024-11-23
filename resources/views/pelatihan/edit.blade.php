@@ -68,10 +68,8 @@
 
 @section('pelatihan_ajax')
 <script>
-    // Pastikan ID pelatihan terdefinisi dengan benar
     const pelatihanId = {{ $pelatihan->id }}; // ID pelatihan yang diteruskan dari controller
 
-    // Fetch data pelatihan dan populasi form saat halaman dimuat
     window.onload = function() {
         fetch(`/api/pelatihan/${pelatihanId}`)
             .then(response => response.json())
@@ -79,26 +77,23 @@
                 if (data.success) {
                     const pelatihan = data.data;
 
-                    // Isi field form dengan data pelatihan
                     document.getElementById('judul').value = pelatihan.judul;
                     document.getElementById('deskripsi_pelatihan').value = pelatihan.deskripsi_pelatihan;
                     document.getElementById('harga').value = pelatihan.harga;
 
-                    // Populate dropdown untuk memilih pelatih
                     const pelatihSelect = document.getElementById('id_user');
                     if (Array.isArray(data.pelatih) && data.pelatih.length > 0) {
                         data.pelatih.forEach(trainer => {
                             let option = document.createElement('option');
                             option.value = trainer.id;
                             option.text = trainer.nama;
-                            option.selected = trainer.id === pelatihan.id_user; // Tandai pelatih yang sudah dipilih
+                            option.selected = trainer.id === pelatihan.id_user;
                             pelatihSelect.appendChild(option);
                         });
                     } else {
                         console.error('No pelatih data available');
                     }
 
-                    // Menampilkan video jika ada
                     if (pelatihan.video_pelatihan) {
                         const videoLink = document.createElement('a');
                         videoLink.href = `/storage/${pelatihan.video_pelatihan}`;
@@ -107,7 +102,6 @@
                         document.getElementById('currentVideoContainer').appendChild(videoLink);
                     }
 
-                    // Menampilkan gambar pelatihan jika ada
                     if (pelatihan.gambar_pelatihan) {
                         const imgElement = document.createElement('img');
                         imgElement.src = `/storage/${pelatihan.gambar_pelatihan}`;
@@ -116,8 +110,11 @@
                         document.getElementById('currentImageContainer').appendChild(imgElement);
                     }
                 } else {
-                    // Jika data gagal dimuat
-                    console.error('Pelatihan tidak ditemukan');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Pelatihan tidak ditemukan.',
+                    });
                 }
             })
             .catch(error => {
@@ -126,55 +123,54 @@
     };
 
     document.getElementById('submitButton').addEventListener('click', function(e) {
-    e.preventDefault();
+        e.preventDefault();
 
-    const formData = new FormData(document.getElementById('editPelatihanForm'));
-    formData.append('_method', 'PUT'); // Tambahkan _method untuk mengakali PUT dengan POST
-    const token = 'yourActualTokenHere'; // Masukkan token autentikasi yang benar
+        const formData = new FormData(document.getElementById('editPelatihanForm'));
+        formData.append('_method', 'PUT'); // Tambahkan _method untuk mengakali PUT dengan POST
+        const token = 'yourActualTokenHere'; // Masukkan token autentikasi yang benar
 
-    fetch(`/api/pelatihan/${pelatihanId}`, {
-        method: 'POST', // Gunakan POST, karena kita mengakali PUT dengan _method
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-            'Accept': 'application/json'
-        },
-        body: formData
-    })
-    .then(response => {
-        console.log("Status:", response.status);
-        console.log("Headers:", response.headers);
-        if (!response.ok) {
-            return response.json().then(errorData => Promise.reject(errorData));
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("Response data:", data);
-
-        if(data.success) {
-            alert(data.message);
-        // Arahkan ke halaman index pelatihan
-        window.location.href = "{{ route('pelatihan.index') }}";
-        } else {
-            alert('Failed to update');
-        }
-
-
-    })
-    .catch(error => {
-        console.error('Error updating pelatihan data:', error);
-        if (error && error.errors) {
-            Object.keys(error.errors).forEach(key => {
-                document.getElementById('error_' + key).innerText = error.errors[key].join(', ');
-            });
-        }
+        fetch(`/api/pelatihan/${pelatihanId}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            },
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errorData => Promise.reject(errorData));
+            }
+            return response.json();
+        })
+        .then(data => {
+            if(data.success) {
+                Swal.fire({
+                    title: 'Sukses!',
+                    text: 'Pelatihan berhasil diperbarui.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = "{{ route('pelatihan.index') }}";
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Gagal memperbarui pelatihan.',
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error updating pelatihan data:', error);
+            if (error && error.errors) {
+                Object.keys(error.errors).forEach(key => {
+                    document.getElementById('error_' + key).innerText = error.errors[key].join(', ');
+                });
+            }
+        });
     });
-});
-
-
-
-
 
     // Fungsi pembantu untuk mengkapitalisasi huruf pertama
     function capitalizeFirstLetter(string) {

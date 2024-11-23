@@ -37,6 +37,7 @@
 @endsection
 
 @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Ensure that feedbackId is passed correctly
         const feedbackId = {{ $feedback->id }};  // Get feedback ID from the blade template
@@ -99,10 +100,18 @@
 
         if (data.success) {
             console.log(data);
-            alert(data.message); // Display success message
+            Swal.fire(
+                'Success!',
+                data.message,
+                'success'
+            );
             window.location.href = "{{ route('feedback.index') }}"; // Redirect to feedback index page after successful update
         } else {
-            alert('Failed to update');
+            Swal.fire(
+                'Failed!',
+                'Failed to update',
+                'error'
+            );
         }
     })
     .catch(error => {
