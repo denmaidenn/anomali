@@ -19,7 +19,7 @@
                             </div>
                         @endif
 
-                        <table class="table center-aligned-table">
+                        <table id="feedbackTable" class="table center-aligned-table">
                             <thead>
                                 <tr class="text-primary">
                                     <th>No</th>
@@ -71,8 +71,23 @@
                                     </tr>
                                 `);
                             });
+
+                            // Inisialisasi DataTable
+                            $('#feedbackTable').DataTable({
+                                dom: 'Bfrtip',
+                                buttons: [
+                                    {
+                                        extend: 'print',
+                                        text: 'Print',
+                                        title: 'Feedback Table',
+                                        exportOptions: {
+                                            columns: ':visible:not(:last-child):not(:nth-last-child(2)):not(:nth-last-child(3))' // Mengecualikan kolom "Details", "Manage", dan "Remove"
+                                        }
+                                    }
+                                ]
+                            });
                         } else {
-                            $('#feedback-table-body').append('<tr><td colspan="4" class="text-center">Tidak ada data feedback.</td></tr>');
+                            $('#feedback-table-body').append('<tr><td colspan="6" class="text-center">Tidak ada data feedback.</td></tr>');
                         }
                     },
                     error: function(xhr, status, error) {
@@ -83,4 +98,15 @@
             }
         </script>
      @endsection
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 

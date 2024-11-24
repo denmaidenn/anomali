@@ -20,7 +20,7 @@
                 @endif
 
                 <div class="table-responsive">
-                    <table class="table center-aligned-table">
+                    <table id="fishmartTable" class="table center-aligned-table">
                         <thead>
                             <tr class="text-primary">
                                 <th>No</th>
@@ -44,6 +44,17 @@
         </div>
     </div>
 </div>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 
 <!-- Script AJAX untuk memuat data dari API -->
     @section('fishmart_ajax')
@@ -81,6 +92,21 @@
                                         </td>
                                     </tr>
                                 `);
+                            });
+
+                            // Inisialisasi DataTable
+                            $('#fishmartTable').DataTable({
+                                dom: 'Bfrtip',
+                                buttons: [
+                                    {
+                                        extend: 'print',
+                                        text: 'Print',
+                                        title: 'Fishmart Table',
+                                        exportOptions: {
+                                            columns: ':visible:not(:last-child):not(:nth-last-child(2)):not(:nth-last-child(3))'
+                                        }
+                                    }
+                                ]
                             });
                         } else {
                             $('#fishmart-table-body').append('<tr><td colspan="10" class="text-center">Tidak ada data Fishmart.</td></tr>');

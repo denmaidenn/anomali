@@ -28,7 +28,7 @@
                 @endif
 
                 <div class="table-responsive">
-                    <table class="table center-aligned-table">
+                    <table id="pelatihanTable" class="table center-aligned-table">
                         <thead>
                             <tr class="text-primary">
                                 <th>No</th>
@@ -53,96 +53,73 @@
     </div>
 </div>
 
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+
 @section('pelatihan_ajax')
-        <script>
-            loadPelatihanData();
+<script>
+    loadPelatihanData();
 
-            // Fungsi untuk memuat data Pelatihan
-            function loadPelatihanData() {
-                $.ajax({
-                    url: '/api/pelatihan',
-                    type: 'GET',
-                    headers: {
-                            'Authorization': `Bearer ${localStorage.getItem('token')}`, // Replace with the actual token if required
-                        },
-                    dataType: 'json',
-                    success: function(response) {
-                        $('#pelatihan-table-body').empty(); // Clear the table body
-                        if (response.success && response.data.length > 0) {
-                            response.data.forEach(function(item, index) {
-                                $('#pelatihan-table-body').append(`
-                                    <tr>
-                                        <td>${index + 1}</td>
-                                        <td>${item.user ? item.user.nama : 'No Pelatih'}</td>
-                                        <td>${item.judul}</td>
-                                        <td>
-                                            <a href="/storage/${item.video_pelatihan}" target="_blank">Lihat Video</a>
-                                        </td>
-                                        <td>${item.deskripsi_pelatihan}</td>
-                                        <td>
-                                            ${item.gambar_pelatihan ? `<img src="/storage/${item.gambar_pelatihan}" alt="Gambar Pelatihan" style="width: 100px; height: auto;">` : 'No Image'}
-                                        </td>
-                                        <td>Rp ${parseFloat(item.harga).toLocaleString()}</td>
-                                        <td><a href="/pelatihan/${item.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
-                                        <td><a href="/pelatihan/${item.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
-                                        <td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger btn-sm" onclick="deletePelatihan(${item.id})">
-                                                Remove
-                                            </button>
-                                        </td>
-                                        </td>
-                                    </tr>
-                                `);
-                            });
-                        } else {
-                            $('#pelatihan-table-body').append('<tr><td colspan="10" class="text-center">Tidak ada data pelatihan.</td></tr>');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                        alert('Terjadi kesalahan saat memuat data pelatihan.');
-                    }
-                });
-            }
-
-            // Function to delete a Pelatihan record
-            function deletePelatihan(id) {
-                if (confirm('Apakah Anda yakin menghapus data ini?')) {
-                    $.ajax({
-                        url: `/api/pelatihan/${id}`,
-                        type: 'DELETE',
-                        headers: {
-                            'Authorization': `Bearer ${localStorage.getItem('token')}`, // Replace with the actual token if required
-                        },
-                        success: function(response) {
-                            if (response.message === 'Pelatihan deleted successfully') {
-                                alert('Data pelatihan berhasil dihapus.');
-                                loadPelatihanData(); // Reload data after deletion
-                            } else {
-                                alert('Gagal menghapus data pelatihan.');
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error(error);
-                            alert('Terjadi kesalahan saat menghapus data pelatihan.');
-                        }
+    function loadPelatihanData() {
+        $.ajax({
+            url: '/api/pelatihan',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                $('#pelatihan-table-body').empty();
+                if (response.success && response.data.length > 0) {
+                    response.data.forEach(function(item, index) {
+                        $('#pelatihan-table-body').append(`
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${item.user ? item.user.nama : 'No Pelatih'}</td>
+                                <td>${item.judul}</td>
+                                <td><a href="/storage/${item.video_pelatihan}" target="_blank">Lihat Video</a></td>
+                                <td>${item.deskripsi_pelatihan}</td>
+                                <td>
+                                    ${item.gambar_pelatihan ? `<img src="/storage/${item.gambar_pelatihan}" alt="Gambar Pelatihan" style="width: 50px; height: auto;">` : 'No Image'}
+                                </td>
+                                <td>Rp ${parseFloat(item.harga).toLocaleString()}</td>
+                                <td><a href="/pelatihan/${item.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
+                                <td><a href="/pelatihan/${item.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" onclick="deletePelatihan(${item.id})">Remove</button>
+                                </td>
+                            </tr>
+                        `);
                     });
+
+                    // Inisialisasi DataTable
+                    $('#pelatihanTable').DataTable({
+                        dom: 'Bfrtip',
+                        buttons: [
+                            {
+                                extend: 'print',
+                                text: 'Print',
+                                title: 'Pelatihan Table',
+                                exportOptions: {
+                                    columns: ':visible:not(:last-child):not(:nth-last-child(2))' // Mengecualikan kolom "Details" dan "Manage"
+                                }
+                            }
+                        ]
+                    });
+                } else {
+                    $('#pelatihan-table-body').append('<tr><td colspan="10" class="text-center">Tidak ada data pelatihan.</td></tr>');
                 }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert('Terjadi kesalahan saat memuat data pelatihan.');
             }
-
-
-            // Fungsi pencarian untuk filter berdasarkan input
-            function searchPelatihan() {
-                const searchTerm = $('#searchInput').val().toLowerCase();
-                $('#pelatihan-table-body tr').each(function() {
-                    const rowText = $(this).text().toLowerCase();
-                    if (rowText.indexOf(searchTerm) !== -1) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
-            }
-        </script>
+        });
+    }
+</script>
 @endsection

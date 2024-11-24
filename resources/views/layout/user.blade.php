@@ -19,7 +19,7 @@
                         </div>
                     @endif
 
-                    <table class="table center-aligned-table">
+                    <table id="userTable" class="table center-aligned-table">
                         <thead>
                             <tr class="text-primary">
                                 <th>No</th>
@@ -48,7 +48,7 @@
 
 @section('user_ajax')
 <script>
-    loadUserData(); 
+    loadUserData();
 
     function loadUserData() {
         $.ajax({
@@ -78,9 +78,23 @@
                                 <td>
                                     <button onclick="deleteUser(${user.id})" class="btn btn-danger btn-sm">Remove</button>
                                 </td>
-
                             </tr>
                         `);
+                    });
+
+                    // Inisialisasi DataTable
+                    $('#userTable').DataTable({
+                        dom: 'Bfrtip',
+                        buttons: [
+                            {
+                                extend: 'print',
+                                text: 'Print',
+                                title: 'User Table',
+                                exportOptions: {
+                                    columns: ':visible:not(:last-child):not(:nth-last-child(2))' // Mengecualikan kolom "Details" dan "Manage"
+                                }
+                            }
+                        ]
                     });
                 } else {
                     $('#user-table-body').append('<tr><td colspan="10" class="text-center">Tidak ada data pengguna.</td></tr>');
@@ -92,36 +106,46 @@
             }
         });
     }
-    
-function deleteUser(id) {
-    if (confirm('Apakah Anda yakin menghapus data ini?')) {
-        $.ajax({
-            url: `/api/formuser/${id}`,
-            type: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                // Tampilkan pesan sukses
-                let successMessage = response.message || 'Pengguna berhasil dihapus.';
-                $('#user-table-body').prepend(`
-                    <tr>
-                        <td colspan="10">
-                            <div class="alert alert-success">${successMessage}</div>
-                        </td>
-                    </tr>
-                `);
 
-                // Muat ulang data tabel setelah penghapusan
-                loadUserData();
-            },
-            error: function(xhr, status, error) {
-                console.log(error);
-                alert('Terjadi kesalahan saat menghapus pengguna.');
-            }
-        });
+    function deleteUser(id) {
+        if (confirm('Apakah Anda yakin menghapus data ini?')) {
+            $.ajax({
+                url: `/api/formuser/${id}`,
+                type: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    // Tampilkan pesan sukses
+                    let successMessage = response.message || 'Pengguna berhasil dihapus.';
+                    $('#user-table-body').prepend(`
+                        <tr>
+                            <td colspan="10">
+                                <div class="alert alert-success">${successMessage}</div>
+                            </td>
+                        </tr>
+                    `);
+
+                    // Muat ulang data tabel setelah penghapusan
+                    loadUserData();
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                    alert('Terjadi kesalahan saat menghapus pengguna.');
+                }
+            });
+        }
     }
-}
-
 </script>
 @endsection
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
