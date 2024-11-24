@@ -28,32 +28,46 @@
               </a>
             </li>
 
-           <li class="nav-item {{ Request::is('pelatihan') ? 'active':'' }}">
-              <a class="nav-link" href="{{ route('pelatihan.index') }}">
-              <img src="{{ asset('images/pelatihan.png') }}" alt="" >
-                <span class="menu-title">Pelatihan</span>
-              </a>
-            </li>
-
-            <li class="nav-item {{ Request::is('pelatihanfree') ? 'active':'' }}">
-              <a class="nav-link" href="{{ route('pelatihanfree.index') }}">
-              <img src="{{ asset('images/pelatihan.png') }}" alt="" >
-                <span class="menu-title">Pelatihan (Free)</span>
-              </a>
-            </li>
-
-            <li class="nav-item {{ Request::is('pelatih') ? 'active':'' }}">
-              <a class="nav-link" href="{{ route('pelatih.index') }}">
-              <img src="{{ asset('images/pelatih.png') }}" alt="">
-                <span class="menu-title">Pelatih</span>
-              </a>
-            </li>
-
             <li class="nav-item {{ Request::is('fishpedia') ? 'active':'' }}">
               <a class="nav-link" href="{{ route('fishpedia.index') }}">
               <img src="{{ asset('images/lucide_fish.png') }}" alt=""  >
                 <span class="menu-title">Fishpedia</span>
               </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#pelatihan-menu" aria-expanded="false" aria-controls="pelatihan-menu">
+                <img src="{{ asset('images/pelatihan.png') }}" alt="">
+                <span class="menu-title">Pelatihan <i class="fa fa-sort-down"></i></span>
+              </a>
+              <div class="collapse" id="pelatihan-menu">
+                <ul class="nav flex-column sub-menu">
+                <li class="nav-item {{ Request::is('pelatih') ? 'active':'' }}">
+                    <a class="nav-link" href="{{ route('pelatih.index') }}">
+                      <img src="{{ asset('images/pelatih.png') }}" alt="Market Icon">
+                      Pelatih 
+                    </a>
+                  </li>
+                  <li class="nav-item {{ Request::is('pelatihan') ? 'active':'' }}">
+                    <a class="nav-link" href="{{ route('pelatihan.index') }}">
+                      <img src="{{ asset('images/pelatihan.png') }}" alt="Market Icon">
+                      Pelatihan 
+                    </a>
+                  </li>
+                  <li class="nav-item {{ Request::is('pelatihanfree') ? 'active':'' }}">
+                    <a class="nav-link" href="{{ route('pelatihanfree.index') }}">
+                      <img src="{{ asset('images/pelatihan.png') }}" alt="Cart Icon">
+                      Pelatihan (Free)
+                    </a>
+                  </li>
+                  <li class="nav-item {{ Request::is('checkout') ? 'active':'' }}">
+                    <a class="nav-link" href="{{ route('checkout.index') }}">
+                      <img src="{{ asset('images/checkout.png') }}" alt="Checkout Icon">
+                      Checkout
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
 
             <li class="nav-item">

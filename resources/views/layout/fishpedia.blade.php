@@ -111,7 +111,7 @@
     function deleteFishpedia(fishId) {
         if (confirm('Apakah Anda yakin menghapus data ini?')) {
             $.ajax({
-                url: `/fishpedia/${fishId}`,
+                url: `api/fishpedia/${fishId}`,
                 type: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Pastikan meta tag CSRF ada di layout utama

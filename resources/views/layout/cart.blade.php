@@ -44,7 +44,7 @@
                 if (response.data.length > 0) {
                     response.data.forEach(function(user, index) {
                         let cartItems = user.cart && user.cart.items.length > 0 ? user.cart.items.map(item => `
-                            <li>${item.produk_name} (x${item.quantity}) - Rp. ${item.subtotal}</li>
+                            <li>${item.produk_name} (x${item.quantity}) - Rp${item.subtotal}</li>
                         `).join('') : 'No items';
 
                         $('#cart-users-table-body').append(`
@@ -54,7 +54,7 @@
                                 <td>${user.email}</td>
                                 <td><ul>${cartItems}</ul></td>
                                 <td>${user.cart ? user.cart.total_quantity : 0}</td>
-                                <td>${user.cart ? user.cart.total_price : 0}</td>
+                                <td>Rp${user.cart ? user.cart.total_price : 0}</td>
                             </tr>
                         `);
                     });

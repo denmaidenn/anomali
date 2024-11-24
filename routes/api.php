@@ -113,10 +113,13 @@ Route::prefix('cart-items')->group(function () {
 });
 
 
-Route::get('/checkout-all', [CheckoutControllerAPI::class, 'getUsersWhoCheckedOut']);
 
+Route::get('/checkout-all', [CheckoutControllerAPI::class, 'getUsersWhoCheckedOut']);
 Route::post('/checkout', [CheckoutControllerAPI::class, 'checkout']);
 Route::post('/direct-checkout', [CheckoutControllerAPI::class, 'directCheckout']);
+Route::post('/checkout/multiple', [CheckoutControllerAPI::class, 'checkoutMultiple']);
+Route::delete('/checkout/{id}', [CheckoutControllerAPI::class, 'delete']);
+
 
 Route::get('/orders/{user_id}', [CheckoutControllerAPI::class, 'getUserOrders']);
 Route::get('/order/{order_id}', [CheckoutControllerAPI::class, 'getOrderDetail']);

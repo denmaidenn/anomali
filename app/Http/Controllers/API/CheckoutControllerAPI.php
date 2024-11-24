@@ -100,6 +100,76 @@ class CheckoutControllerAPI extends Controller
     ], 201);
 }
 
+public function checkoutMultiple(Request $request)
+{
+    $request->validate([
+        'user_id' => 'required|exists:form_users,id',
+        'cart_id' => 'required|exists:carts,id',
+        'selected_items' => 'required|array|min:1', // Daftar item cart
+        'selected_items.*.cart_item_id' => 'required|exists:cart_items,id', // ID dari item di keranjang
+    ]);
+
+    // Ambil keranjang dengan itemnya
+    $cart = Cart::with('items.produk')
+                ->where('id', $request->cart_id)
+                ->where('user_id', $request->user_id)
+                ->first();
+
+    if (!$cart) {
+        return response()->json(['message' => 'Keranjang tidak ditemukan'], 404);
+    }
+
+    $selectedItems = $request->selected_items;
+    $orderItems = [];
+    $totalPrice = 0;
+
+    foreach ($selectedItems as $selectedItem) {
+        // Ambil item berdasarkan cart_item_id
+        $cartItem = $cart->items->where('id', $selectedItem['cart_item_id'])->first();
+
+        if ($cartItem) {
+            $orderItems[] = [
+                'produk_id' => $cartItem->produk_id,
+                'quantity' => $cartItem->quantity,
+                'price' => $cartItem->produk->harga,
+            ];
+            $totalPrice += $cartItem->produk->harga * $cartItem->quantity;
+
+            // Hapus item dari keranjang
+            $cartItem->delete();
+        }
+    }
+
+    if (empty($orderItems)) {
+        return response()->json(['message' => 'Tidak ada item valid untuk checkout'], 400);
+    }
+
+    // Buat pesanan baru
+    $order = Order::create([
+        'user_id' => $request->user_id,
+        'total_price' => $totalPrice,
+        'status' => 'pending',
+    ]);
+
+    // Simpan item ke tabel order_items
+    foreach ($orderItems as $item) {
+        OrderItem::create([
+            'order_id' => $order->id,
+            'produk_id' => $item['produk_id'],
+            'quantity' => $item['quantity'],
+            'price' => $item['price'],
+        ]);
+    }
+
+    return response()->json([
+        'message' => 'Checkout berhasil',
+        'order_id' => $order->id,
+        'total_price' => $totalPrice,
+    ], 201);
+}
+
+
+
 public function getUserOrders($user_id)
 {
     $orders = Order::with('items.produk', 'user')
@@ -218,6 +288,28 @@ public function getOrderDetail($order_id)
             'message' => 'Data pesanan berhasil diambil',
             'data' => $formattedOrders
         ]);
+    }
+
+    public function delete($id)
+    {
+        try {
+            // Cari data checkout berdasarkan ID
+            $checkout = Order::findOrFail($id);
+
+            // Hapus data checkout
+            $checkout->delete();
+
+            // Response sukses
+            return response()->json([
+                'message' => 'Data checkout berhasil dihapus.'
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani error jika ada masalah
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat menghapus data checkout.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
     
 }
