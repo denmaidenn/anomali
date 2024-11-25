@@ -132,6 +132,7 @@ Route::put('/order/{order_id}/status', [CheckoutControllerAPI::class, 'updateOrd
 Route::post('/checkout-pelatihan', [PelatihanControllerAPI::class, 'checkout']);
 Route::get('/orders/pelatihan', [PelatihanControllerAPI::class, 'getAllCheckoutUsers']);
 Route::get('/orders/user/{user_id}', [PelatihanControllerAPI::class, 'getUserCheckout']);
+Route::get('/orders/pelatihan/{order_id}', [PelatihanControllerAPI::class, 'getOrderDetail']);
 Route::put('/orders/{order_id}/status', [PelatihanControllerAPI::class, 'updateStatus']);
 Route::delete('/orders/{order_id}', [PelatihanControllerAPI::class, 'deleteCheckout']);
 

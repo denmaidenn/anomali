@@ -239,4 +239,41 @@ class PelatihanControllerAPI extends Controller
         ]);
     }
     
+    public function getOrderDetail($order_id)
+{
+    $order = OrderPelatihan::with(['pelatihan', 'user'])
+        ->where('id', $order_id)
+        ->first();
+
+    if (!$order) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Order tidak ditemukan'
+        ], 404);
+    }
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Detail order berhasil diambil',
+        'data' => [
+            'id' => $order->id,
+            'user_id' => $order->user_id,
+            'pelatihan_id' => $order->pelatihan_id,
+            'total_harga' => $order->total_harga,
+            'status' => $order->status,
+            'created_at' => $order->created_at,
+            'pelatihan' => [
+                'judul' => $order->pelatihan->judul,
+                'nama_pelatih' => $order->pelatihan->user->nama,
+                'gambar_pelatihan' => $order->pelatihan->gambar_pelatihan,
+                'deskripsi_pelatihan' => $order->pelatihan->deskripsi_pelatihan
+            ],
+            'user' => [
+                'name' => $order->user->name,
+                'email' => $order->user->email
+            ]
+        ]
+    ], 200);
+}
+    
 }

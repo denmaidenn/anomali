@@ -83,21 +83,38 @@
         }
 
         function deletePelatih(id) {
-            if (confirm('Apakah Anda yakin menghapus data pelatih ini?')) {
-                $.ajax({
-                    url: `/api/pelatih/${id}`, // pastikan API route yang benar
-                    type: 'DELETE',
-                    dataType: 'json',
-                    success: function(response) {
-                        alert(response.message);
-                        loadPelatihData(); // Reload data setelah penghapusan
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                        alert('Terjadi kesalahan saat menghapus data pelatih.');
-                    }
-                });
-            }
+            Swal.fire({
+                title: 'Konfirmasi Hapus',
+                text: 'Apakah Anda yakin ingin menghapus data pelatih ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `/api/pelatih/${id}`, // pastikan API route yang benar
+                        type: 'DELETE',
+                        dataType: 'json',
+                        success: function(response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message,
+                            });
+                            loadPelatihData(); // Reload data setelah penghapusan
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: 'Terjadi kesalahan saat menghapus data pelatih.',
+                            });
+                        }
+                    });
+                }
+            });
         }
     </script>
 @endsection

@@ -122,6 +122,7 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
+                        
                         const fish = data.data;
 
                         document.getElementById('nama').value = fish.nama;
@@ -146,8 +147,25 @@
                             imgElement.width = 200;
                             gambarContainer.appendChild(imgElement);
                         }
+                    }
+            }).then(() => {
+                if (data.success) {
+            // Menggunakan SweetAlert untuk menampilkan pesan sukses
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: data.message,
+                    }).then(() => {
+                // Redirect
+                        window.location.href = "{{ route('fishpedia.index') }}";
+            });
                     } else {
                         console.error('Fishpedia entry not found');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: 'Gagal memperbarui data ikan',
+            });
                     }
                 })
                 .catch(error => {
@@ -162,52 +180,70 @@
             formData.append('_method', 'PUT'); // Workaround for PUT
             const token = 'yourActualTokenHere'; // Masukkan token autentikasi yang benar
 
-            fetch(`/api/fishpedia/${fishId}`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Accept': 'application/json'
-                },
-                body: formData
-            })
-            .then(response => {
-                console.log("Status:", response.status);
-                console.log("Headers:", response.headers);
-                if (!response.ok) {
-                    return response.json().then(errorData => Promise.reject(errorData));
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-
-                    // Update or create image element
-                    const imgElement = document.getElementById("currentImage") || document.createElement("img");
-                    imgElement.src = `/storage/${data.data.gambar_ikan}`;
-                    imgElement.alt = "Gambar Ikan";
-                    imgElement.id = "currentImage";
-                    imgElement.classList.add("img-fluid", "rounded", "shadow-sm");
-                    imgElement.width = 200;
-                    document.getElementById('gambarContainer').appendChild(imgElement);
-
-                    // Redirect
-                    window.location.href = "{{ route('fishpedia.index') }}";
-                } else {
-                    alert('Failed to update fish data');
-                }
-            })
-            .catch(error => {
-                if (error && error.errors) {
-                    Object.keys(error.errors).forEach(key => {
-                        const errorElement = document.getElementById('error_' + key);
-                        if (errorElement) {
-                            errorElement.innerText = error.errors[key].join(', ');
+            // Menambahkan SweetAlert sebelum menghapus gambar
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Data ikan akan diperbarui!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, perbarui!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/api/fishpedia/${fishId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json'
+                        },
+                        body: formData
+                    })
+                    .then(response => {
+                        console.log("Status:", response.status);
+                        console.log("Headers:", response.headers);
+                        if (!response.ok) {
+                            return response.json().then(errorData => Promise.reject(errorData));
                         }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            // Menggunakan SweetAlert untuk menampilkan pesan sukses
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: data.message,
+                            }).then(() => {
+                                // Update or create image element
+                                const imgElement = document.getElementById("currentImage") || document.createElement("img");
+                                imgElement.src = `/storage/${data.data.gambar_ikan}`;
+                                imgElement.alt = "Gambar Ikan";
+                                imgElement.id = "currentImage";
+                                imgElement.classList.add("img-fluid", "rounded", "shadow-sm");
+                                imgElement.width = 200;
+                                document.getElementById('gambarContainer').appendChild(imgElement);
+
+                                // Redirect
+                                window.location.href = "{{ route('fishpedia.index') }}";
+                            });
+                        } else {
+                            alert('Failed to update fish data');
+                        }
+                    })
+                    .catch(error => {
+                        if (error && error.errors) {
+                            Object.keys(error.errors).forEach(key => {
+                                const errorElement = document.getElementById('error_' + key);
+                                if (errorElement) {
+                                    errorElement.innerText = error.errors[key].join(', ');
+                                }
+                            });
+                        }
+                        console.error('Error updating fish data:', error);
                     });
                 }
-                console.error('Error updating fish data:', error);
             });
         });
     </script>

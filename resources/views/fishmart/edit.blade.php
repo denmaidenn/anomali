@@ -122,18 +122,27 @@
         })
         .then(data => {
             if (data.success) {
-                alert(data.message);
-                                    // Update or create image element
-                const imgElement = document.getElementById("currentImage") || document.createElement("img");
-                imgElement.src = `/storage/${data.data.gambar_produk}`;
-                imgElement.alt = "Gambar Produk";
-                imgElement.id = "currentImage";
-                imgElement.classList.add("img-fluid", "rounded", "shadow-sm");
-                imgElement.width = 200;
-                document.getElementById('gambarContainer').appendChild(imgElement);
-                window.location.href = "{{ route('fishmart.index') }}";
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: data.message,
+                }).then(() => {
+                    // Update or create image element
+                    const imgElement = document.getElementById("currentImage") || document.createElement("img");
+                    imgElement.src = `/storage/${data.data.gambar_produk}`;
+                    imgElement.alt = "Gambar Produk";
+                    imgElement.id = "currentImage";
+                    imgElement.classList.add("img-fluid", "rounded", "shadow-sm");
+                    imgElement.width = 200;
+                    document.getElementById('gambarContainer').appendChild(imgElement);
+                    window.location.href = "{{ route('fishmart.index') }}";
+                });
             } else {
-                alert('Gagal memperbarui data produk');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Gagal memperbarui data produk',
+                });
             }
         })
         .catch(error => {

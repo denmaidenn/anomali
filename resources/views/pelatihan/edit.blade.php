@@ -67,6 +67,7 @@
 @endsection
 
 @section('pelatihan_ajax')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     // Pastikan ID pelatihan terdefinisi dengan benar
     const pelatihanId = {{ $pelatihan->id }}; // ID pelatihan yang diteruskan dari controller
@@ -126,55 +127,66 @@
     };
 
     document.getElementById('submitButton').addEventListener('click', function(e) {
-    e.preventDefault();
+        e.preventDefault();
 
-    const formData = new FormData(document.getElementById('editPelatihanForm'));
-    formData.append('_method', 'PUT'); // Tambahkan _method untuk mengakali PUT dengan POST
-    const token = 'yourActualTokenHere'; // Masukkan token autentikasi yang benar
+        const formData = new FormData(document.getElementById('editPelatihanForm'));
+        formData.append('_method', 'PUT'); // Tambahkan _method untuk mengakali PUT dengan POST
+        const token = 'yourActualTokenHere'; // Masukkan token autentikasi yang benar
 
-    fetch(`/api/pelatihan/${pelatihanId}`, {
-        method: 'POST', // Gunakan POST, karena kita mengakali PUT dengan _method
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-            'Accept': 'application/json'
-        },
-        body: formData
-    })
-    .then(response => {
-        console.log("Status:", response.status);
-        console.log("Headers:", response.headers);
-        if (!response.ok) {
-            return response.json().then(errorData => Promise.reject(errorData));
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("Response data:", data);
+        fetch(`/api/pelatihan/${pelatihanId}`, {
+            method: 'POST', // Gunakan POST, karena kita mengakali PUT dengan _method
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            },
+            body: formData
+        })
+        .then(response => {
+            console.log("Status:", response.status);
+            console.log("Headers:", response.headers);
+            if (!response.ok) {
+                return response.json().then(errorData => Promise.reject(errorData));
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Response data:", data);
 
-        if(data.success) {
-            alert(data.message);
-        // Arahkan ke halaman index pelatihan
-        window.location.href = "{{ route('pelatihan.index') }}";
-        } else {
-            alert('Failed to update');
-        }
-
-
-    })
-    .catch(error => {
-        console.error('Error updating pelatihan data:', error);
-        if (error && error.errors) {
-            Object.keys(error.errors).forEach(key => {
-                document.getElementById('error_' + key).innerText = error.errors[key].join(', ');
+            if(data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: data.message || 'Pelatihan berhasil diperbarui!',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    // Arahkan ke halaman index pelatihan setelah menutup alert
+                    window.location.href = "{{ route('pelatihan.index') }}";
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Gagal memperbarui pelatihan.',
+                    confirmButtonText: 'OK'
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error updating pelatihan data:', error);
+            if (error && error.errors) {
+                Object.keys(error.errors).forEach(key => {
+                    document.getElementById('error_' + key).innerText = error.errors[key].join(', ');
+                });
+            }
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Terjadi kesalahan saat memperbarui pelatihan.',
+                confirmButtonText: 'OK'
             });
-        }
+        });
     });
-});
-
-
-
-
 
     // Fungsi pembantu untuk mengkapitalisasi huruf pertama
     function capitalizeFirstLetter(string) {

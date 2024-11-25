@@ -10,10 +10,14 @@
   <link rel="icon" href="{{ asset('/images/iquarium.png') }}" type="image/png">
   <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css" />
   <link rel="stylesheet" href="/node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css" />
+  
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="shortcut icon" href="/images/favicon.png" />
   <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- ini sweet alert -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body>

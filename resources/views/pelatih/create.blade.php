@@ -11,14 +11,28 @@
 
                     <!-- Notifikasi sukses dan error -->
                     @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
+                        <script>
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: '{{ session('success') }}',
+                                confirmButtonText: 'OK',
+                            }).then((result) => {
+                                if (result.value) {
+                                    window.location.href = "{{ route('pelatih.index') }}";
+                                }
+                            });
+                        </script>
                     @endif
                     @if (session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
+                        <script>
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: '{{ session('error') }}',
+                                confirmButtonText: 'OK',
+                            });
+                        </script>
                     @endif
 
                     <form class="forms-sample" method="POST" action="{{ route('pelatih.store') }}">

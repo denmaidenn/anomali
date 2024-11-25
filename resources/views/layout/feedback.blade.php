@@ -65,7 +65,7 @@
                                             <form action="/feedback/${feedback.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteFeedback(${feedback.id})">Remove</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -78,6 +78,44 @@
                     error: function(xhr, status, error) {
                         console.error(error);
                         alert('Terjadi kesalahan saat memuat data feedback.');
+                    }
+                });
+            }
+
+            function deleteFeedback(id) {
+                Swal.fire({
+                    title: 'Konfirmasi Hapus',
+                    text: 'Apakah Anda yakin ingin menghapus data feedback ini?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/feedback/${id}/delete`, // pastikan API route yang benar
+                            type: 'POST',
+                            data: {
+                                _method: 'DELETE',
+                                _token: '{{ csrf_token() }}' // Menyertakan token CSRF
+                            },
+                            success: function(response) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: response.message,
+                                });
+                                loadFeedbackData(); // Reload data setelah penghapusan
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(error);
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: 'Terjadi kesalahan saat menghapus data feedback.',
+                                });
+                            }
+                        });
                     }
                 });
             }

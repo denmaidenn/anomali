@@ -99,10 +99,19 @@
 
         if (data.success) {
             console.log(data);
-            alert(data.message); // Display success message
-            window.location.href = "{{ route('feedback.index') }}"; // Redirect to feedback index page after successful update
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: data.message, // Menampilkan pesan sukses
+            }).then(() => {
+                window.location.href = "{{ route('feedback.index') }}"; // Redirect ke halaman index feedback setelah berhasil
+            });
         } else {
-            alert('Failed to update');
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Gagal memperbarui feedback', // Menampilkan pesan gagal
+            });
         }
     })
     .catch(error => {

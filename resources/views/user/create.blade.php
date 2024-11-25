@@ -46,7 +46,11 @@ document.getElementById('submitForm').addEventListener('click', function () {
 
     // Validasi input
     if (!name || !email || !username || !password) {
-        alert('All fields are required!');
+        Swal.fire({
+            icon: 'warning',
+            title: 'Peringatan',
+            text: 'Semua kolom harus diisi!',
+        });
         return;
     }
 
@@ -64,21 +68,39 @@ document.getElementById('submitForm').addEventListener('click', function () {
             password: password
         })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(errorData => Promise.reject(errorData));
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
-            alert('User created successfully!');
-            console.log(data.user); // Data pengguna yang baru dibuat
-
-            // Redirect ke halaman lain setelah berhasil
-            window.location.href = '{{ route("user.index") }}'; // Gantilah dengan route sesuai kebutuhan
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: 'Pengguna berhasil dibuat!',
+            }).then(() => {
+                // Redirect ke halaman lain setelah berhasil
+                window.location.href = '{{ route("user.index") }}'; // Gantilah dengan route sesuai kebutuhan
+            });
         } else {
-            alert('Failed to create user: ' + JSON.stringify(data.error));
+            // Pastikan data.error didefinisikan
+            const errorMessage = data.error ? data.error : 'Gagal membuat pengguna.';
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: errorMessage,
+            });
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred. Please try again.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Kesalahan',
+            text: 'Terjadi kesalahan. Silakan coba lagi.',
+        });
     });
 });
 </script>

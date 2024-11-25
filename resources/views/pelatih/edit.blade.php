@@ -53,7 +53,11 @@
     document.addEventListener('DOMContentLoaded', function () {
         const pelatihId = {{ $pelatih->id ?? 'null' }};
         if (!pelatihId) {
-            alert('Pelatih ID tidak ditemukan. Pastikan data pelatih ada.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Kesalahan',
+                text: 'Pelatih ID tidak ditemukan. Pastikan data pelatih ada.',
+            });
             return;
         }
 
@@ -72,8 +76,12 @@
                     document.getElementById('email').value = data.data.email || '';
                     document.getElementById('no_telp').value = data.data.no_telp || '';
                     document.getElementById('alamat').value = data.data.alamat || '';
-                    } else {
-                    alert('Pelatih tidak ditemukan.');
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Kesalahan',
+                        text: 'Pelatih tidak ditemukan.',
+                    });
                 }
             })
             .catch(error => {
@@ -85,12 +93,10 @@
 
             const formData = new FormData(document.getElementById('editPelatihForm'));
             formData.append('_method', 'PUT'); // Akali PUT menggunakan POST
-            const token = 'yourActualTokenHere'; // Ganti dengan token autentikasi yang valid
 
             fetch(`/api/pelatih/${pelatihId}`, {
                 method: 'POST', // Gunakan POST
                 headers: {
-                    'Authorization': `Bearer ${token}`,
                     'Accept': 'application/json',
                 },
                 body: formData,
@@ -103,10 +109,19 @@
                 })
                 .then(data => {
                     if (data.success) {
-                        alert('Pelatih berhasil diperbarui.');
-                        window.location.href = "{{ route('pelatih.index') }}";
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: 'Pelatih berhasil diperbarui.',
+                        }).then(() => {
+                            window.location.href = "{{ route('pelatih.index') }}"; // Redirect ke halaman index
+                        });
                     } else {
-                        alert('Gagal memperbarui pelatih.');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: 'Gagal memperbarui pelatih.',
+                        });
                     }
                 })
                 .catch(error => {
@@ -118,7 +133,6 @@
                     }
                 });
         });
-});
-
+    });
 </script>
 @endsection

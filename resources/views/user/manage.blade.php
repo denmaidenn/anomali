@@ -62,7 +62,6 @@
 </div>
 @endsection
 
-
 @section('user_ajax')
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -102,6 +101,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const formData = new FormData(userForm);
         formData.append('_method', 'PUT'); // Laravel requires _method=PUT for PUT requests via form
 
+        // Show loading animation
+        document.querySelector('.loader-wrapper').style.display = 'flex';
+
         fetch(`/api/formuser/${userId}`, {
             method: 'POST', // Using POST with _method=PUT
             headers: {
@@ -114,14 +116,31 @@ document.addEventListener("DOMContentLoaded", function () {
             return response.json();
         })
         .then(data => {
+            // Hide loading animation
+            document.querySelector('.loader-wrapper').style.display = 'none';
+
             if (data.success) {
-                alert('User updated successfully!');
-                window.location.href = "{{ route('user.index') }}";
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: 'User updated successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = "{{ route('user.index') }}";
+                });
             } else {
-                alert('Failed to update user.');
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to update user.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             }
         })
         .catch(async error => {
+            // Hide loading animation
+            document.querySelector('.loader-wrapper').style.display = 'none';
+
             if (error.status === 422) { // Validation error
                 const errorData = await error.json();
                 Object.keys(errorData).forEach(field => {
@@ -129,6 +148,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             } else {
                 console.error('Update error:', error);
+                Swal.fire({
+                    title: 'Kesalahan',
+                    text: 'Terjadi kesalahan saat memperbarui pengguna.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             }
         });
     });

@@ -42,13 +42,12 @@
                   <input type="password" class="form-control p_input" placeholder="Password" name="password" required>
                 </div>
                 <div class="form-group d-flex align-items-center justify-content-between">
-                  <div class="form-check"><label><input type="checkbox" class="form-check-input">Remember me</label></div>
-                  <a href="#" class="forgot-pass">Forgot password</a>
+                  <div class="form-check"><label><input type="checkbox" class="form-check-input" name="remember">Remember me</label></div>
                 </div>
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary btn-block enter-btn" value="SIGN IN ">LOG IN</button>
                 </div>
-                <a href="#" class="google-login btn btn-google btn-block">Sign in with Google+</a>
+                <div style="margin-top: 10px;"></div>
                 <a href="/register" class="google-login btn btn-create-account btn-block">Create An Account</a>
               </form>
             </div>

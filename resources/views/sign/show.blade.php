@@ -96,12 +96,22 @@ tolong rapihkan design ini
                         userProfileImageElement.style.display = 'none';
                     }
                 } else {
-                    alert('User tidak ditemukan.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'User tidak ditemukan.',
+                        confirmButtonText: 'OK',
+                    });
                 }
             })
             .catch(error => {
                 console.error('Error fetching user data:', error);
-                alert('Terjadi kesalahan saat memuat data pengguna.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Terjadi kesalahan saat memuat data pengguna.',
+                    confirmButtonText: 'OK',
+                });
             });
     });
 
@@ -118,15 +128,31 @@ tolong rapihkan design ini
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('User deleted successfully');
-                location.reload(); // Reload the page to update the UI
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'User deleted successfully',
+                    confirmButtonText: 'OK',
+                }).then(() => {
+                    location.reload(); // Reload the page to update the UI
+                });
             } else {
-                alert('Failed to delete the user: ' + data.message);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Failed to delete the user: ' + data.message,
+                    confirmButtonText: 'OK',
+                });
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('An error occurred while deleting the user.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'An error occurred while deleting the user.',
+                confirmButtonText: 'OK',
+            });
         });
     }
 }

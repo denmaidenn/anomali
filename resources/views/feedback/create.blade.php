@@ -11,14 +11,22 @@
 
                     <!-- Notifications for success and error -->
                     @if (session('success'))
-                      <div class="alert alert-success">
-                        {{ session('success') }}
-                      </div>
+                      <script>
+                          Swal.fire({
+                              icon: 'success',
+                              title: 'Berhasil',
+                              text: '{{ session('success') }}',
+                          });
+                      </script>
                     @endif
                     @if (session('error'))
-                      <div class="alert alert-danger">
-                        {{ session('error') }}
-                      </div>
+                      <script>
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Gagal',
+                              text: '{{ session('error') }}',
+                          });
+                      </script>
                     @endif
 
                     <form class="forms-sample" method="POST" action="{{ route('feedback.store') }}">                        @csrf

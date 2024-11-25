@@ -83,7 +83,7 @@
                                 <td><a href="/fishpedia/${fish.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
                                 <td><a href="/fishpedia/${fish.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
                                 <td>
-                                    <button class="btn btn-danger btn-sm" onclick="deleteFishpedia(${fish.id})">Remove</button>
+                                    <button class="btn btn-danger btn-sm" onclick="confirmDeleteFishpedia(${fish.id})">Remove</button>
                                 </td>
                             </tr>
                         `);
@@ -99,29 +99,56 @@
         });
     }
 
+    // Fungsi untuk mengonfirmasi penghapusan data Fishpedia
+    function confirmDeleteFishpedia(fishId) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data ikan ini akan dihapus!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteFishpedia(fishId); // Panggil fungsi untuk menghapus data
+            }
+        });
+    }
+
     // Fungsi untuk menghapus data Fishpedia
     function deleteFishpedia(fishId) {
-        if (confirm('Apakah Anda yakin menghapus data ini?')) {
-            $.ajax({
-                url: `api/fishpedia/${fishId}`,
-                type: 'DELETE',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Pastikan meta tag CSRF ada di layout utama
-                },
-                success: function(response) {
-                    if (response.success) {
-                        $(`#fish-row-${fishId}`).remove(); // Hapus baris tabel secara langsung
-                        alert('Data ikan berhasil dihapus!');
-                    } else {
-                        alert('Gagal menghapus data.');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                    alert('Terjadi kesalahan saat menghapus data Fishpedia.');
+        $.ajax({
+            url: `api/fishpedia/${fishId}`,
+            type: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Pastikan meta tag CSRF ada di layout utama
+            },
+            success: function(response) {
+                if (response.success) {
+                    $(`#fish-row-${fishId}`).remove(); // Hapus baris tabel secara langsung
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: 'Data ikan berhasil dihapus!',
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Gagal menghapus data.',
+                    });
                 }
-            });
-        }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Terjadi kesalahan saat menghapus data Fishpedia.',
+                    text: 'Terjadi kesalahan saat menghapus data Fishpedia.',
+                });
+            }
+        });
     }
 </script>
 

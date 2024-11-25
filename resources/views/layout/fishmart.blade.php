@@ -73,11 +73,7 @@
                                         <td><a href="/fishmart/${item.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
                                         <td><a href="/fishmart/${item.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>
                                         <td>
-                                            <form action="/fishmart/${item.id}/delete" method="POST" onsubmit="return confirm('Apakah Anda yakin menghapus data ini?');" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                                            </form>
+                                            <button type="button" class="btn btn-danger btn-sm" onclick="deleteFishmart(${item.id})">Remove</button>
                                         </td>
                                     </tr>
                                 `);
@@ -91,6 +87,41 @@
                         alert('Terjadi kesalahan saat memuat data produk.');
                     }
                 });
-            }            
+            }
+
+            function deleteFishmart(id) {
+                Swal.fire({
+                    title: 'Konfirmasi Hapus',
+                    text: 'Apakah Anda yakin ingin menghapus data produk ini?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/api/fishmart/${id}`, // pastikan API route yang benar
+                            type: 'DELETE',
+                            dataType: 'json',
+                            success: function(response) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: response.message,
+                                });
+                                loadFishmartData(); // Reload data setelah penghapusan
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(error);
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: 'Terjadi kesalahan saat menghapus data produk.',
+                                });
+                            }
+                        });
+                    }
+                });
+            }
         </script>
     @endsection
