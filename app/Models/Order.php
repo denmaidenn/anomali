@@ -14,7 +14,9 @@ class Order extends Model
     protected $fillable = [
         'user_id', 
         'total_price', 
-        'status'
+        'status',
+        'payment_url',
+        'snap_token'
     ];
 
     public function items()

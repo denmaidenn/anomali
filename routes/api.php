@@ -100,7 +100,8 @@ Route::prefix('fishmart')->group(function () {
 
 Route::prefix('cart')->group(function () {
     Route::get('/', [CartControllerAPI::class, 'getUsersWithCarts']);
-    Route::get('{userId}', [CartControllerAPI::class, 'viewUserCart']);    Route::get('/{id}', [CartControllerAPI::class, 'getCart']);
+    Route::get('{userId}', [CartControllerAPI::class, 'viewUserCart']);    
+    Route::get('/{id}', [CartControllerAPI::class, 'getCart']);
     Route::post('/add', [CartControllerAPI::class, 'addToCart']);
     Route::get('/view/{id}', [CartControllerAPI::class, 'viewCartWithItems']);
     Route::delete('/delete/{id}', [CartControllerAPI::class, 'removeFromCart']);
@@ -138,6 +139,7 @@ Route::delete('/orders/{order_id}', [PelatihanControllerAPI::class, 'deleteCheck
 Route::get('/getAllCheckouts', [PelatihanControllerAPI::class, 'getAllCheckouts']);
 
 
+Route::post('/midtrans/notification', [CheckoutControllerAPI::class, 'notification']);
 
 
 

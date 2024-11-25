@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('form_users')->onDelete('cascade');
             $table->decimal('total_price', 15, 2);
             $table->enum('status', ['pending', 'paid', 'shipped', 'completed', 'canceled'])->default('pending');
+            $table->string('snap_token', 255)->nullable(); // Kolom untuk menyimpan Snap Token Midtrans
+            $table->string('payment_url', 255)->nullable(); // Kolom untuk menyimpan URL pembayaran Midtrans
             $table->timestamps();
         });
     }

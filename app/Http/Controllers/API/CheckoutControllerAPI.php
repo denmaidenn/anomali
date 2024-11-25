@@ -8,34 +8,53 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Produk;
+use Midtrans\Config;
+use Midtrans\Snap;
+use Illuminate\Support\Facades\Log;
+
 
 class CheckoutControllerAPI extends Controller
 {
+    public function __construct()
+    {
+        // Konfigurasi Midtrans
+        Config::$serverKey = config('midtrans.server_key');
+        Config::$isProduction = config('midtrans.is_production');
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
+    }
+
     public function checkout(Request $request)
     {
+        // Validasi input
         $request->validate([
             'user_id' => 'required|exists:form_users,id',
             'cart_id' => 'required|exists:carts,id',
         ]);
 
-        // Ambil keranjang dengan itemnya
+        // Ambil keranjang beserta item-nya
         $cart = Cart::with('items.produk')
-                    ->where('user_id', $request->user_id)
-                    ->where('id', $request->cart_id)
-                    ->first();
+            ->where('user_id', $request->user_id)
+            ->where('id', $request->cart_id)
+            ->first();
 
         if (!$cart || $cart->items->isEmpty()) {
             return response()->json(['message' => 'Keranjang tidak ditemukan atau kosong'], 404);
         }
 
+        // Hitung total harga dari keranjang
+        $totalPrice = $cart->items->sum(function ($item) {
+            return $item->produk->harga * $item->quantity;
+        });
+
         // Buat pesanan baru
         $order = Order::create([
             'user_id' => $request->user_id,
-            'total_price' => $cart->totalPrice(),
+            'total_price' => $totalPrice,
             'status' => 'pending',
         ]);
 
-        // Pindahkan item keranjang ke order_items
+        // Pindahkan item dari keranjang ke tabel order_items
         foreach ($cart->items as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
@@ -45,14 +64,111 @@ class CheckoutControllerAPI extends Controller
             ]);
         }
 
+        // Siapkan data untuk transaksi Midtrans
+        $params = [
+            'transaction_details' => [
+                'order_id' => (string) $order->id,
+                'gross_amount' => (int) $totalPrice,
+            ],
+            'customer_details' => [
+                'first_name' => strtok($cart->user->full_name, ' '),
+                'last_name' => trim(strstr($cart->user->full_name, ' ') ?: ''),
+                'email' => $cart->user->email,
+                'phone' => $cart->user->phone_number,
+            ],
+            'item_details' => $cart->items->map(function ($item) {
+                return [
+                    'id' => $item->produk->id,
+                    'price' => $item->produk->harga,
+                    'quantity' => $item->quantity,
+                    'name' => $item->produk->nama_produk,
+                ];
+            })->toArray(),
+        ];
+
+        // Buat transaksi di Midtrans dan dapatkan snap token
+        try {
+            $snapResponse = Snap::createTransaction($params);
+
+            $order->update([
+                'snap_token' => $snapResponse->token,
+                'payment_url' => $snapResponse->redirect_url,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal membuat transaksi: ' . $e->getMessage()], 500);
+        }
+
         // Kosongkan keranjang
         $cart->items()->delete();
 
+        // Berikan respons berhasil
         return response()->json([
             'message' => 'Checkout berhasil',
             'order_id' => $order->id,
-        ]);
+            'snap_token' => $order->snap_token,
+            'payment_url' => $order->payment_url,
+        ], 201);
     }
+
+
+
+    public function notification(Request $request)
+    {
+        try {
+            // Log request awal untuk debugging
+            Log::info('Midtrans Notification Received:', [
+                'raw_request' => $request->all(),
+                'raw_content' => $request->getContent()
+            ]);
+    
+            // Decode notifikasi dari Midtrans
+            $notification = json_decode($request->getContent(), true);
+    
+            // Pastikan data notifikasi memiliki field penting
+            if (!isset($notification['order_id']) || !isset($notification['transaction_status'])) {
+                return response()->json(['message' => 'Invalid notification data'], 400);
+            }
+    
+            // Cari pesanan berdasarkan order_id
+            $order = Order::find($notification['order_id']);
+            if (!$order) {
+                return response()->json(['message' => 'Order not found'], 404);
+            }
+    
+            // Map status Midtrans ke status di tabel orders
+            $statusMapping = [
+                'capture' => 'paid',       // Jika pembayaran berhasil dicapture
+                'settlement' => 'paid',    // Jika pembayaran sukses
+                'pending' => 'pending',    // Jika pembayaran masih menunggu
+                'deny' => 'failed',        // Jika pembayaran ditolak
+                'expire' => 'expired',     // Jika pembayaran sudah kadaluarsa
+                'cancel' => 'canceled',    // Jika pembayaran dibatalkan
+            ];
+    
+            $newStatus = $statusMapping[$notification['transaction_status']] ?? 'pending';
+    
+            // Perbarui status pesanan
+            $order->update([
+                'status' => $newStatus,
+                'paid_at' => $newStatus === 'paid' ? now() : null,
+            ]);
+    
+            Log::info('Order status updated:', [
+                'order_id' => $order->id,
+                'new_status' => $newStatus,
+            ]);
+    
+            return response()->json(['message' => 'Notification processed successfully'], 200);
+        } catch (\Exception $e) {
+            Log::error('Failed to process Midtrans notification:', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            return response()->json(['message' => 'Failed to process notification'], 500);
+        }
+    }
+    
+
 
     public function directCheckout(Request $request)
 {
