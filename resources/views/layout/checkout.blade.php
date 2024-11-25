@@ -6,6 +6,17 @@
                     <h5 class="card-title mb-4">Checkout (Fishmart)</h5>
                 </div>
                 <div class="table-responsive">
+                    <!-- Pesan sukses atau error -->
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     <table class="table center-aligned-table">
                         <thead>
                             <tr class="text-primary">
@@ -81,22 +92,22 @@
                                 <div class="collapse" id="actions-menu-${order.id}">
                                     <ul class="nav flex-column sub-menu">
                                         <li class="nav-item mb-2">
-                                            <a class="nav-link btn-success text-white update-status" href="#" data-id="${order.id}" data-status="paid" style="border-radius: 5px; text-align: center;">
+                                            <a class="nav-link btn-success text-white update-status-fishmart" href="#" data-id="${order.id}" data-status="paid" style="border-radius: 5px; text-align: center;">
                                                 Sudah Bayar
                                             </a>
                                         </li>
                                         <li class="nav-item mb-2">
-                                            <a class="nav-link btn-warning text-white update-status" href="#" data-id="${order.id}" data-status="pending" style="border-radius: 5px; text-align: center;">
+                                            <a class="nav-link btn-warning text-white update-status-fishmart" href="#" data-id="${order.id}" data-status="pending" style="border-radius: 5px; text-align: center;">
                                                 Pending
                                             </a>
                                         </li>
                                         <li class="nav-item mb-2">
-                                            <a class="nav-link btn-info text-white update-status" href="#" data-id="${order.id}" data-status="shipped" style="border-radius: 5px; text-align: center;">
+                                            <a class="nav-link btn-info text-white update-status-fishmart" href="#" data-id="${order.id}" data-status="shipped" style="border-radius: 5px; text-align: center;">
                                                 Dikirim
                                             </a>
                                         </li>
                                         <li class="nav-item mb-2">
-                                            <a class="nav-link btn-danger text-white delete-checkout" href="#" data-id="${order.id}" style="border-radius: 5px; text-align: center;">
+                                            <a class="nav-link btn-danger text-white delete-checkout-fishmart" href="#" data-id="${order.id}" style="border-radius: 5px; text-align: center;">
                                                 Hapus
                                             </a>
                                         </li>
@@ -121,7 +132,7 @@
                     });
 
                     // Tambahkan event listener untuk update status
-                    $('.update-status').off('click').on('click', function (e) {
+                    $('.update-status-fishmart').off('click').on('click', function (e) {
                         e.preventDefault();
                         let id = $(this).data('id');
                         let status = $(this).data('status');
@@ -129,7 +140,7 @@
                     });
 
                     // Tambahkan event listener untuk delete
-                    $('.delete-checkout').off('click').on('click', function (e) {
+                    $('.delete-checkout-fishmart').off('click').on('click', function (e) {
                         e.preventDefault();
                         let id = $(this).data('id');
                         deleteCheckoutFishmart(id);
@@ -154,9 +165,8 @@
             success: function (response) {
                 console.log(response);
                 if (response.success !== undefined && response.success) {
-                    if (status !== 'shipped') { // Hanya tampilkan alert jika status bukan 'dikirim'
-                        Swal.fire('Sukses', response.message || 'Status berhasil diperbarui.', 'success');
-                    }
+                    // Tampilkan alert untuk semua status
+                    Swal.fire('Sukses', response.message || 'Status berhasil diperbarui.', 'success');
                     loadCheckoutDataFishmart(); // Refresh data tabel
                 } else {
                     Swal.fire('Gagal', 'Gagal mengupdate status checkout.', 'error');

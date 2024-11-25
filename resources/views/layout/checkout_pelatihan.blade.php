@@ -89,17 +89,17 @@
                                 <div class="collapse" id="actions-menu-pelatihan-${checkout.id}">
                                     <ul class="nav flex-column sub-menu">
                                         <li class="nav-item mb-2">
-                                            <a class="nav-link btn-success text-white update-status" href="#" data-id="${checkout.id}" data-status="paid" style="border-radius: 5px; text-align: center;">
+                                            <a class="nav-link btn-success text-white update-status-pelatihan" href="#" data-id="${checkout.id}" data-status="paid" style="border-radius: 5px; text-align: center;">
                                                 Sudah Bayar
                                             </a>
                                         </li>
                                         <li class="nav-item mb-2">
-                                            <a class="nav-link btn-warning text-white update-status" href="#" data-id="${checkout.id}" data-status="canceled" style="border-radius: 5px; text-align: center;">
+                                            <a class="nav-link btn-warning text-white update-status-pelatihan" href="#" data-id="${checkout.id}" data-status="canceled" style="border-radius: 5px; text-align: center;">
                                                 Batalkan
                                             </a>
                                         </li>
                                         <li class="nav-item mb-2">
-                                            <a class="nav-link btn-danger text-white delete-checkout" href="#" data-id="${checkout.id}" style="border-radius: 5px; text-align: center;">
+                                            <a class="nav-link btn-danger text-white delete-checkout-pelatihan" href="#" data-id="${checkout.id}" style="border-radius: 5px; text-align: center;">
                                                 Hapus
                                             </a>
                                         </li>
@@ -126,7 +126,7 @@
                     });
 
                     // Tambahkan event listener untuk update status
-                    $('.update-status').on('click', function (e) {
+                    $('.update-status-pelatihan').on('click', function (e) {
                         e.preventDefault();
                         let id = $(this).data('id');
                         let status = $(this).data('status');
@@ -134,7 +134,7 @@
                     });
 
                     // Tambahkan event listener untuk delete
-                    $('.delete-checkout').on('click', function (e) {
+                    $('.delete-checkout-pelatihan').on('click', function (e) {
                         e.preventDefault();
                         let id = $(this).data('id');
                         deleteCheckout(id);
