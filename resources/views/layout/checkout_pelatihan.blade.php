@@ -43,6 +43,7 @@
 
 <!-- Script untuk AJAX -->
 @section('checkoutpelatihan_ajax')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- Tambahkan ini untuk menggunakan Sweet Alert -->
 <script>
     loadCheckoutDataPelatihan();
 
@@ -82,23 +83,23 @@
                         // Tombol Aksi (Dropdown untuk Update dan Delete)
                         let actionButtons = `
                             <div class="nav-item">
-                                <a class="nav-link" data-toggle="collapse" href="#actions-menu-${checkout.id}" aria-expanded="false" aria-controls="actions-menu-${checkout.id}">
+                                <a class="nav-link" data-toggle="collapse" href="#actions-menu-pelatihan-${checkout.id}" aria-expanded="false" aria-controls="actions-menu-pelatihan-${checkout.id}">
                                     <span class="menu-title">Status <i class="fa fa-sort-down"></i></span>
                                 </a>
-                                <div class="collapse" id="actions-menu-${checkout.id}">
+                                <div class="collapse" id="actions-menu-pelatihan-${checkout.id}">
                                     <ul class="nav flex-column sub-menu">
-                                        <li class="nav-item">
-                                            <a class="nav-link btn-success text-white update-status" href="#" data-id="${checkout.id}" data-status="paid">
+                                        <li class="nav-item mb-2">
+                                            <a class="nav-link btn-success text-white update-status" href="#" data-id="${checkout.id}" data-status="paid" style="border-radius: 5px; text-align: center;">
                                                 Sudah Bayar
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link btn-warning text-white update-status" href="#" data-id="${checkout.id}" data-status="canceled">
+                                        <li class="nav-item mb-2">
+                                            <a class="nav-link btn-warning text-white update-status" href="#" data-id="${checkout.id}" data-status="canceled" style="border-radius: 5px; text-align: center;">
                                                 Batalkan
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link btn-danger text-white delete-checkout" href="#" data-id="${checkout.id}">
+                                        <li class="nav-item mb-2">
+                                            <a class="nav-link btn-danger text-white delete-checkout" href="#" data-id="${checkout.id}" style="border-radius: 5px; text-align: center;">
                                                 Hapus
                                             </a>
                                         </li>
@@ -145,7 +146,11 @@
             },
             error: function (xhr, status, error) {
                 console.error(error);
-                alert('Terjadi kesalahan saat memuat data checkout.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Terjadi kesalahan saat memuat data checkout.',
+                });
             }
         });
     }
@@ -157,12 +162,21 @@
             data: { status: status },
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }, // Untuk Laravel
             success: function (response) {
-                alert(response.message);
-                loadCheckoutDataPelatihan(); // Refresh data tabel
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: response.message,
+                }).then(() => {
+                    loadCheckoutDataPelatihan(); // Refresh data tabel
+                });
             },
             error: function (xhr, status, error) {
                 console.error(error);
-                alert('Gagal mengupdate status checkout.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Gagal mengupdate status checkout.',
+                });
             }
         });
     }
@@ -174,12 +188,21 @@
                 type: 'DELETE',
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }, // Untuk Laravel
                 success: function (response) {
-                    alert(response.message);
-                    loadCheckoutDataPelatihan(); // Refresh data tabel
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: response.message,
+                    }).then(() => {
+                        loadCheckoutDataPelatihan(); // Refresh data tabel
+                    });
                 },
                 error: function (xhr, status, error) {
                     console.error(error);
-                    alert('Gagal menghapus data checkout.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Gagal menghapus data checkout.',
+                    });
                 }
             });
         }

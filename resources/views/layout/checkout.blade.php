@@ -6,18 +6,6 @@
                     <h5 class="card-title mb-4">Checkout (Fishmart)</h5>
                 </div>
                 <div class="table-responsive">
-                    <!-- Pesan sukses atau error -->
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-                    @if (session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
-                    @endif
-
                     <table class="table center-aligned-table">
                         <thead>
                             <tr class="text-primary">
@@ -43,6 +31,7 @@
 
 <!-- Script untuk AJAX -->
 @section('checkout_ajax')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
     loadCheckoutDataFishmart();
 
@@ -91,17 +80,25 @@
                                 </a>
                                 <div class="collapse" id="actions-menu-${order.id}">
                                     <ul class="nav flex-column sub-menu">
-                                        <li class="nav-item">
-                                            <a class="nav-link btn-success text-white update-status" href="#" data-id="${order.id}" data-status="paid">Sudah Bayar</a>
+                                        <li class="nav-item mb-2">
+                                            <a class="nav-link btn-success text-white update-status" href="#" data-id="${order.id}" data-status="paid" style="border-radius: 5px; text-align: center;">
+                                                Sudah Bayar
+                                            </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link btn-warning text-white update-status" href="#" data-id="${order.id}" data-status="pending">Pending</a>
+                                        <li class="nav-item mb-2">
+                                            <a class="nav-link btn-warning text-white update-status" href="#" data-id="${order.id}" data-status="pending" style="border-radius: 5px; text-align: center;">
+                                                Pending
+                                            </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link btn-info text-white update-status" href="#" data-id="${order.id}" data-status="shipped">Dikirim</a>
+                                        <li class="nav-item mb-2">
+                                            <a class="nav-link btn-info text-white update-status" href="#" data-id="${order.id}" data-status="shipped" style="border-radius: 5px; text-align: center;">
+                                                Dikirim
+                                            </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link btn-danger text-white delete-checkout" href="#" data-id="${order.id}">Hapus</a>
+                                        <li class="nav-item mb-2">
+                                            <a class="nav-link btn-danger text-white delete-checkout" href="#" data-id="${order.id}" style="border-radius: 5px; text-align: center;">
+                                                Hapus
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>
@@ -124,7 +121,7 @@
                     });
 
                     // Tambahkan event listener untuk update status
-                    $('.update-status').on('click', function (e) {
+                    $('.update-status').off('click').on('click', function (e) {
                         e.preventDefault();
                         let id = $(this).data('id');
                         let status = $(this).data('status');
@@ -132,7 +129,7 @@
                     });
 
                     // Tambahkan event listener untuk delete
-                    $('.delete-checkout').on('click', function (e) {
+                    $('.delete-checkout').off('click').on('click', function (e) {
                         e.preventDefault();
                         let id = $(this).data('id');
                         deleteCheckoutFishmart(id);
@@ -143,7 +140,7 @@
             },
             error: function (xhr, status, error) {
                 console.error(error);
-                alert('Terjadi kesalahan saat memuat data checkout.');
+                Swal.fire('Terjadi kesalahan', 'Kesalahan saat memuat data checkout.', 'error');
             }
         });
     }
@@ -155,12 +152,19 @@
             data: { status: status },
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             success: function (response) {
-                alert(response.message || 'Status berhasil diperbarui.');
-                loadCheckoutDataFishmart(); // Refresh data tabel
+                console.log(response);
+                if (response.success !== undefined && response.success) {
+                    if (status !== 'shipped') { // Hanya tampilkan alert jika status bukan 'dikirim'
+                        Swal.fire('Sukses', response.message || 'Status berhasil diperbarui.', 'success');
+                    }
+                    loadCheckoutDataFishmart(); // Refresh data tabel
+                } else {
+                    Swal.fire('Gagal', 'Gagal mengupdate status checkout.', 'error');
+                }
             },
             error: function (xhr, status, error) {
                 console.error(error);
-                alert('Gagal mengupdate status checkout.');
+                Swal.fire('Gagal', 'Gagal mengupdate status checkout.', 'error');
             }
         });
     }
@@ -172,12 +176,12 @@
                 type: 'DELETE',
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 success: function (response) {
-                    alert(response.message || 'Data checkout berhasil dihapus.');
+                    Swal.fire('Sukses', response.message || 'Data checkout berhasil dihapus.', 'success');
                     loadCheckoutDataFishmart(); // Refresh data tabel
                 },
                 error: function (xhr, status, error) {
                     console.error(error);
-                    alert('Gagal menghapus data checkout.');
+                    Swal.fire('Gagal', 'Gagal menghapus data checkout.', 'error');
                 }
             });
         }
