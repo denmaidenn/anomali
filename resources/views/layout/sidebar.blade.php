@@ -60,10 +60,10 @@
                       Pelatihan (Free)
                     </a>
                   </li>
-                  <li class="nav-item {{ Request::is('checkout') ? 'active':'' }}">
-                    <a class="nav-link" href="{{ route('checkout.index') }}">
+                  <li class="nav-item {{ Request::is('checkoutpelatihan') ? 'active':'' }}">
+                    <a class="nav-link" href="{{ route('checkout.pelatihan') }}">
                       <img src="{{ asset('images/checkout.png') }}" alt="Checkout Icon">
-                      Checkout
+                      Checkout (Pelatihan)
                     </a>
                   </li>
                 </ul>

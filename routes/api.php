@@ -121,13 +121,24 @@ Route::post('/checkout/multiple', [CheckoutControllerAPI::class, 'checkoutMultip
 Route::delete('/checkout/{id}', [CheckoutControllerAPI::class, 'delete']);
 
 
+
 Route::get('/orders/{user_id}', [CheckoutControllerAPI::class, 'getUserOrders']);
 Route::get('/order/{order_id}', [CheckoutControllerAPI::class, 'getOrderDetail']);
 Route::put('/order/{order_id}/status', [CheckoutControllerAPI::class, 'updateOrderStatus']);
 
 
+// Pelatihan Checkout
+Route::post('/checkout-pelatihan', [PelatihanControllerAPI::class, 'checkout']);
+Route::get('/orders/pelatihan', [PelatihanControllerAPI::class, 'getAllCheckoutUsers']);
+Route::get('/orders/user/{user_id}', [PelatihanControllerAPI::class, 'getUserCheckout']);
+Route::put('/orders/{order_id}/status', [PelatihanControllerAPI::class, 'updateStatus']);
+Route::delete('/orders/{order_id}', [PelatihanControllerAPI::class, 'deleteOrder']);
 
 
+
+use App\Http\Controllers\AdminDashboardController;
+
+Route::get('/getAllCheckouts', [PelatihanControllerAPI::class, 'getAllCheckouts']);
 
 
 

@@ -36,5 +36,15 @@ class FormUser extends Model
         return $this->hasOne(Cart::class, 'user_id', 'id'); // Sesuaikan kolom foreign key jika berbeda
     }
 
+    public function orderPelatihans()
+    {
+        return $this->hasMany(OrderPelatihan::class, 'user_id');
+    }
+
+    public function purchasedPelatihans()
+{
+    return $this->hasMany(OrderPelatihan::class, 'user_id');
+}
+    
 
 }

@@ -172,7 +172,7 @@ public function checkoutMultiple(Request $request)
 
 public function getUserOrders($user_id)
 {
-    $orders = Order::with('items.produk', 'user')
+    $orders = Order::with(['items.produk', 'user'])
                    ->where('user_id', $user_id)
                    ->get();
 
@@ -181,8 +181,10 @@ public function getUserOrders($user_id)
     }
 
     $orders = $orders->map(function ($order) {
-        $order->username = $order->user->name;  // Asumsi nama kolom 'name' di tabel 'users' adalah username
-        unset($order->user);  // Menghapus objek 'user' agar hanya 'username' yang tampil
+        $order->username = $order->user->name;  
+        $order->alamat_pengiriman = $order->user->alamat;  // Ambil alamat dari user
+        $order->no_telp = $order->user->no_telp;          // Ambil no_telp dari user
+        unset($order->user);  // Hapus objek user setelah mengambil data yang diperlukan
         return $order;
     });
 
@@ -311,5 +313,7 @@ public function getOrderDetail($order_id)
             ], 500);
         }
     }
+
+    
     
 }

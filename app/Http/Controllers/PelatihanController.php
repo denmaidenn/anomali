@@ -114,4 +114,10 @@ class PelatihanController extends Controller
         $pelatihan = Pelatihan::with('user')->findOrFail($id);
         return view('pelatihan.show', compact('pelatihan'), ['title' => 'Pelatihan']);
     }
+
+    public function viewcheckout() {
+        // Load all feedback entries with associated user data
+        $pelatihan = Pelatihan::all();
+        return view('checkout.pelatihan', ['title' => 'Checkout', 'pelatihan' => $pelatihan]);
+    }
 }

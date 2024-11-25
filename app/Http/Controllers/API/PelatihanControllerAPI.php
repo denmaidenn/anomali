@@ -4,9 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Pelatihan;
 use App\Models\Pelatih;
+use App\Models\OrderPelatihan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\FormUser;
 
 class PelatihanControllerAPI extends Controller
 {
@@ -138,4 +140,103 @@ class PelatihanControllerAPI extends Controller
         $pelatihan->delete();
         return response()->json(['message' => 'Pelatihan deleted successfully']);
     }
+
+    public function checkout(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'user_id' => 'required|exists:form_users,id',
+            'pelatihan_id' => 'required|exists:pelatihan,id',
+        ]);
+    
+        // Ambil pelatihan berdasarkan ID
+        $pelatihan = Pelatihan::findOrFail($request->pelatihan_id);
+    
+        // Buat order pelatihan
+        $order = OrderPelatihan::create([
+            'user_id' => $request->user_id,
+            'pelatihan_id' => $pelatihan->id,
+            'total_harga' => $pelatihan->harga, // Harga dari pelatihan
+            'status' => 'pending',
+        ]);
+    
+        // Berikan respons JSON
+        return response()->json([
+            'success' => true,
+            'message' => 'Checkout berhasil.',
+            'order' => $order->load('pelatihan', 'user'), // Sertakan relasi
+        ], 201);
+    }
+
+
+
+    public function getAllCheckouts()
+    {
+        // Ambil data order pelatihan beserta relasi user (FormUser) dan pelatihan (termasuk pelatih)
+        $checkouts = OrderPelatihan::with([
+            'user', // Relasi ke FormUser (pembeli pelatihan)
+            'pelatihan.user' // Relasi ke Pelatihan dan Pelatih
+        ])
+        ->orderBy('created_at', 'desc') // Urutkan berdasarkan waktu terbaru
+        ->get();
+    
+        // Berikan respons JSON
+        return response()->json([
+            'success' => true,
+            'message' => 'Data checkout berhasil diambil.',
+            'data' => $checkouts,
+        ], 200);
+    }
+    
+    
+    
+    
+    
+    
+
+
+    // Get a single user with their checkout data
+    public function getUserCheckout($user_id)
+    {
+        $user = FormUser::with('orderPelatihans.pelatihan')
+            ->findOrFail($user_id);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data user yang telah checkout berhasil diambil.',
+            'user' => $user,
+        ], 200);
+    }
+
+    // Update status of a specific order
+    public function updateStatus(Request $request, $order_id)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,paid,shipped,completed,canceled',
+        ]);
+
+        $order = OrderPelatihan::findOrFail($order_id);
+        $order->update([
+            'status' => $request->status,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Status berhasil diperbarui.',
+            'order' => $order,
+        ], 200);
+    }
+
+    // Delete a specific order
+    public function deleteOrder($order_id)
+    {
+        $order = OrderPelatihan::findOrFail($order_id);
+        $order->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Order berhasil dihapus.',
+        ], 200);
+    }
+    
 }

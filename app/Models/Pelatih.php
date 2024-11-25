@@ -17,4 +17,9 @@ class Pelatih extends Model
         'no_telp',
         'alamat'
     ];
+
+    public function pelatihans()
+    {
+        return $this->hasMany(Pelatihan::class, 'id_user');
+    }
 }
