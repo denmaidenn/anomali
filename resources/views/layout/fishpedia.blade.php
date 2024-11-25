@@ -4,14 +4,6 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center m-2">
                     <h5 class="card-title mb-0">Fishpedia Table</h5>
-                    <div class="d-flex justify-content-center flex-grow-1 mx-4">
-                        <div class="d-flex gap-2" style="width: 300px;">
-                            <input type="text" class="form-control" id="searchInput" placeholder="Search...">
-                            <button class="btn btn-outline-primary search-btn" type="submit">
-                                <i class="fa fa-search" style="height: 20px"></i>
-                            </button>
-                        </div>
-                    </div>
                     <a href="{{ route('fishpedia.create') }}" class="btn btn-primary">Tambah</a>
                 </div>
 
@@ -86,7 +78,7 @@
                                 <td>${fish.ph_air}</td>
                                 <td>${fish.salinitas}</td>
                                 <td>
-                                    ${fish.gambar_ikan ? `<img src="/storage/${fish.gambar_ikan}" alt="Gambar Ikan" style="width: 50px; height: auto;">` : 'No Image'}
+                                    ${fish.gambar_ikan ? `<img src="/storage/${fish.gambar_ikan}" alt="Gambar Ikan" style="width: 120px; height: auto;">` : 'No Image'}
                                 </td>
                                 <td><a href="/fishpedia/${fish.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
                                 <td><a href="/fishpedia/${fish.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>

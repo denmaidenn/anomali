@@ -34,11 +34,19 @@
                         <div class="card-body">
                             <div class="row mb-3">
                                 <div class="col-md-4"><strong>Pelatih:</strong></div>
-                                <div class="col-md-8">${pelatihan.user?.nama || 'Pelatih Tidak Ditemukan'}</div>
+                                <div class="col-md-8">${pelatihan.pelatih?.nama || 'Pelatih Tidak Ditemukan'}</div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-4"><strong>Deskripsi Pelatihan:</strong></div>
                                 <div class="col-md-8">${pelatihan.deskripsi_pelatihan || 'Tidak ada deskripsi.'}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Gambar Pelatihan:</strong></div>
+                                <div class="col-md-8">
+                                    ${pelatihan.gambar_pelatihan 
+                                        ? `<img src="/storage/${pelatihan.gambar_pelatihan}" alt="Gambar Pelatihan" style="width: 200px; height: auto;">`
+                                        : '<span>No Image Available</span>'}
+                                </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-4"><strong>Video Pelatihan:</strong></div>
@@ -49,14 +57,6 @@
                                             Your browser does not support the video tag.
                                         </video>` 
                                         : '<span>No Video Available</span>'}
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-4"><strong>Gambar Pelatihan:</strong></div>
-                                <div class="col-md-8">
-                                    ${pelatihan.gambar_pelatihan 
-                                        ? `<img src="/storage/${pelatihan.gambar_pelatihan}" alt="Gambar Pelatihan" style="width: 100px; height: auto;">`
-                                        : '<span>No Image Available</span>'}
                                 </div>
                             </div>
                             <div class="row mb-3">

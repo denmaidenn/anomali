@@ -228,15 +228,15 @@ class PelatihanControllerAPI extends Controller
     }
 
     // Delete a specific order
-    public function deleteOrder($order_id)
+    public function deleteCheckout($id)
     {
-        $order = OrderPelatihan::findOrFail($order_id);
-        $order->delete();
-
+        $checkout = OrderPelatihan::findOrFail($id);
+        $checkout->delete();
+    
         return response()->json([
             'success' => true,
-            'message' => 'Order berhasil dihapus.',
-        ], 200);
+            'message' => 'Checkout berhasil dihapus.',
+        ]);
     }
     
 }

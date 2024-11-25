@@ -1,10 +1,9 @@
-<div class="row mb-2">
+<div class="row mb-4">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between m-2">
-                    <h5 class="card-title mb-4">Cart User Table</h5>
-                    <a href="#" class="btn btn-primary" onclick="loadUsersWithCarts()">Reload</a>
+                    <h5 class="card-title mb-4">Cart (Fishmart)</h5>
                 </div>
                 <div class="table-responsive">
                     <table class="table center-aligned-table">
@@ -27,6 +26,8 @@
         </div>
     </div>
 </div>
+
+@section('scripts')
 
 <script>
     // Load data automatically when the page is loaded
@@ -69,4 +70,5 @@
         });
     }
 </script>
+@endsection
 

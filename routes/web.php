@@ -142,7 +142,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('checkout')->group(function () {
-        Route::get('/', [CheckoutController::class,'index'])->name('checkout.index');
+        Route::get('/fishmart', [CheckoutController::class,'index'])->name('checkout.index');
         Route::get('/pelatihan', [PelatihanController::class,'viewcheckout'])->name('checkout.pelatihan');
     });
 

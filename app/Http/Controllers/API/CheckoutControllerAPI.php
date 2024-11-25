@@ -207,22 +207,32 @@ public function getOrderDetail($order_id)
 
   
 
-    public function updateOrderStatus(Request $request, $order_id)
-    {
-        $request->validate([
-            'status' => 'required|in:pending,paid,shipped,completed,canceled',
-        ]);
+public function updateOrderStatus(Request $request, $order_id)
+{
+    $request->validate([
+        'status' => 'required|in:pending,paid,shipped,completed,canceled',
+    ]);
 
-        $order = Order::findOrFail($order_id);
-        $order->status = $request->status;
-        $order->save();
+    $order = Order::findOrFail($order_id);
+    $order->update(['status' => $request->status]);
 
-        return response()->json([        
-            'success' => true,
-            'message' => 'Status berhasil diperbarui.',
-            'data' => $order
-        ]);
-    }
+    return response()->json([
+        'success' => true,
+        'message' => 'Status berhasil diperbarui.',
+        'data' => $order
+    ], 200);
+}
+
+public function delete($id)
+{
+    $checkout = Order::findOrFail($id);
+    $checkout->delete();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Data checkout berhasil dihapus.'
+    ], 200);
+}
 
     public function getUsersWhoCheckedOut(Request $request)
     {
@@ -290,28 +300,6 @@ public function getOrderDetail($order_id)
             'message' => 'Data pesanan berhasil diambil',
             'data' => $formattedOrders
         ]);
-    }
-
-    public function delete($id)
-    {
-        try {
-            // Cari data checkout berdasarkan ID
-            $checkout = Order::findOrFail($id);
-
-            // Hapus data checkout
-            $checkout->delete();
-
-            // Response sukses
-            return response()->json([
-                'message' => 'Data checkout berhasil dihapus.'
-            ], 200);
-        } catch (\Exception $e) {
-            // Tangani error jika ada masalah
-            return response()->json([
-                'message' => 'Terjadi kesalahan saat menghapus data checkout.',
-                'error' => $e->getMessage()
-            ], 500);
-        }
     }
 
     

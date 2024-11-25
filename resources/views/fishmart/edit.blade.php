@@ -1,53 +1,62 @@
 @extends('layout.main')
 
 @section('content')
-<div class="container">
-    <h2>Edit Produk Fishmart</h2>
-    <form id="editFishForm">
-        <div class="form-group">
-            <label for="nama_produk">Nama Produk</label>
-            <input type="text" id="nama_produk" name="nama_produk" class="form-control">
-            <small id="error_nama_produk" class="text-danger"></small>
-        </div>
+<div class="content-wrapper">
+    <h3 class="page-heading mb-4">Forms</h3>
+    <div class="row mb-2">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Edit Produk Fishmart</h2>
+                    <form id="editFishForm">
+                        <div class="form-group">
+                            <label for="nama_produk">Nama Produk</label>
+                            <input type="text" id="nama_produk" name="nama_produk" class="form-control">
+                            <small id="error_nama_produk" class="text-danger"></small>
+                        </div>
 
-        <div class="form-group">
-            <label for="deskripsi_produk">Deskripsi Produk</label>
-            <textarea id="deskripsi_produk" name="deskripsi_produk" class="form-control"></textarea>
-            <small id="error_deskripsi_produk" class="text-danger"></small>
-        </div>
+                        <div class="form-group">
+                            <label for="deskripsi_produk">Deskripsi Produk</label>
+                            <textarea id="deskripsi_produk" name="deskripsi_produk" class="form-control"></textarea>
+                            <small id="error_deskripsi_produk" class="text-danger"></small>
+                        </div>
 
-        <div class="form-group">
-            <label for="kategori">Kategori</label>
-            <select id="kategori" name="kategori" class="form-control">
-                <option value="Filter Air">Filter Air</option>
-                <option value="Pakan">Pakan</option>
-                <option value="Tanaman Hias">Tanaman Hias</option>
-                <option value="Batu Coral">Batu Coral</option>
-                <option value="Aquascape">Aquascape</option>
-            </select>
-            <small id="error_kategori" class="text-danger"></small>
-        </div>
+                        <div class="form-group">
+                            <label for="kategori">Kategori</label>
+                            <select id="kategori" name="kategori" class="form-control">
+                                <option value="Filter Air">Filter Air</option>
+                                <option value="Pakan">Pakan</option>
+                                <option value="Tanaman Hias">Tanaman Hias</option>
+                                <option value="Batu Coral">Batu Coral</option>
+                                <option value="Aquascape">Aquascape</option>
+                            </select>
+                            <small id="error_kategori" class="text-danger"></small>
+                        </div>
 
-        <div class="form-group">
-            <label for="stok">Stok</label>
-            <input type="number" id="stok" name="stok" class="form-control">
-            <small id="error_stok" class="text-danger"></small>
-        </div>
+                        <div class="form-group">
+                            <label for="stok">Stok</label>
+                            <input type="number" id="stok" name="stok" class="form-control">
+                            <small id="error_stok" class="text-danger"></small>
+                        </div>
 
-        <div class="form-group">
-            <label for="harga">Harga</label>
-            <input type="number" id="harga" name="harga" class="form-control">
-            <small id="error_harga" class="text-danger"></small>
-        </div>
+                        <div class="form-group">
+                            <label for="harga">Harga</label>
+                            <input type="number" id="harga" name="harga" class="form-control">
+                            <small id="error_harga" class="text-danger"></small>
+                        </div>
 
-        <div class="form-group">
-            <label for="gambar_produk">Gambar Produk</label>
-            <input type="file" id="gambar_produk" name="gambar_produk" class="form-control">
-            <div id="gambarContainer" class="mt-2"></div>
-        </div>
+                        <div class="form-group">
+                            <label for="gambar_produk">Gambar Produk</label>
+                            <input type="file" id="gambar_produk" name="gambar_produk" class="form-control">
+                            <div id="gambarContainer" class="mt-2"></div>
+                        </div>
 
-        <button id="submitButton" class="btn btn-primary">Simpan Perubahan</button>
-    </form>
+                        <button id="submitButton" class="btn btn-primary">Simpan Perubahan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 

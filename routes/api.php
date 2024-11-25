@@ -84,6 +84,7 @@ Route::prefix('fishpedia')->group(function () {
     Route::get('/{id}', [FishpediaControllerAPI::class, 'show']);
     Route::put('/{id}', [FishpediaControllerAPI::class, 'update']);
     Route::delete('/{id}', [FishpediaControllerAPI::class, 'delete']);
+    Route::get('/search', [FishpediaControllerAPI::class, 'search']);
 });
 
 Route::prefix('fishmart')->group(function () {
@@ -114,12 +115,12 @@ Route::prefix('cart-items')->group(function () {
 
 
 
+// Fishmart Checkout
 Route::get('/checkout-all', [CheckoutControllerAPI::class, 'getUsersWhoCheckedOut']);
 Route::post('/checkout', [CheckoutControllerAPI::class, 'checkout']);
 Route::post('/direct-checkout', [CheckoutControllerAPI::class, 'directCheckout']);
 Route::post('/checkout/multiple', [CheckoutControllerAPI::class, 'checkoutMultiple']);
 Route::delete('/checkout/{id}', [CheckoutControllerAPI::class, 'delete']);
-
 
 
 Route::get('/orders/{user_id}', [CheckoutControllerAPI::class, 'getUserOrders']);
@@ -132,11 +133,7 @@ Route::post('/checkout-pelatihan', [PelatihanControllerAPI::class, 'checkout']);
 Route::get('/orders/pelatihan', [PelatihanControllerAPI::class, 'getAllCheckoutUsers']);
 Route::get('/orders/user/{user_id}', [PelatihanControllerAPI::class, 'getUserCheckout']);
 Route::put('/orders/{order_id}/status', [PelatihanControllerAPI::class, 'updateStatus']);
-Route::delete('/orders/{order_id}', [PelatihanControllerAPI::class, 'deleteOrder']);
-
-
-
-use App\Http\Controllers\AdminDashboardController;
+Route::delete('/orders/{order_id}', [PelatihanControllerAPI::class, 'deleteCheckout']);
 
 Route::get('/getAllCheckouts', [PelatihanControllerAPI::class, 'getAllCheckouts']);
 

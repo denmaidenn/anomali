@@ -68,7 +68,7 @@
                                         <td>${item.stok}</td>
                                         <td>Rp ${parseFloat(item.harga).toLocaleString()}</td>
                                         <td>
-                                            ${item.gambar_produk ? `<img src="${item.gambar_produk}" alt="Gambar Produk" width="50px" height="auto">` : 'Tidak ada gambar'}
+                                            ${item.gambar_produk ? `<img src="${item.gambar_produk}" alt="Gambar Produk" width="120px" height="auto">` : 'Tidak ada gambar'}
                                         </td>
                                         <td><a href="/fishmart/${item.id}/show" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a></td>
                                         <td><a href="/fishmart/${item.id}/edit" class="btn btn-primary btn-sm">Manage</a></td>

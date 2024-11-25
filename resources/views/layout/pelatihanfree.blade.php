@@ -4,14 +4,6 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center m-2">
                     <h5 class="card-title mb-0">Pelatihan Table (Free)</h5>
-                    <div class="d-flex justify-content-center flex-grow-1 mx-4">
-                        <div class="d-flex gap-2" style="width: 300px;">
-                            <input type="text" class="form-control" id="searchInput" placeholder="Search...">
-                            <button class="btn btn-outline-primary search-btn" type="button" onclick="searchPelatihan()">
-                                <i class="fa fa-search" style="height: 20px"></i>
-                            </button>
-                        </div>
-                    </div>
                     <a href="{{ route('pelatihanfree.create') }}" class="btn btn-primary">Tambah</a>
                 </div>
 

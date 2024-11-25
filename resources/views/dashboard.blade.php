@@ -41,6 +41,12 @@
 
     <!-- Tabel Checkout -->
     @include('layout.checkout')
+    
+    <!-- Tabel Checkout Pelatihan-->
+    @include('layout.checkout_pelatihan')
+
+
+
 </div>
 @endsection
 

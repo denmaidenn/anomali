@@ -1,4 +1,4 @@
-<div class="row mb-2">
+<div class="row mb-4">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
@@ -69,7 +69,7 @@
                                 <td>${user.alamat ? user.alamat : 'Tidak tersedia'}</td>
                                 <td>
                                     ${user.gambar_profile 
-                                        ? `<img src="/storage/${user.gambar_profile}" alt="Profile Picture" width="50" height="50" />` 
+                                        ? `<img src="/storage/${user.gambar_profile}" alt="Profile Picture" width="80px" height="auto" />` 
                                         : 'Tidak ada gambar'
                                     }
                                 </td>

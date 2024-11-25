@@ -60,10 +60,10 @@
                       Pelatihan (Free)
                     </a>
                   </li>
-                  <li class="nav-item {{ Request::is('checkoutpelatihan') ? 'active':'' }}">
+                  <li class="nav-item {{ Request::is('checkout/pelatihan') ? 'active':'' }}">
                     <a class="nav-link" href="{{ route('checkout.pelatihan') }}">
                       <img src="{{ asset('images/checkout.png') }}" alt="Checkout Icon">
-                      Checkout (Pelatihan)
+                      Checkout  
                     </a>
                   </li>
                 </ul>
@@ -89,7 +89,7 @@
                       Cart
                     </a>
                   </li>
-                  <li class="nav-item {{ Request::is('checkout') ? 'active':'' }}">
+                  <li class="nav-item {{ Request::is('checkout/fishmart') ? 'active':'' }}">
                     <a class="nav-link" href="{{ route('checkout.index') }}">
                       <img src="{{ asset('images/checkout.png') }}" alt="Checkout Icon">
                       Checkout
