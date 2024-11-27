@@ -106,7 +106,7 @@ class FishpediaController extends Controller
         return redirect()->route('fishpedia.index')->with('success', 'Data ikan berhasil diperbarui!');
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
         $fish = Fishpedia::findOrFail($id);
 

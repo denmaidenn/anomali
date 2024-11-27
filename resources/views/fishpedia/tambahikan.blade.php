@@ -126,4 +126,37 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function() {
+        $('#fish-form').on('submit', function(e) {
+            e.preventDefault(); // Mencegah form dari submit default
+
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: 'Data berhasil ditambahkan.',
+                    }).then(() => {
+                        // Redirect atau lakukan tindakan lain setelah alert ditutup
+                        window.location.reload(); // Reload halaman
+                    });
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: 'Data gagal ditambahkan.',
+                    });
+                }
+            });
+        });
+    });
+</script>
 @endsection

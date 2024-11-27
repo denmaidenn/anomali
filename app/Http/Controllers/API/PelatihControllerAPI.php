@@ -13,7 +13,10 @@ class PelatihControllerAPI extends Controller
     public function index()
     {
         $pelatih = Pelatih::all();
-        return response()->json(['data' => $pelatih], 200);
+        return response()->json([
+            'success' => true,
+            'message' => 'All Pelatih retrieved successfully',
+            'data' => $pelatih], 200);
     }
 
     // Store a newly created Pelatih in the database.
@@ -39,9 +42,14 @@ class PelatihControllerAPI extends Controller
     {
         $pelatih = Pelatih::find($id);
         if (!$pelatih) {
-            return response()->json(['message' => 'Pelatih tidak ditemukan'], 404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Pelatih tidak ditemukan'], 404);
         }
-        return response()->json(['data' => $pelatih], 200);
+        return response()->json([
+            'success' => true,
+            'message' => 'Pelatih data retrieved successfully',
+            'data' => $pelatih], 200);
     }
 
     // Update the specified Pelatih in the database.
@@ -64,7 +72,10 @@ class PelatihControllerAPI extends Controller
         }
 
         $pelatih->update($request->all());
-        return response()->json(['data' => $pelatih, 'message' => 'Pelatih berhasil diperbarui'], 200);
+        return response()->json([
+            'success' => true,
+            'data' => $pelatih, 
+            'message' => 'Pelatih berhasil diperbarui'], 200);
     }
 
     // Remove the specified Pelatih from the database.

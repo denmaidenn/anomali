@@ -30,4 +30,9 @@ class Pelatihan extends Model
     {
         return $this->belongsTo(Pelatih::class, 'id_user');
     }
+
+    public function orderPelatihans()
+    {
+        return $this->hasMany(OrderPelatihan::class, 'pelatihan_id');
+    }
 }

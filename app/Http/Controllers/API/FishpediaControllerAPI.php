@@ -24,6 +24,27 @@ class FishpediaControllerAPI extends Controller
         ], 200);
     }
 
+    public function search(Request $request)
+{
+    $query = Fishpedia::query();
+
+    // Logika pencarian
+    if ($request->has('search') && $request->search != '') {
+        $search = $request->search;
+        $query->where('nama', 'LIKE', "%{$search}%")
+              ->orWhere('nama_ilmiah', 'LIKE', "%{$search}%")
+              ->orWhere('kategori', 'LIKE', "%{$search}%")
+              ->orWhere('asal', 'LIKE', "%{$search}%");
+    }
+
+    $data = $query->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => $data,
+    ]);
+}
+
     /**
      * Membuat data Fishpedia baru.
      */

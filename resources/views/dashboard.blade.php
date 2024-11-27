@@ -5,14 +5,22 @@
     <h3 class="page-heading mb-4" style="font-weight: bold">Dashboard</h3>
 
     @if (session('success_login'))
-        <div class="alert alert-success">
-            {{ session('success_login') }}
-        </div>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success_login') }}',
+            });
+        </script>
     @endif
     @if (session('error_login'))
-        <div class="alert alert-danger">
-            {{ session('error_login') }}
-        </div>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: '{{ session('error_login') }}',
+            });
+        </script>
     @endif
 
     <!-- Tabel User -->
@@ -35,6 +43,16 @@
 
     <!-- Tabel Feedback -->
     @include('layout.feedback')
+
+    <!-- Tabel Cart -->
+    @include('layout.cart')
+
+    <!-- Tabel Checkout -->
+    @include('layout.checkout')
+    
+    <!-- Tabel Checkout Pelatihan-->
+    @include('layout.checkout_pelatihan')
+
 </div>
 @endsection
 

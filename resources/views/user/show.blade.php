@@ -98,6 +98,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success && data.data) {
+                    console.log("API response data:", data);
                     const user = data.data;
 
                     // Update DOM with the user data

@@ -9,7 +9,7 @@
         </button>
 
         <div>
-            <span>{{ Auth::user()->name }}</span>    
+            <span style="color: white;">{{ Auth::user()->name }}</span>        
         </div>
     </div>
 </nav>

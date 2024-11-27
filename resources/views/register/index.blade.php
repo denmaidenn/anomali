@@ -32,7 +32,6 @@
 
               <h3 class="card-title text-left mb-3">Register</h3>
               <form id="createUserForm">
-                  @csrf
                   <div class="form-group">
                       <input type="text" class="form-control p_input" placeholder="Name" name="name" required>
                   </div>
@@ -62,6 +61,7 @@
   <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="/node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
   <script src="/js/misc.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- Tambahkan ini untuk menggunakan Sweet Alert -->
   <script>
 function createUser() {
     const form = document.getElementById('createUserForm');
@@ -93,11 +93,19 @@ function createUser() {
         return response.json();
     })
     .then(data => {
-        alert(data.message); // Display success message
+        // Tambahkan Sweet Alert untuk menampilkan pesan akun sudah terbuat
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: 'Akun Anda telah terbuat. Silakan login untuk melanjutkan.',
+            confirmButtonText: 'OK',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect to the home page after successful account creation
+                window.location.href = '/'; // Redirect to the home page
+            }
+        });
         console.log(data.data); // New user data
-
-        // Redirect to the home page after successful account creation
-        window.location.href = '/'; // Redirect to the home page
     })
     .catch(error => {
         if (error.errors) {

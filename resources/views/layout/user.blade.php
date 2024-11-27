@@ -1,4 +1,4 @@
-<div class="row mb-2">
+<div class="row mb-4">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
@@ -69,7 +69,7 @@
                                 <td>${user.alamat ? user.alamat : 'Tidak tersedia'}</td>
                                 <td>
                                     ${user.gambar_profile 
-                                        ? `<img src="/storage/${user.gambar_profile}" alt="Profile Picture" width="50" height="50" />` 
+                                        ? `<img src="/storage/${user.gambar_profile}" alt="Profile Picture" width="80px" height="auto" />` 
                                         : 'Tidak ada gambar'
                                     }
                                 </td>
@@ -94,33 +94,42 @@
     }
     
 function deleteUser(id) {
-    if (confirm('Apakah Anda yakin menghapus data ini?')) {
-        $.ajax({
-            url: `/api/formuser/${id}`,
-            type: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                // Tampilkan pesan sukses
-                let successMessage = response.message || 'Pengguna berhasil dihapus.';
-                $('#user-table-body').prepend(`
-                    <tr>
-                        <td colspan="10">
-                            <div class="alert alert-success">${successMessage}</div>
-                        </td>
-                    </tr>
-                `);
+    Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: "Data yang dihapus tidak akan bisa dikembalikan!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, hapus!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/api/formuser/${id}`,
+                type: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    // Tampilkan pesan sukses
+                    let successMessage = response.message || 'Pengguna berhasil dihapus.';
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Terhapus!',
+                        text: successMessage,
+                        confirmButtonText: 'OK'
+                    });
 
-                // Muat ulang data tabel setelah penghapusan
-                loadUserData();
-            },
-            error: function(xhr, status, error) {
-                console.log(error);
-                alert('Terjadi kesalahan saat menghapus pengguna.');
-            }
-        });
-    }
+                    // Muat ulang data tabel setelah penghapusan
+                    loadUserData();
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                    alert('Terjadi kesalahan saat menghapus pengguna.');
+                }
+            });
+        }
+    });
 }
 
 </script>

@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
-            $table->foreignId('id_produk')->constrained('produk')->onDelete('cascade');
-            $table->integer('jumlah_prooduk');
-            $table->decimal('total_harga', 10, 2);
-            $table->enum('status_transaksi', ['pending','completed','cancelled'])->default('pending');
-            $table->date('tanggal_transaksi');
+            $table->foreignId('user_id')->constrained('form_users')->onDelete('cascade');
+            $table->string('order_id')->unique();
+            $table->decimal('amount', 15, 2); // Jumlah total pembayaran
+            $table->string('payment_type')->nullable(); // Tipe pembayaran
+            $table->string('status')->default('pending'); // Status pembayaran
+            $table->json('midtrans_response')->nullable(); // Data respons Midtrans
             $table->timestamps();
         });
     }

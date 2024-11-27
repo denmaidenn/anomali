@@ -7,12 +7,11 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title mb-4">Form Edit Data Pelatihan</h5>
+                    <h5 class="card-title mb-4">Pelatihan</h5>
 
                     <div id="notification"></div>
 
                     <form id="editPelatihanForm" enctype="multipart/form-data">
-                        @csrf
 
                         <div class="form-group">
                             <label for="id_user">Pelatih</label>
@@ -68,6 +67,7 @@
 @endsection
 
 @section('pelatihan_ajax')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     // Pastikan ID pelatihan terdefinisi dengan benar
     const pelatihanId = {{ $pelatihan->id }}; // ID pelatihan yang diteruskan dari controller
@@ -87,13 +87,17 @@
 
                     // Populate dropdown untuk memilih pelatih
                     const pelatihSelect = document.getElementById('id_user');
-                    data.pelatih.forEach(trainer => {
-                        let option = document.createElement('option');
-                        option.value = trainer.id;
-                        option.text = trainer.nama;
-                        option.selected = trainer.id === pelatihan.id_user; // Tandai pelatih yang sudah dipilih
-                        pelatihSelect.appendChild(option);
-                    });
+                    if (Array.isArray(data.pelatih) && data.pelatih.length > 0) {
+                        data.pelatih.forEach(trainer => {
+                            let option = document.createElement('option');
+                            option.value = trainer.id;
+                            option.text = trainer.nama;
+                            option.selected = trainer.id === pelatihan.id_user; // Tandai pelatih yang sudah dipilih
+                            pelatihSelect.appendChild(option);
+                        });
+                    } else {
+                        console.error('No pelatih data available');
+                    }
 
                     // Menampilkan video jika ada
                     if (pelatihan.video_pelatihan) {
@@ -122,40 +126,65 @@
             });
     };
 
-    // Menangani pengiriman form untuk memperbarui pelatihan
     document.getElementById('submitButton').addEventListener('click', function(e) {
-        e.preventDefault(); // Mencegah pengiriman form standar
+        e.preventDefault();
 
         const formData = new FormData(document.getElementById('editPelatihanForm'));
-
-        // Pastikan Anda mengganti 'yourAuthToken' dengan token autentikasi yang benar
-        const token = 'yourAuthToken'; // Ganti ini dengan token autentikasi yang valid
+        formData.append('_method', 'PUT'); // Tambahkan _method untuk mengakali PUT dengan POST
+        const token = 'yourActualTokenHere'; // Masukkan token autentikasi yang benar
 
         fetch(`/api/pelatihan/${pelatihanId}`, {
-            method: 'PUT', // Gunakan PUT untuk memperbarui data
+            method: 'POST', // Gunakan POST, karena kita mengakali PUT dengan _method
             headers: {
                 'Authorization': `Bearer ${token}`,
-                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
             },
             body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+            console.log("Status:", response.status);
+            console.log("Headers:", response.headers);
+            if (!response.ok) {
+                return response.json().then(errorData => Promise.reject(errorData));
+            }
+            return response.json();
+        })
         .then(data => {
-            if (data.message) {
-                document.getElementById('notification').innerText = data.message;
-                window.location.href = "{{ route('pelatihan.index') }}"; // Redirect ke daftar pelatihan setelah berhasil
+            console.log("Response data:", data);
+
+            if(data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: data.message || 'Pelatihan berhasil diperbarui!',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    // Arahkan ke halaman index pelatihan setelah menutup alert
+                    window.location.href = "{{ route('pelatihan.index') }}";
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Gagal memperbarui pelatihan.',
+                    confirmButtonText: 'OK'
+                });
             }
         })
         .catch(error => {
             console.error('Error updating pelatihan data:', error);
-
-            // Menangani error validasi jika ada
             if (error && error.errors) {
-                const errors = error.errors;
-                Object.keys(errors).forEach(key => {
-                    document.getElementById('error_' + key).innerText = errors[key].join(', ');
+                Object.keys(error.errors).forEach(key => {
+                    document.getElementById('error_' + key).innerText = error.errors[key].join(', ');
                 });
             }
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Terjadi kesalahan saat memperbarui pelatihan.',
+                confirmButtonText: 'OK'
+            });
         });
     });
 

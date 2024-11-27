@@ -67,10 +67,13 @@ class PelatihanfreeControllerAPI extends Controller
             ], 404);
         }
 
+        $pelatih = Pelatih::all(['id', 'nama']); // Ganti dengan model User atau Pelatih yang sesuai
+
         return response()->json([
             'success' => true,
             'message' => 'Pelatihan retrieved successfully',
-            'data' => $pelatihan
+            'data' => $pelatihan,
+            'pelatih' => $pelatih, // Tambahkan data pelatih
         ], 200);
     }
 
@@ -84,15 +87,32 @@ class PelatihanfreeControllerAPI extends Controller
         $validatedData = $request->validate([
             'id_user' => 'sometimes|required|exists:pelatih,id',
             'judul' => 'sometimes|required|string|max:255',
-            'video_pelatihan' => 'sometimes|required|string',
-            'gambar_pelatihan' => 'nullable|string',
+            'video_pelatihan' => 'nullable|file|mimes:mp4,mov,avi|max:102400', // Validasi untuk video
+            'gambar_pelatihan' => 'nullable|file|mimes:jpeg,png,jpg|max:10240',
             'deskripsi_pelatihan' => 'sometimes|required|string',
         ]);
 
         // Update the Pelatihan data
-        $pelatihan->update($validatedData);
+        if ($request->hasFile('video_pelatihan')) {
+            $videoPath = $request->file('video_pelatihan')->store('videos_pelatihan', 'public');
+            $pelatihan->video_pelatihan = $videoPath;
+        }
+    
+        // Handle gambar upload jika ada gambar yang diunggah
+        if ($request->hasFile('gambar_pelatihan')) {
+            $gambarPath = $request->file('gambar_pelatihan')->store('pelatihan', 'public');
+            $pelatihan->gambar_pelatihan = $gambarPath;
+        }
+
+        $pelatihan->id_user = $validatedData['id_user'] ?? $pelatihan->id_user;
+        $pelatihan->judul = $validatedData['judul'] ?? $pelatihan->judul;
+        $pelatihan->deskripsi_pelatihan = $validatedData['deskripsi_pelatihan'] ?? $pelatihan->deskripsi_pelatihan;
+
+        $pelatihan->save();
+
 
         return response()->json([
+            'success' => true,
             'message' => 'Pelatihan updated successfully',
             'data' => $pelatihan
         ]);

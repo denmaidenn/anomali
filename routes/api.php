@@ -10,14 +10,24 @@ use App\Http\Controllers\API\FeedbackControllerAPI;
 use App\Http\Controllers\API\PelatihanfreeControllerAPI;
 use App\Http\Controllers\API\PelatihControllerAPI;
 
-
-
-
-
+use App\Http\Controllers\API\CartControllerAPI;
+use App\Http\Controllers\API\CartItemControllerAPI;
+use App\Http\Controllers\API\CheckoutControllerAPI;
 // Route untuk menampilkan semua data ikan
 
 
+// Untuk Admin Login
 Route::post('/login', [AuthControllerAPI::class, 'in']);
+
+Route::prefix('admin')->group(function () {
+    Route::get('/', [AuthControllerAPI::class, 'index']);
+    Route::post('/create', [AuthControllerAPI::class,'store']);
+    Route::get('/{id}', [AuthControllerAPI::class, 'show']);
+    Route::put('/{id}', [AuthControllerAPI::class,'update']);
+    Route::delete('/{id}', [AuthControllerAPI::class,'delete']);
+});
+
+// Untuk Mobile User Register dan Login
 Route::prefix('formuser')->group(function () {
     Route::get('/', [MobileAuthControllerAPI::class, 'index']);
     Route::post('/create', [MobileAuthControllerAPI::class,'store']);
@@ -34,20 +44,14 @@ Route::prefix('feedback')->group(function () {
 });
 
 Route::prefix('formuser')->group(function () {
+    Route::put('/{id}/picture', [MobileAuthControllerAPI::class,'updatePicture']);
     Route::get('/{id}', [MobileAuthControllerAPI::class, 'show']);
     Route::put('/{id}', [MobileAuthControllerAPI::class,'update']);
     Route::delete('/{id}', [MobileAuthControllerAPI::class,'delete']);
     Route::put('/{id}/paymentinfo', [MobileAuthControllerAPI::class,'updatePaymentInfo']);
-    Route::put('/{id}/picture', [MobileAuthControllerAPI::class,'updatePicture']);
 });
 
-Route::prefix('admin')->group(function () {
-    Route::get('/', [AuthControllerAPI::class, 'index']);
-    Route::post('/create', [AuthControllerAPI::class,'store']);
-    Route::get('/{id}', [AuthControllerAPI::class, 'show']);
-    Route::put('/{id}', [AuthControllerAPI::class,'update']);
-    Route::delete('/{id}', [AuthControllerAPI::class,'delete']);
-});
+
 
 Route::prefix('pelatihan')->group(function () {
     Route::get('/', [PelatihanControllerAPI::class, 'index']);
@@ -80,6 +84,7 @@ Route::prefix('fishpedia')->group(function () {
     Route::get('/{id}', [FishpediaControllerAPI::class, 'show']);
     Route::put('/{id}', [FishpediaControllerAPI::class, 'update']);
     Route::delete('/{id}', [FishpediaControllerAPI::class, 'delete']);
+    Route::get('/search', [FishpediaControllerAPI::class, 'search']);
 });
 
 Route::prefix('fishmart')->group(function () {
@@ -92,9 +97,58 @@ Route::prefix('fishmart')->group(function () {
 
 
 
-Route::middleware(['auth:sanctum'])->group(function () {
 
-    
+Route::prefix('cart')->group(function () {
+    Route::get('/', [CartControllerAPI::class, 'getUsersWithCarts']);
+    Route::get('{userId}', [CartControllerAPI::class, 'viewUserCart']);    Route::get('/{id}', [CartControllerAPI::class, 'getCart']);
+    Route::post('/add', [CartControllerAPI::class, 'addToCart']);
+    Route::get('/view/{id}', [CartControllerAPI::class, 'viewCartWithItems']);
+    Route::delete('/delete/{id}', [CartControllerAPI::class, 'removeFromCart']);
+});
+
+Route::prefix('cart-items')->group(function () {
+    Route::post('/add', [CartItemControllerAPI::class, 'addItem']);
+    Route::put('/update/{id}', [CartItemControllerAPI::class, 'updateItem']);
+    Route::delete('/remove/{id}', [CartItemControllerAPI::class, 'removeItem']);
+    Route::get('/{cart_id}', [CartItemControllerAPI::class, 'getItemsByCart']);
+});
+
+
+
+// Fishmart Checkout
+Route::get('/checkout-all', [CheckoutControllerAPI::class, 'getUsersWhoCheckedOut']);
+Route::post('/checkout', [CheckoutControllerAPI::class, 'checkout']);
+Route::post('/direct-checkout', [CheckoutControllerAPI::class, 'directCheckout']);
+Route::post('/checkout/multiple', [CheckoutControllerAPI::class, 'checkoutMultiple']);
+Route::delete('/checkout/{id}', [CheckoutControllerAPI::class, 'delete']);
+
+
+Route::get('/orders/{user_id}', [CheckoutControllerAPI::class, 'getUserOrders']);
+Route::get('/order/{order_id}', [CheckoutControllerAPI::class, 'getOrderDetail']);
+Route::put('/order/{order_id}/status', [CheckoutControllerAPI::class, 'updateOrderStatus']);
+
+
+// Pelatihan Checkout
+Route::post('/checkout-pelatihan', [PelatihanControllerAPI::class, 'checkout']);
+Route::get('/orders/pelatihan', [PelatihanControllerAPI::class, 'getAllCheckoutUsers']);
+Route::get('/orders/user/{user_id}', [PelatihanControllerAPI::class, 'getUserCheckout']);
+Route::get('/orders/pelatihan/{order_id}', [PelatihanControllerAPI::class, 'getOrderDetail']);
+Route::put('/orders/{order_id}/status', [PelatihanControllerAPI::class, 'updateStatus']);
+Route::delete('/orders/{order_id}', [PelatihanControllerAPI::class, 'deleteCheckout']);
+
+Route::get('/getAllCheckouts', [PelatihanControllerAPI::class, 'getAllCheckouts']);
+
+
+
+
+
+
+
+
+
+Route::middleware(['auth:sanctum', 'auth'])->group(function () {
+
+
 
 
 

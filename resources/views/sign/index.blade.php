@@ -19,6 +19,9 @@
         <div class="content-wrapper full-page-wrapper d-flex align-items-center auth-pages">
           <div class="card col-lg-4 mx-auto">
             <div class="card-body px-5 py-5">
+              <div class="text-center">
+                  <img src="/images/iquarium.png" alt="iQuarium Logo" class="logo">
+              </div>
 
               @if (session('success'))
                     <div class="alert alert-success">
@@ -41,14 +44,10 @@
                 <div class="form-group">
                   <input type="password" class="form-control p_input" placeholder="Password" name="password" required>
                 </div>
-                <div class="form-group d-flex align-items-center justify-content-between">
-                  <div class="form-check"><label><input type="checkbox" class="form-check-input">Remember me</label></div>
-                  <a href="#" class="forgot-pass">Forgot password</a>
-                </div>
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary btn-block enter-btn" value="SIGN IN ">LOG IN</button>
                 </div>
-                <a href="#" class="google-login btn btn-google btn-block">Sign in with Google+</a>
+                <div style="margin-top: 10px;"></div>
                 <a href="/register" class="google-login btn btn-create-account btn-block">Create An Account</a>
               </form>
             </div>
