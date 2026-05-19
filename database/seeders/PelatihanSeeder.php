@@ -16,6 +16,7 @@ class PelatihanSeeder extends Seeder
     {
         Pelatihan::create([
             'id_user' => 1, // Pastikan id_user ini ada di tabel User
+            'judul' => 'Pelatihan Dasar Web',
             'video_pelatihan' => 'video_link_1.mp4',
             'deskripsi_pelatihan' => 'Pelatihan dasar pemrograman web.',
             'harga' => 50000,
@@ -23,6 +24,7 @@ class PelatihanSeeder extends Seeder
 
         Pelatihan::create([
             'id_user' => 2, // Pastikan id_user ini ada di tabel User
+            'judul' => 'Pelatihan Mobile Lanjut',
             'video_pelatihan' => 'video_link_2.mp4',
             'deskripsi_pelatihan' => 'Pelatihan lanjut pemrograman mobile.',
             'harga' => 75000,
@@ -30,6 +32,7 @@ class PelatihanSeeder extends Seeder
 
         Pelatihan::create([
             'id_user' => 1,
+            'judul' => 'Pelatihan UI/UX',
             'video_pelatihan' => 'video_link_3.mp4',
             'deskripsi_pelatihan' => 'Pelatihan desain UI/UX.',
             'harga' => 60000,
